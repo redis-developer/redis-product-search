@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+
+  redis:
+    image: redis/redis-stack:latest
+    environment:
+      REDIS_ARGS: --protected-mode no --maxclients 70000 --loglevel notice
+    ports:
+      - 6379:6379
+      - 8001:8001
+
+  vecsim_app:
+    image: python:3.8-slim-buster
+    command: "sh entrypoint.sh"
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./entrypoint.sh:/entrypoint.sh:cached
+      - ./app:/app/
+      - ./data:/data/:cached
+      - ./.docker/.ipython:/root/.ipython:cached
+    environment:
+      REDIS_DATA_URL: 'redis://redis:6379'
+      REDIS_OM_URL: 'redis://redis:6379'
+    expose:
+      - "8888"
+    ports:
+      - "8888:8888"
+    depends_on:
+      - "redis"
+

@@ -1,0 +1,7 @@
+fastapi
+httpx
+requests
+uvicorn
+aiofiles
+redis-om
+pandas
