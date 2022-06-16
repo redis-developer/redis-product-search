@@ -1,11 +1,31 @@
+import random
 import typing as t
-import numpy as np
-from fastapi import APIRouter
 from redis import Redis
-from vecsim_app.schema import Product, SimilarityRequest
+from fastapi import APIRouter
+
+from vecsim_app.schema import Product, ProductMetadata, SimilarityRequest, SearchRequest
 from vecsim_app.query import create_query
+from vecsim_app import config
 
 product_router = r = APIRouter()
+
+@r.get("/", response_model=t.List[Product],
+       name="product:get_product_samples",
+       operation_id="get_products_samples")
+async def get_products(limit: int = 10, skip: int = 0):
+    pks = await Product.all_pks()
+    if pks:
+        # TODO figure out how to slice async_generator
+        products = []
+        i = 0
+        async for pk in pks:
+            if i >= skip and i < skip + limit:
+                products.append(await Product.get(pk))
+            if len(products) == limit:
+                break
+            i += 1
+        return products
+    return []
 
 @r.get("/{product_pk}",
        response_model=Product,
@@ -45,7 +65,7 @@ async def find_similar_products(similarity_request: SimilarityRequest) -> t.List
                         similarity_request.number_of_results)
 
        #redis_client = Product.db()
-       redis_client = Redis(host="redis", port=6379, db=0)
+       redis_client = Redis(host=config.REDIS_HOST, port=config.REDIS_PORT, db=0)
 
        # find the vector of the Product listed in the request
        product_vector_key = "product_vector:" + str(similarity_request.product_id)
@@ -59,3 +79,12 @@ async def find_similar_products(similarity_request: SimilarityRequest) -> t.List
        similar_products = [await Product.get(pk) for pk in similar_product_pks]
        return similar_products
 
+
+@r.post("/search",
+       response_model=t.List[Product],
+       name="product:text_search",
+       operation_id="text_search")
+async def text_search_products(search: SearchRequest):
+    products = await Product.find(
+        Product.product_metadata.name % search.text).all()
+    return products

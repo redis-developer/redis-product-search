@@ -2,20 +2,21 @@
 import typing as t
 import json
 import asyncio
-from redis import Redis
 import numpy as np
+
+from redis import Redis
 
 from vecsim_app.query import create_flat_index
 from vecsim_app.schema import Product
 from vecsim_app import config
 
 def read_product_json() -> t.List:
-    with open("/data/products_no_vectors.json") as f:
+    with open(config.DATA_LOCATION + "/products_no_vectors.json") as f:
         products = json.load(f)
     return products
 
 def read_product_json_vectors() -> t.List:
-    with open("/data/product_img_vectors.json") as f:
+    with open(config.DATA_LOCATION + "/product_img_vectors.json") as f:
         product_vectors = json.load(f)
     return product_vectors
 
@@ -56,7 +57,7 @@ async def load_all_data():
     print("Products loaded!")
 
     # TODO use redis-om connection
-    redis_conn = Redis(host="redis", port=6379, db=0)
+    redis_conn = Redis(host=config.REDIS_HOST, port=config.REDIS_PORT, db=0)
 
     print("loading product vectors")
     vectors = read_product_json_vectors()
