@@ -11,12 +11,12 @@ from vecsim_app.schema import Product
 from vecsim_app import config
 
 def read_product_json() -> t.List:
-    with open(config.DATA_LOCATION + "/products_no_vectors.json") as f:
+    with open(config.DATA_LOCATION + "/product_metadata.json") as f:
         products = json.load(f)
     return products
 
 def read_product_json_vectors() -> t.List:
-    with open(config.DATA_LOCATION + "/product_img_vectors.json") as f:
+    with open(config.DATA_LOCATION + "/product_vectors.json") as f:
         product_vectors = json.load(f)
     return product_vectors
 
@@ -41,12 +41,12 @@ def set_product_vectors(product_vectors, redis_conn, products_with_pk):
 
     for product, product_pk in zip(product_vectors, products_with_pk):
         key = "product_vector:" + str(product["product_id"])
-        value = np.array(product["img_vector"], dtype=np.float32).tobytes()
         redis_conn.hset(key,
                         mapping={
                             "product_pk": product_pk.pk,
                             "product_id": product["product_id"],
-                            "img_vector": value
+                            "img_vector": np.array(product["img_vector"], dtype=np.float32).tobytes(),
+                            "text_vector": np.array(product["text_vector"], dtype=np.float32).tobytes()
                             })
 
 

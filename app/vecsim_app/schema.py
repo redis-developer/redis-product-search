@@ -18,7 +18,6 @@ class ProductMetadata(EmbeddedJsonModel):
 class Product(JsonModel):
     product_id: int = Field(index=True)
     product_metadata: ProductMetadata
-    image_url: FileUrl
 
 class SimilarityRequest(BaseModel):
     product_id: int
