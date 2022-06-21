@@ -4,7 +4,8 @@
 This demo showcases the vector search similarity (VSS) capability within Redis Stack.
 
 
-https://user-images.githubusercontent.com/13009163/174868872-81de3f6f-fea6-405d-954c-a8c15c6c41f8.mov
+https://user-images.githubusercontent.com/13009163/174869063-09210162-25be-4d79-bc43-9be8439121d5.mov
+
 
 
 The following Redis capabilities are available in this demo:
@@ -24,18 +25,26 @@ The dataset was taken from the the following Kaggle links.
 
 ## Stack
 
-This demo was built as a Single Page Application (SPA) with the following components
+This app was built as a Single Page Application (SPA) with the following components
 
-#### Backend
- - FastAPI
- - Redis OM
- - RedisPy
- - Pydantic
+### Backend
+ - [FastAPI](https://fastapi.tiangolo.com/)
+ - [Redis OM](https://redis.io/docs/stack/get-started/tutorials/stack-python/)
+ - [Pydantic](https://pydantic-docs.helpmanual.io/)
 
-#### Database
- - Redis Stack: Redis with RedisJSON and RedisSearch Modules (amoungst others)
+### Database
+ - [Redis Stack](https://redis.io/docs/stack/): Redis with RedisJSON and RedisSearch Modules (amoungst others)
 
-#### Front End
+### Front End
+ Built from create react app
  - Typescript + React
  - React-bootstrap
+
+ 
+### ML tooling
+ - [Pytorch/Img2Vec](https://github.com/christiansafka/img2vec)
+ - [Huggingface Sentence Transformers](https://huggingface.co/sentence-transformers)
+ - PyData stack
+
+
 
