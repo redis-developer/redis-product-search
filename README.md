@@ -1,12 +1,14 @@
 
-## Redis Vector Search Demo
+## Redis Vector Search
 
-This demo showcases the vector search similarity (VSS) capability within Redis enterprise.
+This demo showcases the vector search similarity (VSS) capability within Redis Stack.
 
-The following capabilities are available in this demo:
- - Visual Vector search
- - Full text search for Product names.
-
+The following Redis capabilities are available in this demo:
+ - Vector Similarity Search with RedisSearch
+    - Visual embedding search with Pytorch and img2vec
+    - Semantic embedding search with Huggingface and RoBerta
+ - Full text search
+ - Document based storage with RedisJSON
 
 ### Datasets
 
@@ -26,8 +28,10 @@ This demo was built as a Single Page Application (SPA) with the following compon
  - RedisPy
  - Pydantic
 
+#### Database
+ - Redis Stack: Redis with RedisJSON and RedisSearch Modules (amoungst others)
+
 #### Front End
  - Typescript + React
  - React-bootstrap
- - more to come
 
