@@ -3,6 +3,10 @@
 
 This demo showcases the vector search similarity (VSS) capability within Redis Stack.
 
+
+https://user-images.githubusercontent.com/13009163/174868872-81de3f6f-fea6-405d-954c-a8c15c6c41f8.mov
+
+
 The following Redis capabilities are available in this demo:
  - Vector Similarity Search with RedisSearch
     - Visual embedding search with Pytorch and img2vec
