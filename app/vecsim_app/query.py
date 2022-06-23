@@ -36,7 +36,7 @@ def create_flat_index(redis_conn: Redis,
 
 
 def create_query(search_type: str="KNN",
-                 number_of_results: int=5,
+                 number_of_results: int=20,
                  vector_field_name: str="img_vector"):
     base_query = f'*=>[{search_type} {number_of_results} @{vector_field_name} $vec_param AS vector_score]'
     q = Query(base_query)

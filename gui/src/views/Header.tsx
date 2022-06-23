@@ -55,10 +55,10 @@ export const Header = (props: Props) => {
           >
             <Nav.Link href="#action1">Home</Nav.Link>
             <NavDropdown title="About" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3">Code</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">Blog</NavDropdown.Item>
+              <NavDropdown.Item href="https://github.com/Spartee/redis-vector-search">Code</NavDropdown.Item>
+              <NavDropdown.Item href="http://launchpad.redis.com/">Blog</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5">
+              <NavDropdown.Item href="https://redis.io/docs/stack/search/reference/vectors/">
                 Redis Vector Search
               </NavDropdown.Item>
             </NavDropdown>

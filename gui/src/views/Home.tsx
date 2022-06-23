@@ -16,7 +16,7 @@ interface Props {
 export const Home = (props: Props) => {
   const [error, setError] = useState<string>('');
   const [skip, setSkip] = useState(0);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(20);
 
   const queryProducts = async () => {
     try {
@@ -69,7 +69,7 @@ export const Home = (props: Props) => {
                   image_path={`${BASE_URL}/data/images/${product.product_id}.jpg`}
                   name={product.product_metadata.name}
                   productId={product.product_id}
-                  numProducts={10}
+                  numProducts={20}
                   setState={props.setProducts}
                   />
 

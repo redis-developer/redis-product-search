@@ -29,7 +29,7 @@ COPY ./app/ .
 RUN pip install -e .
 
 # add static react files to fastapi image
-COPY --from=ReactImage /app/gui/build ./app/backend/vecsim_app/templates/build
+COPY --from=ReactImage /app/gui/build /app/backend/vecsim_app/templates/build
 
 WORKDIR /app/backend/vecsim_app
 

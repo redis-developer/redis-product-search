@@ -1,5 +1,5 @@
 import typing as t
-from pydantic import FileUrl, BaseModel
+from pydantic import BaseModel
 from aredis_om import JsonModel, EmbeddedJsonModel, Field
 
 
@@ -21,9 +21,9 @@ class Product(JsonModel):
 
 class SimilarityRequest(BaseModel):
     product_id: int
-    number_of_results: int = 10
+    number_of_results: int = 20
     search_type: str = "KNN"
 
 class SearchRequest(BaseModel):
     text: str
-    number_of_results: int = 10
+    number_of_results: int = 20
