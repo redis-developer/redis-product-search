@@ -7,7 +7,9 @@ import numpy as np
 from redis import Redis
 
 from vecsim_app.query import create_flat_index
-from vecsim_app.schema import Product
+from vecsim_app.models import Product
+from vecsim_app.schema import UserCreate
+from vecsim_app.crud import create_user
 from vecsim_app import config
 
 def read_product_json() -> t.List:
@@ -34,7 +36,26 @@ async def gather_with_concurrency(n,  *products):
     await asyncio.gather(*[load_product(p) for p in products])
     return with_pk
 
+
+def set_user_count(redis_conn):
+    redis_conn.set("user_count", 0)
+
+async def set_superuser_account():
+    user_dict = {
+        "email": config.SUPERUSER_EMAIL,
+        "password": config.SUPERUSER_PASS,
+        "is_active": True,
+        "is_superuser": True,
+        "first_name": config.SUPERUSER_FIRST,
+        "last_name": config.SUPERUSER_LAST,
+        "title": "Principal Engineer",
+        "company": "Redis"
+    }
+    superuser = UserCreate(**user_dict)
+    await create_user(superuser)
+
 def set_product_vectors(product_vectors, redis_conn, products_with_pk):
+    # TODO use redis-om HasHModel for product vectors
     # sort products with pk by value of product_id
     products_with_pk.sort(key=lambda x: x.product_id)
     product_vectors.sort(key=lambda x: x["product_id"])
@@ -45,6 +66,12 @@ def set_product_vectors(product_vectors, redis_conn, products_with_pk):
                         mapping={
                             "product_pk": product_pk.pk,
                             "product_id": product["product_id"],
+
+                            # Add tag fields to vectors for hybrid search
+                            "gender": product_pk.product_metadata.gender,
+                            "category": product_pk.product_metadata.master_category,
+
+                            # add image and text vectors as blobs
                             "img_vector": np.array(product["img_vector"], dtype=np.float32).tobytes(),
                             "text_vector": np.array(product["text_vector"], dtype=np.float32).tobytes()
                             })
@@ -69,6 +96,13 @@ async def load_all_data():
     create_flat_index(redis_conn, len(products))
     print("Search index created")
 
+    # set the number of users to get around problems
+    # with react admin and redis-om
+    set_user_count(redis_conn)
+
+    print("Creating Superuser")
+    await set_superuser_account()
+    print("Created superuser")
 
 if __name__ == "__main__":
     asyncio.run(load_all_data())

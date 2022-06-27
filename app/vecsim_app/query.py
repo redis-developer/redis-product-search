@@ -1,5 +1,6 @@
+import typing as t
 from redis import Redis
-from redis.commands.search.field import VectorField
+from redis.commands.search.field import VectorField, TagField
 from redis.commands.search.query import Query
 
 
@@ -22,10 +23,14 @@ def create_flat_index(redis_conn: Redis,
                         "INITIAL_CAP": number_of_vectors,
                         "BLOCK_SIZE":number_of_vectors
                     })
+        category_field = TagField("category")
+        gender_field = TagField("gender")
         flat_index = redis_conn.ft().create_index([image_field,
-                                                   text_field])
+                                                   text_field,
+                                                   category_field,
+                                                   gender_field])
 
-
+# TODO HSNW index
 #def create_hnsw_index (redis_conn,vector_field_name,number_of_vectors, vector_dimensions=512, distance_metric='L2',M=40,EF=200):
 #redis_conn.ft().create_index([
 #    VectorField(vector_field_name, "HNSW", {"TYPE": "FLOAT32", "DIM": vector_dimensions, "DISTANCE_METRIC": distance_metric, "INITIAL_CAP": number_of_vectors, "M": M, "EF_CONSTRUCTION": EF}),
@@ -37,8 +42,20 @@ def create_flat_index(redis_conn: Redis,
 
 def create_query(search_type: str="KNN",
                  number_of_results: int=20,
-                 vector_field_name: str="img_vector"):
-    base_query = f'*=>[{search_type} {number_of_results} @{vector_field_name} $vec_param AS vector_score]'
+                 vector_field_name: str="img_vector",
+                 gender: t.Optional[str] = None,
+                 category: t.Optional[str] = None):
+    tag = "("
+    if gender:
+        tag += f"@gender:{{{gender}}}"
+    if category:
+        tag += f"@category:{{{category}}}"
+    tag += ")"
+    # if no tags are selected
+    if len(tag) < 3:
+        tag = "*"
+
+    base_query = f'{tag}=>[{search_type} {number_of_results} @{vector_field_name} $vec_param AS vector_score]'
     q = Query(base_query)
     q.sort_by("vector_score")
     q.paging(0, number_of_results)
