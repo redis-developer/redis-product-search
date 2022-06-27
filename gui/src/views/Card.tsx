@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { getVisuallySimilarProducts, getSemanticallySimilarProducts } from "../api"
+import  useCheckMobileScreen  from "../mobile"
+
 
 
 interface Props {
@@ -8,17 +10,23 @@ interface Props {
     numProducts: number;
     image_path: string;
     name: string;
+    gender: string;
+    category: string;
     setState: (state: any) => void;
 }
 
 
 export const Card = (props: Props) => {
 
+    const isMobile = useCheckMobileScreen();
+
     const queryVisuallySimilarProducts = async () => {
         try {
           const productJson = await getVisuallySimilarProducts(
               props.productId,
               "KNN",
+              props.gender,
+              props.category,
               props.numProducts);
           props.setState(productJson)
         } catch (err) {
@@ -31,6 +39,8 @@ export const Card = (props: Props) => {
           const productJson = await getSemanticallySimilarProducts(
               props.productId,
               "KNN",
+              props.gender,
+              props.category,
               props.numProducts);
           props.setState(productJson)
         } catch (err) {
@@ -39,9 +49,18 @@ export const Card = (props: Props) => {
       };
 
 
+    const getCardSize = () => {
+      if (isMobile) {
+        return '50%';
+      }
+      else {
+        return '20%';
+      }
+    }
+
     return (
-     <div className="col-md-2" style={{width: '20%'}}>
-      <div className="card mb-2 box-shadow">
+     <div className="col-md-2" style={{width: getCardSize()}}>
+      <div className="card mb-2 box-shadow" style={{alignContent : 'center'}}>
        <img
         className="card-img-top"
         style={{height: '50%', width: '50%', alignSelf: 'center'}}
@@ -52,8 +71,10 @@ export const Card = (props: Props) => {
         <p className="card-text">
             {props.name}
         </p>
+        <div style={{alignContent: "left"}}>
+          <b>View Similar:</b>
+        </div>
         <div className="d-flex justify-content-between align-items-center">
-            <p>View Similar:</p>
          <div className="btn-group">
           <button
            type="button"

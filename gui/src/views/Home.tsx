@@ -1,8 +1,11 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 //import { makeStyles } from '@material-ui/core/styles';
 import { getProducts } from '../api';
+import { isAuthenticated } from '../auth';
+import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../config';
 import { Card } from "./Card"
+import { TagRadios } from '../radio';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -16,7 +19,10 @@ interface Props {
 export const Home = (props: Props) => {
   const [error, setError] = useState<string>('');
   const [skip, setSkip] = useState(0);
-  const [limit, setLimit] = useState(20);
+  const [limit, setLimit] = useState(15);
+  const [gender, setGender] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
+  const Navigate = useNavigate();
 
   const queryProducts = async () => {
     try {
@@ -37,6 +43,7 @@ export const Home = (props: Props) => {
   };
 
 
+
   return (
     <>
       <main role="main">
@@ -48,14 +55,27 @@ export const Home = (props: Props) => {
            show how unstructured data, such as images and text, can be used to create powerful
            search engines.
        </p>
-       <p>
-        <a href="#" className="btn btn-primary m-2" onClick={() => queryProductsWithLimit()}>
+      { isAuthenticated() ? (
+        <p>
+        <a className="btn btn-primary m-2" onClick={() => queryProductsWithLimit()}>
          Load Products
         </a>
-        <a href="#" className="btn btn-secondary m-2" onClick={() => queryProductsWithLimit()}>
+        <a className="btn btn-secondary m-2" onClick={() => queryProductsWithLimit()}>
          More Products
         </a>
        </p>
+      ) : (
+        <p>
+          <a className="btn btn-primary m-2" onClick={() => Navigate("/login")}>
+            Login
+          </a>
+          <a className="btn btn-secondary m-2" onClick={() => Navigate("/signup")}>
+            Sign Up
+          </a>
+        </p>
+      )}
+      <TagRadios gender={gender} category={category} setGender={setGender} setCategory={setCategory} />
+
       </div>
      </section>
 
@@ -65,16 +85,19 @@ export const Home = (props: Props) => {
             <div className="row">
 
               {props.products.map((product) => (
-                  <Card
+                <Card
+                  key={product.pk}
                   image_path={`${BASE_URL}/data/images/${product.product_id}.jpg`}
                   name={product.product_metadata.name}
                   productId={product.product_id}
-                  numProducts={20}
+                  numProducts={15}
+                  gender={gender}
+                  category={category}
                   setState={props.setProducts}
                   />
 
                 ))}
-              </div>
+            </div>
             )}
           </div>
       </div>
@@ -82,28 +105,3 @@ export const Home = (props: Props) => {
         </>
   );
 };
-
-
-
-// <h1>Products</h1>
-// {!error && (
-//   <a className={classes.link} href="#" onClick={() => queryProducts()}>
-//     Load New Products
-//   </a>
-// )}
-//   <div className={classes.gallery}>
-//   {products && (
-//     <ul>
-//       {products.map((product) => (
-//           //<p key={product.product_pk}>{product.product_metadata.name}</p>
-//           <img className={classes.image} src={`${BASE_URL}/static/images/${product.product_id}.jpg`} alt={product.product_metadata.name}/>
-//         ))}
-//     </ul>
-//     )}
-//   </div>
-// {error && (
-//   <p>
-//     Error: <code>{error}</code>
-//   </p>
-// )}
-//   </>

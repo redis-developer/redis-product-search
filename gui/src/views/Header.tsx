@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Navbar, Container, NavDropdown, Nav, Form, FormControl, Button } from 'react-bootstrap';
 import { getProductsByText } from "../api"
-import { BASE_URL } from "../config"
+import { isAuthenticated, logout } from '../auth';
+import { BASE_URL } from "../config";
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   products: any[];
@@ -12,6 +14,7 @@ interface Props {
 /* eslint-disable jsx-a11y/anchor-is-valid */
 export const Header = (props: Props) => {
   const [searchText, setText] = useState("");
+  const Navigate = useNavigate();
 
    // This function is called when the input changes
    const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,12 +31,15 @@ export const Header = (props: Props) => {
     }
   };
 
+  const logoutUser = async () => {
+      logout();
+      Navigate("/login");
+  }
 
   return (
    <header>
     <Navbar expand="lg" bg="dark" variant="dark" style={{ padding: '25px'}} >
       <Container fluid>
-
         <Navbar.Brand style={{marginRight: "-30rem"}} href="#">
             <img
               src={BASE_URL + `/data/redis-logo.png`}
@@ -53,7 +59,6 @@ export const Header = (props: Props) => {
             style={{ maxHeight: '100px'}}
             navbarScroll
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
             <NavDropdown title="About" id="navbarScrollingDropdown">
               <NavDropdown.Item href="https://github.com/Spartee/redis-vector-search">Code</NavDropdown.Item>
               <NavDropdown.Item href="http://launchpad.redis.com/">Blog</NavDropdown.Item>
@@ -63,6 +68,21 @@ export const Header = (props: Props) => {
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
+          {/* Add a button to logout when user is authenticated */}
+          { isAuthenticated() ? (
+            <Nav.Link onClick={() => logoutUser() }>
+              Logout
+            </Nav.Link>
+          ) : (
+            <Nav>
+            <Nav.Link  onClick={() => Navigate("/login")}>
+              Login
+            </Nav.Link>
+            <Nav.Link  onClick={() => Navigate("/signup")}>
+            Signup
+          </Nav.Link>
+          </Nav>
+          )}
           <Form className="d-flex">
 
             <FormControl
