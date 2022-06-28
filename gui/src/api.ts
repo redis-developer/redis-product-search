@@ -1,4 +1,4 @@
-import { MASTER_URL } from './config';
+import { MASTER_URL, BASE_URL } from './config';
 import { logout } from './auth';
 
 export const fetchFromBackend = async (url: string, method: string, body?: any) => {
@@ -7,7 +7,7 @@ export const fetchFromBackend = async (url: string, method: string, body?: any) 
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem("token")}`
+      'Authorization': `Bearer ${localStorage.getItem("token")}`,
     },
   });
 

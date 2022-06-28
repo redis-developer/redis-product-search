@@ -30,8 +30,9 @@ export const login = async (email: string, password: string) => {
 
   const request = new Request(BASE_URL + '/api/token', {
     method: 'POST',
-    body: formData,
-  });
+    body: formData
+  }
+  );
 
   const response = await fetch(request);
 

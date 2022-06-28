@@ -80,7 +80,7 @@ def set_product_vectors(product_vectors, redis_conn, products_with_pk):
 async def load_all_data():
     print("Loading products into Vecsim App")
     products = read_product_json()
-    products_with_pk = await gather_with_concurrency(1000, *products)
+    products_with_pk = await gather_with_concurrency(100, *products)
     print("Products loaded!")
 
     # TODO use redis-om connection

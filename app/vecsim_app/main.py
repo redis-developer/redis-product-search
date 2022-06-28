@@ -4,7 +4,7 @@ from aredis_om import get_redis_connection, Migrator
 
 from fastapi import FastAPI, Depends
 from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.cors import CORSMiddleware
 
 from vecsim_app import config
 from vecsim_app.models import Product
@@ -15,8 +15,6 @@ from vecsim_app.auth import (
     get_current_active_superuser
 )
 
-from fastapi.openapi.docs import get_swagger_ui_html
-from fastapi.openapi.utils import get_openapi
 
 app = FastAPI(
     title=config.PROJECT_NAME,
@@ -24,18 +22,9 @@ app = FastAPI(
     openapi_url=config.OPENAPI_DOCS
 )
 
-origins = [
-    "http://localhost:3000",
-    "http://localhost:8888",
-    "http://localhost:8080",
-    "https://localhost:3000",
-    "https://localhost:8888",
-]
-
-# dev only
 app.add_middleware(
         CORSMiddleware,
-        allow_origins=origins,
+        allow_origins="*",
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"]
@@ -71,13 +60,20 @@ async def startup():
 app.mount("/data", StaticFiles(directory="data"), name="data")
 
 ## mount the built GUI react files into the static dir to be served.
-#current_file = Path(__file__)
-#project_root = current_file.parent.resolve()
-#gui_build_dir = project_root / "templates" / "build"
-#app.mount(
-#    path="/", app=SinglePageApplication(directory=gui_build_dir), name="SPA"
-#)
+current_file = Path(__file__)
+project_root = current_file.parent.resolve()
+gui_build_dir = project_root / "templates" / "build"
+app.mount(
+    path="/", app=SinglePageApplication(directory=gui_build_dir), name="SPA"
+)
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", reload=True, port=8888)
+    uvicorn.run("main:app",
+                host="0.0.0.0",
+                reload=True,
+                port=8888,
+                ssl_keyfile=project_root / "key.pem",
+                ssl_certfile=project_root / "full.pem",
+                workers=3
+                )
