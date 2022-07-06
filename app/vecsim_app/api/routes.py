@@ -3,10 +3,11 @@ import typing as t
 from redis.asyncio import Redis
 from fastapi import APIRouter, Depends
 
-from vecsim_app.schema import SimilarityRequest, SearchRequest
+from vecsim_app.schema import SimilarityRequest, SearchRequest, UserTextSimilarityRequest
 from vecsim_app.models import Product
 from vecsim_app.query import create_query
 from vecsim_app import config
+from vecsim_app import TEXT_MODEL
 
 product_router = r = APIRouter()
 
@@ -86,6 +87,28 @@ async def find_products_by_text(similarity_request: SimilarityRequest) -> t.List
 
     # obtain results of the query
     results = await redis_client.ft().search(q, query_params={"vec_param": vector})
+
+    # Get Product records of those results
+    similar_product_pks = [p.product_pk for p in results.docs]
+    similar_products = [await Product.get(pk) for pk in similar_product_pks]
+    return similar_products
+
+
+@r.post("/vectorsearch/text/user",
+       response_model=t.List[Product],
+       name="product:find_similar_by_user_text",
+       operation_id="compute_user_text_similarity")
+async def find_products_by_user_text(similarity_request: UserTextSimilarityRequest) -> t.List[Product]:
+    q = create_query(similarity_request.search_type,
+                    similarity_request.number_of_results,
+                    vector_field_name="text_vector")
+
+    redis_client = await Redis(host=config.REDIS_HOST, port=config.REDIS_PORT, db=0)
+
+    # obtain vector from text model in top level  __init__.py
+    vector = TEXT_MODEL.encode(similarity_request.user_text)
+    # obtain results of the query
+    results = await redis_client.ft().search(q, query_params={"vec_param": vector.tobytes()})
 
     # Get Product records of those results
     similar_product_pks = [p.product_pk for p in results.docs]

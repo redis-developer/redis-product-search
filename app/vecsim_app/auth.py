@@ -7,6 +7,7 @@ from vecsim_app.models import User
 from vecsim_app.schema import UserCreate
 from vecsim_app.schema.user import TokenData
 from vecsim_app import crud
+from vecsim_app.config import SECRET_KEY
 
 async def get_current_user(token: str = Depends(security.oauth2_scheme)):
     credentials_exception = HTTPException(
@@ -16,7 +17,7 @@ async def get_current_user(token: str = Depends(security.oauth2_scheme)):
     )
     try:
         payload = jwt.decode(
-            token, security.SECRET_KEY, algorithms=[security.ALGORITHM]
+            token, SECRET_KEY, algorithms=[security.ALGORITHM]
         )
         email: str = payload.get("sub")
         if email is None:

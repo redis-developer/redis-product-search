@@ -25,19 +25,35 @@ def create_flat_index(redis_conn: Redis,
                     })
         category_field = TagField("category")
         gender_field = TagField("gender")
-        flat_index = redis_conn.ft().create_index([image_field,
-                                                   text_field,
-                                                   category_field,
-                                                   gender_field])
+        redis_conn.ft().create_index([image_field,
+                                      text_field,
+                                      category_field,
+                                      gender_field])
 
-# TODO HSNW index
-#def create_hnsw_index (redis_conn,vector_field_name,number_of_vectors, vector_dimensions=512, distance_metric='L2',M=40,EF=200):
-#redis_conn.ft().create_index([
-#    VectorField(vector_field_name, "HNSW", {"TYPE": "FLOAT32", "DIM": vector_dimensions, "DISTANCE_METRIC": distance_metric, "INITIAL_CAP": number_of_vectors, "M": M, "EF_CONSTRUCTION": EF}),
-#    TagField("product_type"),
-#    TextField("item_name"),
-#    TagField("country")
-#])
+
+def create_hnsw_index(redis_conn: Redis,
+                      number_of_vectors: int,
+                      distance_metric: str='COSINE'):
+        image_field = VectorField("img_vector",
+                    "HNSW", {
+                        "TYPE": "FLOAT32",
+                        "DIM": 512,
+                        "DISTANCE_METRIC": distance_metric,
+                        "INITIAL_CAP": number_of_vectors,
+                    })
+        text_field = VectorField("text_vector",
+                    "HNSW", {
+                        "TYPE": "FLOAT32",
+                        "DIM": 768,
+                        "DISTANCE_METRIC": distance_metric,
+                        "INITIAL_CAP": number_of_vectors,
+                    })
+        category_field = TagField("category")
+        gender_field = TagField("gender")
+        redis_conn.ft().create_index([image_field,
+                                      text_field,
+                                      category_field,
+                                      gender_field])
 
 
 def create_query(search_type: str="KNN",

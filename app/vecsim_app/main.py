@@ -69,11 +69,19 @@ app.mount(
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app",
-                host="0.0.0.0",
-                reload=True,
-                port=8888,
-                ssl_keyfile=project_root / "key.pem",
-                ssl_certfile=project_root / "full.pem",
-                workers=3
-                )
+    import os
+    env = os.environ.get("DEPLOYMENT", "prod")
+
+    server_attr = {
+        "host": "0.0.0.0",
+        "reload": True,
+        "port": 8888,
+        "workers": 1
+    }
+    if env == "prod":
+        server_attr.update({"reload": False,
+                            "workers": 3,
+                            "ssl_keyfile": "certs/key.pem", # replaced
+                            "ssl_certfile": "certs/cert.pem"})
+
+    uvicorn.run("main:app", **server_attr)

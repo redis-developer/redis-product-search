@@ -522,3 +522,10 @@
 13:M 06 Jul 2022 02:53:01.442 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 22140576B, available memory: 12482018256B
 13:M 06 Jul 2022 02:53:01.444 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 32380576B, available memory: 12482018256B
 13:M 06 Jul 2022 02:53:01.447 * <search> Scanning index idx in background
+13:M 06 Jul 2022 02:53:10.605 * <search> Scanning indexes in background: done (scanned=19999)
+13:M 06 Jul 2022 02:53:10.606 * <search> Scanning index :vecsim_app.models.Product:index in background
+13:M 06 Jul 2022 02:53:11.090 * <search> Scanning indexes in background: done (scanned=20001)
+13:M 06 Jul 2022 02:53:11.092 * <search> Scanning index :vecsim_app.models.User:index in background
+13:M 06 Jul 2022 02:53:11.119 * <search> Scanning indexes in background: done (scanned=20002)
+13:M 06 Jul 2022 02:53:11.135 * <search> Scanning index :pydantic.main.Product:index in background
+13:M 06 Jul 2022 02:53:11.162 * <search> Scanning indexes in background: done (scanned=20003)

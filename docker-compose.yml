@@ -1,31 +1,31 @@
 version: '3.7'
 services:
 
-  redis:
-    image: redis/redis-stack:latest
-    environment:
-      REDIS_ARGS: --protected-mode no --maxclients 70000 --loglevel notice
+  redis-vector-db:
+    build:
+      context: ./redis-vector-db
+      dockerfile: Dockerfile
+    volumes:
+      - ./redis-data:/data/
     ports:
       - 6379:6379
       - 8001:8001
-
   backend:
     build:
       context: .
       dockerfile: Dockerfile
-    tty: true
-    stdin_open: true
-    volumes:
-      - ./.docker/.ipython:/root/.ipython:cached
     environment:
-      REDIS_DATA_URL: 'redis://redis:6379'
-      REDIS_OM_URL: 'redis://redis:6379'
-      REDIS_HOST: 'redis'
+      DEPLOYMENT: "dev"
+      REDIS_DATA_URL: 'redis://redis-vector-db:6379'
+      REDIS_OM_URL: 'redis://redis-vector-db:6379'
+      REDIS_HOST: 'redis-vector-db'
       REDIS_PORT: 6379
     expose:
       - "8888"
     ports:
       - "8888:8888"
     depends_on:
-      - "redis"
+      - "redis-vector-db"
 
+volumes:
+  redis-vector-db:

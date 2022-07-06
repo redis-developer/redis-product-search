@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Navbar, Container, NavDropdown, Nav, Form, FormControl, Button } from 'react-bootstrap';
-import { getProductsByText } from "../api"
+import { getProductsByText, getSemanticallySimilarProductsbyText } from "../api"
 import { isAuthenticated, logout } from '../auth';
 import { BASE_URL } from "../config";
 import { useNavigate } from 'react-router-dom';
@@ -25,6 +25,15 @@ export const Header = (props: Props) => {
   const queryProductsByText = async () => {
     try {
       const productJson = await getProductsByText(searchText);
+      props.setProducts(productJson);
+    } catch (err) {
+      console.log(String(err));
+    }
+  };
+
+  const queryProductsByUserText = async () => {
+    try {
+      const productJson = await getSemanticallySimilarProductsbyText(searchText);
       props.setProducts(productJson);
     } catch (err) {
       console.log(String(err));
@@ -56,7 +65,7 @@ export const Header = (props: Props) => {
         <Navbar.Collapse id="navbarScroll" style={{top: "5px"}}>
           <Nav
             className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: '100px'}}
+            style={{ maxHeight: '175px'}}
             navbarScroll
           >
             <NavDropdown title="About" id="navbarScrollingDropdown">
@@ -70,9 +79,11 @@ export const Header = (props: Props) => {
           </Nav>
           {/* Add a button to logout when user is authenticated */}
           { isAuthenticated() ? (
-            <Nav.Link onClick={() => logoutUser() }>
-              Logout
-            </Nav.Link>
+            <Nav>
+              <Nav.Link onClick={() => logoutUser() }>
+                Logout
+              </Nav.Link>
+            </Nav>
           ) : (
             <Nav>
             <Nav.Link  onClick={() => Navigate("/login")}>
@@ -84,7 +95,6 @@ export const Header = (props: Props) => {
           </Nav>
           )}
           <Form className="d-flex">
-
             <FormControl
               onChange={inputHandler}
               type="search"
@@ -93,7 +103,8 @@ export const Header = (props: Props) => {
               aria-label="Search"
             />
             <Button onClick={() => queryProductsByText()} variant="outline-success">Search</Button>
-          </Form>
+{/*             <Button onClick={() => queryProductsByUserText()} variant="outline-success">Vector Search</Button>
+ */}          </Form>
         </Navbar.Collapse>
       </Container>
     </Navbar>

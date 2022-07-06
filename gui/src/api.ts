@@ -86,3 +86,18 @@ export const getSemanticallySimilarProducts = async (id: number,
   const url = MASTER_URL + "vectorsearch/text";
   return fetchFromBackend(url, 'POST', body);
 };
+
+
+export const getSemanticallySimilarProductsbyText = async (text: string,
+                                                    search='KNN',
+                                                    limit=15,
+                                                    skip=0) => {
+  let body = {
+  user_text: text,
+  search_type: search,
+  number_of_results: limit
+  }
+
+  const url = MASTER_URL + "vectorsearch/text/user";
+  return fetchFromBackend(url, 'POST', body);
+};

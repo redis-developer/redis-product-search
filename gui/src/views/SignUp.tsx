@@ -215,6 +215,9 @@ export const SignUp: FC = () => {
             </Grid>
           )}
         </Grid>
+        <span>
+           By clicking Sign Up, you agree to our <a href="https://redis.com/legal/privacy-policy/" > Terms, Data Policy and Privacy Policy. </a>
+        </span>
         <Grid container justifyContent="center" className={classes.marginTop}>
           <Button
             variant="outlined"

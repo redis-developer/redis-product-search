@@ -9,5 +9,6 @@ from .user import (
 
 from .search import (
     SearchRequest,
-    SimilarityRequest
+    SimilarityRequest,
+    UserTextSimilarityRequest
 )

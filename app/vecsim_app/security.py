@@ -3,12 +3,12 @@ import os
 import jwt
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
+from vecsim_app.config import SECRET_KEY
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/token")
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-SECRET_KEY = os.environ.get("SECRET", "supersecretkey") # don't use this in production
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 

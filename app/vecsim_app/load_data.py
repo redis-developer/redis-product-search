@@ -6,7 +6,7 @@ import numpy as np
 
 from redis import Redis
 
-from vecsim_app.query import create_flat_index
+from vecsim_app.query import create_flat_index, create_hnsw_index
 from vecsim_app.models import Product
 from vecsim_app.schema import UserCreate
 from vecsim_app.crud import create_user
@@ -78,31 +78,37 @@ def set_product_vectors(product_vectors, redis_conn, products_with_pk):
 
 
 async def load_all_data():
-    print("Loading products into Vecsim App")
-    products = read_product_json()
-    products_with_pk = await gather_with_concurrency(100, *products)
-    print("Products loaded!")
-
     # TODO use redis-om connection
     redis_conn = Redis(host=config.REDIS_HOST, port=config.REDIS_PORT, db=0)
+    keys = redis_conn.keys()
+    if len(keys) > 10000:
+        print("Products already loaded")
+    else:
+        print("Loading products into Vecsim App")
+        products = read_product_json()
+        products_with_pk = await gather_with_concurrency(100, *products)
+        print("Products loaded!")
 
-    print("loading product vectors")
-    vectors = read_product_json_vectors()
-    set_product_vectors(vectors, redis_conn, products_with_pk)
-    print("product vectors loaded!")
 
-    print("Creating vector search index")
-    # create a search index
-    create_flat_index(redis_conn, len(products))
-    print("Search index created")
+        print("loading product vectors")
+        vectors = read_product_json_vectors()
+        set_product_vectors(vectors, redis_conn, products_with_pk)
+        print("product vectors loaded!")
 
-    # set the number of users to get around problems
-    # with react admin and redis-om
-    set_user_count(redis_conn)
+        print("Creating vector search index")
+        # create a search index
+        if config.INDEX_TYPE == "HNSW":
+            create_hnsw_index(redis_conn, len(products), distance_metric="COSINE")
+        else:
+            create_flat_index(redis_conn, len(products), distance_metric="L2")
+        print("Search index created")
 
-    print("Creating Superuser")
-    await set_superuser_account()
-    print("Created superuser")
+    if not redis_conn.exists("user_count"):
+        set_user_count(redis_conn)
+
+        print("Creating Superuser")
+        await set_superuser_account()
+        print("Created superuser")
 
 if __name__ == "__main__":
     asyncio.run(load_all_data())
