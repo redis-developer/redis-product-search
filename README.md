@@ -1,6 +1,6 @@
 
 <div align="center">
-    <a href="https://github.com/spartee/redis-vector-search"><img src="https://github.com/Spartee/redis-vector-search/blob/master/app/vecsim_app/data/redis-logo.png?raw=true" width="60%"><img></a>
+    <a href="https://github.com/spartee/redis-vector-search"><img src="https://github.com/Spartee/redis-vector-search/blob/master/app/vecsim_app/data/redis-logo.png?raw=true" width="30%"><img></a>
     <br />
     <br />
 <div display="inline-block">
@@ -12,30 +12,26 @@
     <br />
 </div>
 
-## Redis Vector Search
+# Redis Vector Search Demo Application
 
 This demo showcases the vector search similarity (VSS) capability within Redis Stack and Redis Enterprise.
 Through the RediSearch module, vector types and indexes can be added to Redis. This turns Redis into
 a highly performant vector database which can be used for all types of applications.
 
 The following Redis Stack capabilities are available in this demo:
-   - Vector Similarity Search (RedisSearch)
+   - **Vector Similarity Search** 
      - by image
      - by text
-   - Multiple vector indexing types
+   - **Multiple vector indexing types**
      - HNSW
      - Flat (brute-force)
-   - Hybrid Queries
+   - **Hybrid Queries**
      - Apply tags as pre-filter for vector search
-   - Full text search (RedisSearch)
-   - JSON based storage (RedisJSON)
+   - **Full text search** 
+   - **JSON storage** 
 
-### Try it out
 
-The demo is hosted [here](https://redisvss.partee.io). If you would like to run this on your own
-system, please see the sections below.
-
-### Application
+## Application
 
 This app was built as a Single Page Application (SPA) with the following components:
 
