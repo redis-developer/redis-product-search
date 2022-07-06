@@ -1,0 +1,524 @@
+14:C 05 Jul 2022 21:17:42.275 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+14:C 05 Jul 2022 21:17:42.278 # Redis version=6.2.7, bits=64, commit=00000000, modified=0, pid=14, just started
+14:C 05 Jul 2022 21:17:42.280 # Configuration loaded
+14:M 05 Jul 2022 21:17:42.283 * monotonic clock: POSIX clock_gettime
+14:M 05 Jul 2022 21:17:42.285 # A key '__redis__compare_helper' was added to Lua globals which is not on the globals allow list nor listed on the deny list.
+14:M 05 Jul 2022 21:17:42.287 * Running mode=standalone, port=6379.
+14:M 05 Jul 2022 21:17:42.289 # Server initialized
+14:M 05 Jul 2022 21:17:42.294 * <search> Redis version found by RedisSearch : 6.2.7 - oss
+14:M 05 Jul 2022 21:17:42.295 * <search> RediSearch version 2.4.8 (Git=HEAD-b78fee05)
+14:M 05 Jul 2022 21:17:42.297 * <search> Low level api version 1 initialized successfully
+14:M 05 Jul 2022 21:17:42.298 * <search> concurrent writes: OFF, gc: ON, prefix min length: 2, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  10000, search pool size: 20, index pool size: 8, 
+14:M 05 Jul 2022 21:17:42.300 * <search> Initialized thread pool!
+14:M 05 Jul 2022 21:17:42.302 * <search> Enabled diskless replication
+14:M 05 Jul 2022 21:17:42.303 * Module 'search' loaded from /opt/redis-stack/lib/redisearch.so
+14:M 05 Jul 2022 21:17:42.312 * <graph> Starting up RedisGraph version 2.8.13.
+14:M 05 Jul 2022 21:17:42.314 * <graph> Thread pool created, using 4 threads.
+14:M 05 Jul 2022 21:17:42.316 * <graph> Maximum number of OpenMP threads set to 4
+14:M 05 Jul 2022 21:17:42.317 * Module 'graph' loaded from /opt/redis-stack/lib/redisgraph.so
+14:M 05 Jul 2022 21:17:42.324 * <timeseries> RedisTimeSeries version 10611, git_sha=ac24ed70355e718b4778b3f237e9649cbdfb7a71
+14:M 05 Jul 2022 21:17:42.326 * <timeseries> Redis version found by RedisTimeSeries : 6.2.7 - oss
+14:M 05 Jul 2022 21:17:42.327 * <timeseries> loaded default CHUNK_SIZE_BYTES policy: 4096
+14:M 05 Jul 2022 21:17:42.329 * <timeseries> loaded server DUPLICATE_POLICY: block
+14:M 05 Jul 2022 21:17:42.331 * <timeseries> Setting default series ENCODING to: compressed
+14:M 05 Jul 2022 21:17:42.332 * <timeseries> Detected redis oss
+14:M 05 Jul 2022 21:17:42.334 * <timeseries> Enabled diskless replication
+14:M 05 Jul 2022 21:17:42.335 * Module 'timeseries' loaded from /opt/redis-stack/lib/redistimeseries.so
+14:M 05 Jul 2022 21:17:42.339 * <ReJSON> version: 20009 git sha: d8d4b19 branch: HEAD
+14:M 05 Jul 2022 21:17:42.340 * <ReJSON> Exported RedisJSON_V1 API
+14:M 05 Jul 2022 21:17:42.341 * <ReJSON> Enabled diskless replication
+14:M 05 Jul 2022 21:17:42.343 * <ReJSON> Created new data type 'ReJSON-RL'
+14:M 05 Jul 2022 21:17:42.344 * Module 'ReJSON' loaded from /opt/redis-stack/lib/rejson.so
+14:M 05 Jul 2022 21:17:42.346 * <search> Acquired RedisJSON_V1 API
+14:M 05 Jul 2022 21:17:42.347 * <graph> Acquired RedisJSON_V1 API
+14:M 05 Jul 2022 21:17:42.350 * Module 'bf' loaded from /opt/redis-stack/lib/redisbloom.so
+14:M 05 Jul 2022 21:17:42.351 * Ready to accept connections
+14:M 05 Jul 2022 21:17:57.637 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 20640336B, available memory: 12482018144B
+14:M 05 Jul 2022 21:17:57.639 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 30880336B, available memory: 12482018144B
+14:M 05 Jul 2022 21:17:57.646 * <search> Scanning index idx in background
+14:M 05 Jul 2022 21:17:57.825 * <search> Scanning indexes in background: done (scanned=19999)
+14:M 05 Jul 2022 21:18:00.056 * <search> Scanning index :vecsim_app.models.Product:index in background
+14:M 05 Jul 2022 21:18:00.507 * <search> Scanning indexes in background: done (scanned=20001)
+14:M 05 Jul 2022 21:18:00.508 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 05 Jul 2022 21:18:00.533 * <search> Scanning indexes in background: done (scanned=20002)
+14:M 05 Jul 2022 21:18:00.535 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 05 Jul 2022 21:18:00.558 * <search> Scanning indexes in background: done (scanned=20003)
+14:M 05 Jul 2022 21:19:43.053 * 1 changes in 120 seconds. Saving...
+14:M 05 Jul 2022 21:19:43.058 * Background saving started by pid 33
+33:C 05 Jul 2022 21:19:43.779 * DB saved on disk
+33:C 05 Jul 2022 21:19:43.785 * RDB: 0 MB of memory used by copy-on-write
+14:M 05 Jul 2022 21:19:43.864 * Background saving terminated with success
+14:C 05 Jul 2022 21:34:05.088 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+14:C 05 Jul 2022 21:34:05.095 # Redis version=6.2.7, bits=64, commit=00000000, modified=0, pid=14, just started
+14:C 05 Jul 2022 21:34:05.102 # Configuration loaded
+14:M 05 Jul 2022 21:34:05.112 * monotonic clock: POSIX clock_gettime
+14:M 05 Jul 2022 21:34:05.122 # A key '__redis__compare_helper' was added to Lua globals which is not on the globals allow list nor listed on the deny list.
+14:M 05 Jul 2022 21:34:05.132 * Running mode=standalone, port=6379.
+14:M 05 Jul 2022 21:34:05.141 # Server initialized
+14:M 05 Jul 2022 21:34:05.159 * <search> Redis version found by RedisSearch : 6.2.7 - oss
+14:M 05 Jul 2022 21:34:05.163 * <search> RediSearch version 2.4.8 (Git=HEAD-b78fee05)
+14:M 05 Jul 2022 21:34:05.166 * <search> Low level api version 1 initialized successfully
+14:M 05 Jul 2022 21:34:05.168 * <search> concurrent writes: OFF, gc: ON, prefix min length: 2, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  10000, search pool size: 20, index pool size: 8, 
+14:M 05 Jul 2022 21:34:05.173 * <search> Initialized thread pool!
+14:M 05 Jul 2022 21:34:05.177 * <search> Enabled diskless replication
+14:M 05 Jul 2022 21:34:05.182 * Module 'search' loaded from /opt/redis-stack/lib/redisearch.so
+14:M 05 Jul 2022 21:34:05.195 * <graph> Starting up RedisGraph version 2.8.13.
+14:M 05 Jul 2022 21:34:05.198 * <graph> Thread pool created, using 4 threads.
+14:M 05 Jul 2022 21:34:05.204 * <graph> Maximum number of OpenMP threads set to 4
+14:M 05 Jul 2022 21:34:05.207 * Module 'graph' loaded from /opt/redis-stack/lib/redisgraph.so
+14:M 05 Jul 2022 21:34:05.214 * <timeseries> RedisTimeSeries version 10611, git_sha=ac24ed70355e718b4778b3f237e9649cbdfb7a71
+14:M 05 Jul 2022 21:34:05.216 * <timeseries> Redis version found by RedisTimeSeries : 6.2.7 - oss
+14:M 05 Jul 2022 21:34:05.222 * <timeseries> loaded default CHUNK_SIZE_BYTES policy: 4096
+14:M 05 Jul 2022 21:34:05.226 * <timeseries> loaded server DUPLICATE_POLICY: block
+14:M 05 Jul 2022 21:34:05.228 * <timeseries> Setting default series ENCODING to: compressed
+14:M 05 Jul 2022 21:34:05.230 * <timeseries> Detected redis oss
+14:M 05 Jul 2022 21:34:05.233 * <timeseries> Enabled diskless replication
+14:M 05 Jul 2022 21:34:05.238 * Module 'timeseries' loaded from /opt/redis-stack/lib/redistimeseries.so
+14:M 05 Jul 2022 21:34:05.243 * <ReJSON> version: 20009 git sha: d8d4b19 branch: HEAD
+14:M 05 Jul 2022 21:34:05.246 * <ReJSON> Exported RedisJSON_V1 API
+14:M 05 Jul 2022 21:34:05.249 * <ReJSON> Enabled diskless replication
+14:M 05 Jul 2022 21:34:05.253 * <ReJSON> Created new data type 'ReJSON-RL'
+14:M 05 Jul 2022 21:34:05.256 * Module 'ReJSON' loaded from /opt/redis-stack/lib/rejson.so
+14:M 05 Jul 2022 21:34:05.260 * <search> Acquired RedisJSON_V1 API
+14:M 05 Jul 2022 21:34:05.262 * <graph> Acquired RedisJSON_V1 API
+14:M 05 Jul 2022 21:34:05.265 * Module 'bf' loaded from /opt/redis-stack/lib/redisbloom.so
+14:M 05 Jul 2022 21:34:05.268 * Loading RDB produced by version 6.2.7
+14:M 05 Jul 2022 21:34:05.270 * RDB age 862 seconds
+14:M 05 Jul 2022 21:34:05.272 * RDB memory usage when created 141.15 Mb
+14:M 05 Jul 2022 21:34:05.274 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 20640336B, available memory: 12560360744B
+14:M 05 Jul 2022 21:34:05.276 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 30880336B, available memory: 12560360728B
+14:M 05 Jul 2022 21:34:06.388 # Done loading RDB, keys loaded: 20004, keys expired: 0.
+14:M 05 Jul 2022 21:34:06.392 # <search> Skip background reindex scan, redis version contains loaded event.
+14:M 05 Jul 2022 21:34:06.395 * DB loaded from disk: 1.127 seconds
+14:M 05 Jul 2022 21:34:06.398 * Ready to accept connections
+14:M 05 Jul 2022 21:35:36.628 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 05 Jul 2022 21:35:36.672 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 05 Jul 2022 21:35:36.675 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 05 Jul 2022 21:35:36.705 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 05 Jul 2022 21:36:06.041 * 1 changes in 120 seconds. Saving...
+14:M 05 Jul 2022 21:36:06.050 * Background saving started by pid 34
+34:C 05 Jul 2022 21:36:06.994 * DB saved on disk
+34:C 05 Jul 2022 21:36:07.002 * RDB: 1 MB of memory used by copy-on-write
+14:M 05 Jul 2022 21:36:07.059 * Background saving terminated with success
+14:M 05 Jul 2022 21:42:06.676 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 05 Jul 2022 21:42:06.708 * 1 changes in 120 seconds. Saving...
+14:M 05 Jul 2022 21:42:06.714 * Background saving started by pid 35
+14:M 05 Jul 2022 21:42:06.724 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 05 Jul 2022 21:42:06.726 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 05 Jul 2022 21:42:06.759 * <search> Scanning indexes in background: done (scanned=20004)
+35:C 05 Jul 2022 21:42:07.622 * DB saved on disk
+35:C 05 Jul 2022 21:42:07.633 * RDB: 1 MB of memory used by copy-on-write
+14:M 05 Jul 2022 21:42:07.726 * Background saving terminated with success
+14:M 05 Jul 2022 21:51:12.714 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 05 Jul 2022 21:51:12.763 * 1 changes in 120 seconds. Saving...
+14:M 05 Jul 2022 21:51:12.773 * Background saving started by pid 36
+14:M 05 Jul 2022 21:51:12.799 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 05 Jul 2022 21:51:12.803 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 05 Jul 2022 21:51:12.857 * <search> Scanning indexes in background: done (scanned=20004)
+36:C 05 Jul 2022 21:51:14.188 * DB saved on disk
+36:C 05 Jul 2022 21:51:14.201 * RDB: 1 MB of memory used by copy-on-write
+14:M 05 Jul 2022 21:51:14.304 * Background saving terminated with success
+14:M 05 Jul 2022 21:53:33.584 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 05 Jul 2022 21:53:33.660 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 05 Jul 2022 21:53:33.666 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 05 Jul 2022 21:53:33.670 * 1 changes in 120 seconds. Saving...
+14:M 05 Jul 2022 21:53:33.681 * Background saving started by pid 37
+14:M 05 Jul 2022 21:53:33.768 * <search> Scanning indexes in background: done (scanned=20004)
+37:C 05 Jul 2022 21:53:34.886 * DB saved on disk
+37:C 05 Jul 2022 21:53:34.901 * RDB: 1 MB of memory used by copy-on-write
+14:M 05 Jul 2022 21:53:34.917 * Background saving terminated with success
+14:M 06 Jul 2022 00:14:06.515 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 00:14:06.556 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 00:14:06.559 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 00:14:06.597 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 00:14:06.604 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 00:14:06.611 * Background saving started by pid 38
+38:C 06 Jul 2022 00:14:07.594 * DB saved on disk
+38:C 06 Jul 2022 00:14:07.603 * RDB: 1 MB of memory used by copy-on-write
+14:M 06 Jul 2022 00:14:07.621 * Background saving terminated with success
+14:M 06 Jul 2022 00:24:49.556 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 00:24:49.580 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 00:24:49.590 * Background saving started by pid 39
+14:M 06 Jul 2022 00:24:49.597 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 00:24:49.599 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 00:24:49.623 * <search> Scanning indexes in background: done (scanned=20004)
+39:C 06 Jul 2022 00:24:50.272 * DB saved on disk
+39:C 06 Jul 2022 00:24:50.279 * RDB: 1 MB of memory used by copy-on-write
+14:M 06 Jul 2022 00:24:50.296 * Background saving terminated with success
+14:M 06 Jul 2022 00:29:56.829 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 00:29:56.869 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 00:29:56.881 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 00:29:56.883 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 00:29:56.888 * Background saving started by pid 40
+14:M 06 Jul 2022 00:29:56.915 * <search> Scanning indexes in background: done (scanned=20004)
+40:C 06 Jul 2022 00:29:57.606 * DB saved on disk
+40:C 06 Jul 2022 00:29:57.612 * RDB: 1 MB of memory used by copy-on-write
+14:M 06 Jul 2022 00:29:57.697 * Background saving terminated with success
+14:M 06 Jul 2022 00:44:14.368 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 00:44:14.398 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 00:44:14.400 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 00:44:14.427 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 00:44:14.443 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 00:44:14.449 * Background saving started by pid 41
+41:C 06 Jul 2022 00:44:15.212 * DB saved on disk
+41:C 06 Jul 2022 00:44:15.219 * RDB: 1 MB of memory used by copy-on-write
+14:M 06 Jul 2022 00:44:15.256 * Background saving terminated with success
+14:M 06 Jul 2022 00:46:09.900 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 00:46:09.941 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 00:46:09.943 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 00:46:09.977 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 00:46:16.055 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 00:46:16.069 * Background saving started by pid 42
+42:C 06 Jul 2022 00:46:16.916 * DB saved on disk
+42:C 06 Jul 2022 00:46:16.924 * RDB: 0 MB of memory used by copy-on-write
+14:M 06 Jul 2022 00:46:16.988 * Background saving terminated with success
+14:M 06 Jul 2022 01:11:16.366 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 01:11:16.396 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 01:11:16.402 * Background saving started by pid 43
+14:M 06 Jul 2022 01:11:16.418 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:11:16.421 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 01:11:16.464 * <search> Scanning indexes in background: done (scanned=20004)
+43:C 06 Jul 2022 01:11:17.196 * DB saved on disk
+43:C 06 Jul 2022 01:11:17.203 * RDB: 1 MB of memory used by copy-on-write
+14:M 06 Jul 2022 01:11:17.315 * Background saving terminated with success
+14:M 06 Jul 2022 01:12:49.007 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 01:12:49.068 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:12:49.070 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 01:12:49.120 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:13:18.071 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 01:13:18.080 * Background saving started by pid 44
+44:C 06 Jul 2022 01:13:18.741 * DB saved on disk
+44:C 06 Jul 2022 01:13:18.749 * RDB: 0 MB of memory used by copy-on-write
+14:M 06 Jul 2022 01:13:18.785 * Background saving terminated with success
+14:M 06 Jul 2022 01:21:24.527 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 01:21:24.546 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 01:21:24.552 * Background saving started by pid 45
+14:M 06 Jul 2022 01:21:24.588 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:21:24.593 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 01:21:24.621 * <search> Scanning indexes in background: done (scanned=20004)
+45:C 06 Jul 2022 01:21:25.267 * DB saved on disk
+45:C 06 Jul 2022 01:21:25.273 * RDB: 1 MB of memory used by copy-on-write
+14:M 06 Jul 2022 01:21:25.360 * Background saving terminated with success
+14:M 06 Jul 2022 01:23:26.013 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 01:23:26.019 * Background saving started by pid 46
+46:C 06 Jul 2022 01:23:26.686 * DB saved on disk
+46:C 06 Jul 2022 01:23:26.695 * RDB: 0 MB of memory used by copy-on-write
+14:M 06 Jul 2022 01:23:26.726 * Background saving terminated with success
+14:M 06 Jul 2022 01:25:28.106 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 01:25:28.142 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:25:28.162 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 01:25:28.172 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 01:25:28.191 * Background saving started by pid 47
+14:M 06 Jul 2022 01:25:28.241 * <search> Scanning indexes in background: done (scanned=20004)
+47:C 06 Jul 2022 01:25:28.971 * DB saved on disk
+47:C 06 Jul 2022 01:25:28.977 * RDB: 1 MB of memory used by copy-on-write
+14:M 06 Jul 2022 01:25:29.016 * Background saving terminated with success
+14:M 06 Jul 2022 01:25:50.663 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 01:25:50.697 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:25:50.699 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 01:25:50.730 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:27:30.101 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 01:27:30.106 * Background saving started by pid 48
+48:C 06 Jul 2022 01:27:30.822 * DB saved on disk
+48:C 06 Jul 2022 01:27:30.832 * RDB: 0 MB of memory used by copy-on-write
+14:M 06 Jul 2022 01:27:30.916 * Background saving terminated with success
+14:M 06 Jul 2022 01:29:35.717 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 01:29:35.732 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 01:29:35.748 * Background saving started by pid 49
+14:M 06 Jul 2022 01:29:35.784 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:29:35.787 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 01:29:35.826 * <search> Scanning indexes in background: done (scanned=20004)
+49:C 06 Jul 2022 01:29:36.581 * DB saved on disk
+49:C 06 Jul 2022 01:29:36.588 * RDB: 1 MB of memory used by copy-on-write
+14:M 06 Jul 2022 01:29:36.656 * Background saving terminated with success
+14:M 06 Jul 2022 01:30:00.659 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 01:30:00.698 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:30:00.700 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 01:30:00.733 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:31:05.880 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 01:31:05.911 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:31:05.915 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 01:31:05.949 * <search> Scanning indexes in background: done (scanned=20004)
+14:C 06 Jul 2022 01:34:19.161 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+14:C 06 Jul 2022 01:34:19.162 # Redis version=6.2.7, bits=64, commit=00000000, modified=0, pid=14, just started
+14:C 06 Jul 2022 01:34:19.164 # Configuration loaded
+14:M 06 Jul 2022 01:34:19.166 * monotonic clock: POSIX clock_gettime
+14:M 06 Jul 2022 01:34:19.169 # A key '__redis__compare_helper' was added to Lua globals which is not on the globals allow list nor listed on the deny list.
+14:M 06 Jul 2022 01:34:19.171 * Running mode=standalone, port=6379.
+14:M 06 Jul 2022 01:34:19.174 # Server initialized
+14:M 06 Jul 2022 01:34:19.177 * <search> Redis version found by RedisSearch : 6.2.7 - oss
+14:M 06 Jul 2022 01:34:19.178 * <search> RediSearch version 2.4.8 (Git=HEAD-b78fee05)
+14:M 06 Jul 2022 01:34:19.180 * <search> Low level api version 1 initialized successfully
+14:M 06 Jul 2022 01:34:19.182 * <search> concurrent writes: OFF, gc: ON, prefix min length: 2, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  10000, search pool size: 20, index pool size: 8, 
+14:M 06 Jul 2022 01:34:19.185 * <search> Initialized thread pool!
+14:M 06 Jul 2022 01:34:19.187 * <search> Enabled diskless replication
+14:M 06 Jul 2022 01:34:19.189 * Module 'search' loaded from /opt/redis-stack/lib/redisearch.so
+14:M 06 Jul 2022 01:34:19.193 * <graph> Starting up RedisGraph version 2.8.13.
+14:M 06 Jul 2022 01:34:19.195 * <graph> Thread pool created, using 4 threads.
+14:M 06 Jul 2022 01:34:19.197 * <graph> Maximum number of OpenMP threads set to 4
+14:M 06 Jul 2022 01:34:19.199 * Module 'graph' loaded from /opt/redis-stack/lib/redisgraph.so
+14:M 06 Jul 2022 01:34:19.202 * <timeseries> RedisTimeSeries version 10611, git_sha=ac24ed70355e718b4778b3f237e9649cbdfb7a71
+14:M 06 Jul 2022 01:34:19.204 * <timeseries> Redis version found by RedisTimeSeries : 6.2.7 - oss
+14:M 06 Jul 2022 01:34:19.206 * <timeseries> loaded default CHUNK_SIZE_BYTES policy: 4096
+14:M 06 Jul 2022 01:34:19.208 * <timeseries> loaded server DUPLICATE_POLICY: block
+14:M 06 Jul 2022 01:34:19.210 * <timeseries> Setting default series ENCODING to: compressed
+14:M 06 Jul 2022 01:34:19.211 * <timeseries> Detected redis oss
+14:M 06 Jul 2022 01:34:19.213 * <timeseries> Enabled diskless replication
+14:M 06 Jul 2022 01:34:19.215 * Module 'timeseries' loaded from /opt/redis-stack/lib/redistimeseries.so
+14:M 06 Jul 2022 01:34:19.217 * <ReJSON> version: 20009 git sha: d8d4b19 branch: HEAD
+14:M 06 Jul 2022 01:34:19.219 * <ReJSON> Exported RedisJSON_V1 API
+14:M 06 Jul 2022 01:34:19.221 * <ReJSON> Enabled diskless replication
+14:M 06 Jul 2022 01:34:19.223 * <ReJSON> Created new data type 'ReJSON-RL'
+14:M 06 Jul 2022 01:34:19.225 * Module 'ReJSON' loaded from /opt/redis-stack/lib/rejson.so
+14:M 06 Jul 2022 01:34:19.226 * <search> Acquired RedisJSON_V1 API
+14:M 06 Jul 2022 01:34:19.228 * <graph> Acquired RedisJSON_V1 API
+14:M 06 Jul 2022 01:34:19.230 * Module 'bf' loaded from /opt/redis-stack/lib/redisbloom.so
+14:M 06 Jul 2022 01:34:19.232 * Ready to accept connections
+14:M 06 Jul 2022 01:36:20.044 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 01:36:20.057 * Background saving started by pid 30
+30:C 06 Jul 2022 01:36:20.726 * DB saved on disk
+30:C 06 Jul 2022 01:36:20.731 * RDB: 0 MB of memory used by copy-on-write
+14:M 06 Jul 2022 01:36:20.763 * Background saving terminated with success
+14:M 06 Jul 2022 01:36:37.575 * DB saved on disk
+14:M 06 Jul 2022 01:37:06.862 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 22140576B, available memory: 12482317080B
+14:M 06 Jul 2022 01:37:06.864 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 32380576B, available memory: 12482317080B
+14:M 06 Jul 2022 01:37:06.867 * <search> Scanning index idx in background
+14:M 06 Jul 2022 01:37:16.692 * <search> Scanning indexes in background: done (scanned=19999)
+14:M 06 Jul 2022 01:37:44.845 * <search> Scanning index :vecsim_app.models.Product:index in background
+14:M 06 Jul 2022 01:37:45.282 * <search> Scanning indexes in background: done (scanned=20001)
+14:M 06 Jul 2022 01:37:45.285 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 01:37:45.309 * <search> Scanning indexes in background: done (scanned=20002)
+14:M 06 Jul 2022 01:37:45.311 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 01:37:45.334 * <search> Scanning indexes in background: done (scanned=20003)
+14:M 06 Jul 2022 01:38:38.018 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 01:38:38.023 * Background saving started by pid 34
+34:C 06 Jul 2022 01:38:38.705 * DB saved on disk
+34:C 06 Jul 2022 01:38:38.713 * RDB: 1 MB of memory used by copy-on-write
+14:M 06 Jul 2022 01:38:38.728 * Background saving terminated with success
+14:M 06 Jul 2022 01:42:47.647 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 01:42:47.695 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:42:47.698 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 01:42:47.733 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:42:47.737 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 01:42:47.744 * Background saving started by pid 36
+36:C 06 Jul 2022 01:42:48.567 * DB saved on disk
+36:C 06 Jul 2022 01:42:48.578 * RDB: 1 MB of memory used by copy-on-write
+14:M 06 Jul 2022 01:42:48.651 * Background saving terminated with success
+14:M 06 Jul 2022 01:43:02.817 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 01:43:02.849 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:43:02.852 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 01:43:02.878 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:43:10.227 * DB saved on disk
+14:M 06 Jul 2022 01:43:45.383 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 22140576B, available memory: 12482262208B
+14:M 06 Jul 2022 01:43:45.384 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 32380576B, available memory: 12482262208B
+14:M 06 Jul 2022 01:43:45.386 * <search> Scanning index idx in background
+14:M 06 Jul 2022 01:43:56.595 * <search> Scanning indexes in background: done (scanned=19999)
+14:M 06 Jul 2022 01:44:14.430 * <search> Scanning index :vecsim_app.models.Product:index in background
+14:M 06 Jul 2022 01:44:14.886 * <search> Scanning indexes in background: done (scanned=20001)
+14:M 06 Jul 2022 01:44:14.888 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 01:44:14.911 * <search> Scanning indexes in background: done (scanned=20002)
+14:M 06 Jul 2022 01:44:14.913 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 01:44:14.938 * <search> Scanning indexes in background: done (scanned=20003)
+14:M 06 Jul 2022 01:45:11.056 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 01:45:11.070 * Background saving started by pid 37
+37:C 06 Jul 2022 01:45:11.758 * DB saved on disk
+37:C 06 Jul 2022 01:45:11.764 * RDB: 1 MB of memory used by copy-on-write
+14:M 06 Jul 2022 01:45:11.775 * Background saving terminated with success
+14:M 06 Jul 2022 01:48:18.118 * DB saved on disk
+14:M 06 Jul 2022 01:49:10.110 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 20640336B, available memory: 12482240880B
+14:M 06 Jul 2022 01:49:10.112 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 30880336B, available memory: 12482240880B
+14:M 06 Jul 2022 01:49:10.114 * <search> Scanning index idx in background
+14:M 06 Jul 2022 01:49:10.277 * <search> Scanning indexes in background: done (scanned=19999)
+14:M 06 Jul 2022 01:49:27.580 * <search> Scanning index :vecsim_app.models.Product:index in background
+14:M 06 Jul 2022 01:49:28.002 * <search> Scanning indexes in background: done (scanned=20001)
+14:M 06 Jul 2022 01:49:28.023 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 01:49:28.052 * <search> Scanning indexes in background: done (scanned=20002)
+14:M 06 Jul 2022 01:49:28.054 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 01:49:28.077 * <search> Scanning indexes in background: done (scanned=20003)
+14:M 06 Jul 2022 01:50:19.025 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 01:50:19.031 * Background saving started by pid 38
+38:C 06 Jul 2022 01:50:19.697 * DB saved on disk
+38:C 06 Jul 2022 01:50:19.704 * RDB: 1 MB of memory used by copy-on-write
+14:M 06 Jul 2022 01:50:19.741 * Background saving terminated with success
+14:M 06 Jul 2022 01:54:56.386 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 01:54:56.416 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:54:56.420 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 01:54:56.444 * <search> Scanning indexes in background: done (scanned=20004)
+14:M 06 Jul 2022 01:54:56.488 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 01:54:56.494 * Background saving started by pid 51
+51:C 06 Jul 2022 01:54:57.129 * DB saved on disk
+51:C 06 Jul 2022 01:54:57.138 * RDB: 1 MB of memory used by copy-on-write
+14:M 06 Jul 2022 01:54:57.200 * Background saving terminated with success
+14:M 06 Jul 2022 01:56:58.020 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 01:56:58.027 * Background saving started by pid 52
+52:C 06 Jul 2022 01:56:58.681 * DB saved on disk
+52:C 06 Jul 2022 01:56:58.687 * RDB: 1 MB of memory used by copy-on-write
+14:M 06 Jul 2022 01:56:58.735 * Background saving terminated with success
+13:C 06 Jul 2022 02:04:26.193 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13:C 06 Jul 2022 02:04:26.196 # Redis version=6.2.7, bits=64, commit=00000000, modified=0, pid=13, just started
+13:C 06 Jul 2022 02:04:26.198 # Configuration loaded
+13:M 06 Jul 2022 02:04:26.201 * monotonic clock: POSIX clock_gettime
+13:M 06 Jul 2022 02:04:26.204 # A key '__redis__compare_helper' was added to Lua globals which is not on the globals allow list nor listed on the deny list.
+13:M 06 Jul 2022 02:04:26.206 * Running mode=standalone, port=6379.
+13:M 06 Jul 2022 02:04:26.208 # Server initialized
+13:M 06 Jul 2022 02:04:26.210 * <search> Redis version found by RedisSearch : 6.2.7 - oss
+13:M 06 Jul 2022 02:04:26.212 * <search> RediSearch version 2.4.8 (Git=HEAD-b78fee05)
+13:M 06 Jul 2022 02:04:26.213 * <search> Low level api version 1 initialized successfully
+13:M 06 Jul 2022 02:04:26.215 * <search> concurrent writes: OFF, gc: ON, prefix min length: 2, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  10000, search pool size: 20, index pool size: 8, 
+13:M 06 Jul 2022 02:04:26.217 * <search> Initialized thread pool!
+13:M 06 Jul 2022 02:04:26.218 * <search> Enabled diskless replication
+13:M 06 Jul 2022 02:04:26.220 * Module 'search' loaded from /opt/redis-stack/lib/redisearch.so
+13:M 06 Jul 2022 02:04:26.223 * <graph> Starting up RedisGraph version 2.8.13.
+13:M 06 Jul 2022 02:04:26.226 * <graph> Thread pool created, using 4 threads.
+13:M 06 Jul 2022 02:04:26.227 * <graph> Maximum number of OpenMP threads set to 4
+13:M 06 Jul 2022 02:04:26.229 * Module 'graph' loaded from /opt/redis-stack/lib/redisgraph.so
+13:M 06 Jul 2022 02:04:26.232 * <timeseries> RedisTimeSeries version 10611, git_sha=ac24ed70355e718b4778b3f237e9649cbdfb7a71
+13:M 06 Jul 2022 02:04:26.233 * <timeseries> Redis version found by RedisTimeSeries : 6.2.7 - oss
+13:M 06 Jul 2022 02:04:26.235 * <timeseries> loaded default CHUNK_SIZE_BYTES policy: 4096
+13:M 06 Jul 2022 02:04:26.236 * <timeseries> loaded server DUPLICATE_POLICY: block
+13:M 06 Jul 2022 02:04:26.238 * <timeseries> Setting default series ENCODING to: compressed
+13:M 06 Jul 2022 02:04:26.239 * <timeseries> Detected redis oss
+13:M 06 Jul 2022 02:04:26.241 * <timeseries> Enabled diskless replication
+13:M 06 Jul 2022 02:04:26.243 * Module 'timeseries' loaded from /opt/redis-stack/lib/redistimeseries.so
+13:M 06 Jul 2022 02:04:26.245 * <ReJSON> version: 20009 git sha: d8d4b19 branch: HEAD
+13:M 06 Jul 2022 02:04:26.247 * <ReJSON> Exported RedisJSON_V1 API
+13:M 06 Jul 2022 02:04:26.248 * <ReJSON> Enabled diskless replication
+13:M 06 Jul 2022 02:04:26.249 * <ReJSON> Created new data type 'ReJSON-RL'
+13:M 06 Jul 2022 02:04:26.251 * Module 'ReJSON' loaded from /opt/redis-stack/lib/rejson.so
+13:M 06 Jul 2022 02:04:26.253 * <search> Acquired RedisJSON_V1 API
+13:M 06 Jul 2022 02:04:26.254 * <graph> Acquired RedisJSON_V1 API
+13:M 06 Jul 2022 02:04:26.256 * Module 'bf' loaded from /opt/redis-stack/lib/redisbloom.so
+13:M 06 Jul 2022 02:04:26.258 * Ready to accept connections
+13:M 06 Jul 2022 02:04:44.434 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 20640336B, available memory: 12482038624B
+13:M 06 Jul 2022 02:04:44.435 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 30880336B, available memory: 12482038624B
+13:M 06 Jul 2022 02:04:44.438 * <search> Scanning index idx in background
+13:M 06 Jul 2022 02:04:44.595 * <search> Scanning indexes in background: done (scanned=19999)
+13:M 06 Jul 2022 02:04:46.942 * <search> Scanning index :vecsim_app.models.Product:index in background
+13:M 06 Jul 2022 02:04:47.408 * <search> Scanning indexes in background: done (scanned=20001)
+13:M 06 Jul 2022 02:04:47.410 * <search> Scanning index :vecsim_app.models.User:index in background
+13:M 06 Jul 2022 02:04:47.435 * <search> Scanning indexes in background: done (scanned=20002)
+13:M 06 Jul 2022 02:04:47.437 * <search> Scanning index :pydantic.main.Product:index in background
+13:M 06 Jul 2022 02:04:47.463 * <search> Scanning indexes in background: done (scanned=20003)
+15:C 06 Jul 2022 02:29:37.426 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15:C 06 Jul 2022 02:29:37.428 # Redis version=6.2.7, bits=64, commit=00000000, modified=0, pid=15, just started
+15:C 06 Jul 2022 02:29:37.430 # Configuration loaded
+15:M 06 Jul 2022 02:29:37.434 * monotonic clock: POSIX clock_gettime
+15:M 06 Jul 2022 02:29:37.439 # A key '__redis__compare_helper' was added to Lua globals which is not on the globals allow list nor listed on the deny list.
+15:M 06 Jul 2022 02:29:37.441 * Running mode=standalone, port=6379.
+15:M 06 Jul 2022 02:29:37.444 # Server initialized
+15:M 06 Jul 2022 02:29:37.455 * <search> Redis version found by RedisSearch : 6.2.7 - oss
+15:M 06 Jul 2022 02:29:37.458 * <search> RediSearch version 2.4.8 (Git=HEAD-b78fee05)
+15:M 06 Jul 2022 02:29:37.460 * <search> Low level api version 1 initialized successfully
+15:M 06 Jul 2022 02:29:37.463 * <search> concurrent writes: OFF, gc: ON, prefix min length: 2, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  10000, search pool size: 20, index pool size: 8, 
+15:M 06 Jul 2022 02:29:37.466 * <search> Initialized thread pool!
+15:M 06 Jul 2022 02:29:37.469 * <search> Enabled diskless replication
+15:M 06 Jul 2022 02:29:37.472 * Module 'search' loaded from /opt/redis-stack/lib/redisearch.so
+15:M 06 Jul 2022 02:29:37.485 * <graph> Starting up RedisGraph version 2.8.13.
+15:M 06 Jul 2022 02:29:37.489 * <graph> Thread pool created, using 4 threads.
+15:M 06 Jul 2022 02:29:37.491 * <graph> Maximum number of OpenMP threads set to 4
+15:M 06 Jul 2022 02:29:37.494 * Module 'graph' loaded from /opt/redis-stack/lib/redisgraph.so
+15:M 06 Jul 2022 02:29:37.508 * <timeseries> RedisTimeSeries version 10611, git_sha=ac24ed70355e718b4778b3f237e9649cbdfb7a71
+15:M 06 Jul 2022 02:29:37.510 * <timeseries> Redis version found by RedisTimeSeries : 6.2.7 - oss
+15:M 06 Jul 2022 02:29:37.513 * <timeseries> loaded default CHUNK_SIZE_BYTES policy: 4096
+15:M 06 Jul 2022 02:29:37.515 * <timeseries> loaded server DUPLICATE_POLICY: block
+15:M 06 Jul 2022 02:29:37.517 * <timeseries> Setting default series ENCODING to: compressed
+15:M 06 Jul 2022 02:29:37.520 * <timeseries> Detected redis oss
+15:M 06 Jul 2022 02:29:37.524 * <timeseries> Enabled diskless replication
+15:M 06 Jul 2022 02:29:37.527 * Module 'timeseries' loaded from /opt/redis-stack/lib/redistimeseries.so
+15:M 06 Jul 2022 02:29:37.532 * <ReJSON> version: 20009 git sha: d8d4b19 branch: HEAD
+15:M 06 Jul 2022 02:29:37.535 * <ReJSON> Exported RedisJSON_V1 API
+15:M 06 Jul 2022 02:29:37.538 * <ReJSON> Enabled diskless replication
+15:M 06 Jul 2022 02:29:37.541 * <ReJSON> Created new data type 'ReJSON-RL'
+15:M 06 Jul 2022 02:29:37.543 * Module 'ReJSON' loaded from /opt/redis-stack/lib/rejson.so
+15:M 06 Jul 2022 02:29:37.545 * <search> Acquired RedisJSON_V1 API
+15:M 06 Jul 2022 02:29:37.547 * <graph> Acquired RedisJSON_V1 API
+15:M 06 Jul 2022 02:29:37.552 * Module 'bf' loaded from /opt/redis-stack/lib/redisbloom.so
+15:M 06 Jul 2022 02:29:37.557 * Ready to accept connections
+14:C 06 Jul 2022 02:35:42.483 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+14:C 06 Jul 2022 02:35:42.485 # Redis version=6.2.7, bits=64, commit=00000000, modified=0, pid=14, just started
+14:C 06 Jul 2022 02:35:42.487 # Configuration loaded
+14:M 06 Jul 2022 02:35:42.490 * monotonic clock: POSIX clock_gettime
+14:M 06 Jul 2022 02:35:42.493 # A key '__redis__compare_helper' was added to Lua globals which is not on the globals allow list nor listed on the deny list.
+14:M 06 Jul 2022 02:35:42.495 * Running mode=standalone, port=6379.
+14:M 06 Jul 2022 02:35:42.497 # Server initialized
+14:M 06 Jul 2022 02:35:42.503 * <search> Redis version found by RedisSearch : 6.2.7 - oss
+14:M 06 Jul 2022 02:35:42.505 * <search> RediSearch version 2.4.8 (Git=HEAD-b78fee05)
+14:M 06 Jul 2022 02:35:42.507 * <search> Low level api version 1 initialized successfully
+14:M 06 Jul 2022 02:35:42.508 * <search> concurrent writes: OFF, gc: ON, prefix min length: 2, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  10000, search pool size: 20, index pool size: 8, 
+14:M 06 Jul 2022 02:35:42.510 * <search> Initialized thread pool!
+14:M 06 Jul 2022 02:35:42.512 * <search> Enabled diskless replication
+14:M 06 Jul 2022 02:35:42.514 * Module 'search' loaded from /opt/redis-stack/lib/redisearch.so
+14:M 06 Jul 2022 02:35:42.522 * <graph> Starting up RedisGraph version 2.8.13.
+14:M 06 Jul 2022 02:35:42.524 * <graph> Thread pool created, using 4 threads.
+14:M 06 Jul 2022 02:35:42.526 * <graph> Maximum number of OpenMP threads set to 4
+14:M 06 Jul 2022 02:35:42.528 * Module 'graph' loaded from /opt/redis-stack/lib/redisgraph.so
+14:M 06 Jul 2022 02:35:42.535 * <timeseries> RedisTimeSeries version 10611, git_sha=ac24ed70355e718b4778b3f237e9649cbdfb7a71
+14:M 06 Jul 2022 02:35:42.537 * <timeseries> Redis version found by RedisTimeSeries : 6.2.7 - oss
+14:M 06 Jul 2022 02:35:42.538 * <timeseries> loaded default CHUNK_SIZE_BYTES policy: 4096
+14:M 06 Jul 2022 02:35:42.540 * <timeseries> loaded server DUPLICATE_POLICY: block
+14:M 06 Jul 2022 02:35:42.542 * <timeseries> Setting default series ENCODING to: compressed
+14:M 06 Jul 2022 02:35:42.545 * <timeseries> Detected redis oss
+14:M 06 Jul 2022 02:35:42.547 * <timeseries> Enabled diskless replication
+14:M 06 Jul 2022 02:35:42.549 * Module 'timeseries' loaded from /opt/redis-stack/lib/redistimeseries.so
+14:M 06 Jul 2022 02:35:42.552 * <ReJSON> version: 20009 git sha: d8d4b19 branch: HEAD
+14:M 06 Jul 2022 02:35:42.554 * <ReJSON> Exported RedisJSON_V1 API
+14:M 06 Jul 2022 02:35:42.555 * <ReJSON> Enabled diskless replication
+14:M 06 Jul 2022 02:35:42.557 * <ReJSON> Created new data type 'ReJSON-RL'
+14:M 06 Jul 2022 02:35:42.559 * Module 'ReJSON' loaded from /opt/redis-stack/lib/rejson.so
+14:M 06 Jul 2022 02:35:42.560 * <search> Acquired RedisJSON_V1 API
+14:M 06 Jul 2022 02:35:42.562 * <graph> Acquired RedisJSON_V1 API
+14:M 06 Jul 2022 02:35:42.564 * Module 'bf' loaded from /opt/redis-stack/lib/redisbloom.so
+14:M 06 Jul 2022 02:35:42.567 * Ready to accept connections
+14:M 06 Jul 2022 02:36:01.495 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 22140576B, available memory: 12482018256B
+14:M 06 Jul 2022 02:36:01.498 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 32380576B, available memory: 12482018256B
+14:M 06 Jul 2022 02:36:01.501 * <search> Scanning index idx in background
+14:M 06 Jul 2022 02:36:10.641 * <search> Scanning indexes in background: done (scanned=19999)
+14:M 06 Jul 2022 02:36:10.642 * <search> Scanning index :vecsim_app.models.Product:index in background
+14:M 06 Jul 2022 02:36:11.135 * <search> Scanning indexes in background: done (scanned=20001)
+14:M 06 Jul 2022 02:36:11.137 * <search> Scanning index :vecsim_app.models.User:index in background
+14:M 06 Jul 2022 02:36:11.167 * <search> Scanning indexes in background: done (scanned=20002)
+14:M 06 Jul 2022 02:36:11.169 * <search> Scanning index :pydantic.main.Product:index in background
+14:M 06 Jul 2022 02:36:11.197 * <search> Scanning indexes in background: done (scanned=20003)
+14:M 06 Jul 2022 02:37:43.047 * 1 changes in 120 seconds. Saving...
+14:M 06 Jul 2022 02:37:43.055 * Background saving started by pid 33
+33:C 06 Jul 2022 02:37:43.698 * DB saved on disk
+33:C 06 Jul 2022 02:37:43.705 * RDB: 0 MB of memory used by copy-on-write
+14:M 06 Jul 2022 02:37:43.761 * Background saving terminated with success
+13:C 06 Jul 2022 02:52:45.361 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13:C 06 Jul 2022 02:52:45.363 # Redis version=6.2.7, bits=64, commit=00000000, modified=0, pid=13, just started
+13:C 06 Jul 2022 02:52:45.364 # Configuration loaded
+13:M 06 Jul 2022 02:52:45.367 * monotonic clock: POSIX clock_gettime
+13:M 06 Jul 2022 02:52:45.369 # A key '__redis__compare_helper' was added to Lua globals which is not on the globals allow list nor listed on the deny list.
+13:M 06 Jul 2022 02:52:45.371 * Running mode=standalone, port=6379.
+13:M 06 Jul 2022 02:52:45.373 # Server initialized
+13:M 06 Jul 2022 02:52:45.376 * <search> Redis version found by RedisSearch : 6.2.7 - oss
+13:M 06 Jul 2022 02:52:45.377 * <search> RediSearch version 2.4.8 (Git=HEAD-b78fee05)
+13:M 06 Jul 2022 02:52:45.379 * <search> Low level api version 1 initialized successfully
+13:M 06 Jul 2022 02:52:45.380 * <search> concurrent writes: OFF, gc: ON, prefix min length: 2, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  10000, search pool size: 20, index pool size: 8, 
+13:M 06 Jul 2022 02:52:45.382 * <search> Initialized thread pool!
+13:M 06 Jul 2022 02:52:45.384 * <search> Enabled diskless replication
+13:M 06 Jul 2022 02:52:45.386 * Module 'search' loaded from /opt/redis-stack/lib/redisearch.so
+13:M 06 Jul 2022 02:52:45.390 * <graph> Starting up RedisGraph version 2.8.13.
+13:M 06 Jul 2022 02:52:45.396 * <graph> Thread pool created, using 4 threads.
+13:M 06 Jul 2022 02:52:45.398 * <graph> Maximum number of OpenMP threads set to 4
+13:M 06 Jul 2022 02:52:45.400 * Module 'graph' loaded from /opt/redis-stack/lib/redisgraph.so
+13:M 06 Jul 2022 02:52:45.403 * <timeseries> RedisTimeSeries version 10611, git_sha=ac24ed70355e718b4778b3f237e9649cbdfb7a71
+13:M 06 Jul 2022 02:52:45.405 * <timeseries> Redis version found by RedisTimeSeries : 6.2.7 - oss
+13:M 06 Jul 2022 02:52:45.407 * <timeseries> loaded default CHUNK_SIZE_BYTES policy: 4096
+13:M 06 Jul 2022 02:52:45.410 * <timeseries> loaded server DUPLICATE_POLICY: block
+13:M 06 Jul 2022 02:52:45.413 * <timeseries> Setting default series ENCODING to: compressed
+13:M 06 Jul 2022 02:52:45.415 * <timeseries> Detected redis oss
+13:M 06 Jul 2022 02:52:45.418 * <timeseries> Enabled diskless replication
+13:M 06 Jul 2022 02:52:45.420 * Module 'timeseries' loaded from /opt/redis-stack/lib/redistimeseries.so
+13:M 06 Jul 2022 02:52:45.422 * <ReJSON> version: 20009 git sha: d8d4b19 branch: HEAD
+13:M 06 Jul 2022 02:52:45.424 * <ReJSON> Exported RedisJSON_V1 API
+13:M 06 Jul 2022 02:52:45.425 * <ReJSON> Enabled diskless replication
+13:M 06 Jul 2022 02:52:45.426 * <ReJSON> Created new data type 'ReJSON-RL'
+13:M 06 Jul 2022 02:52:45.428 * Module 'ReJSON' loaded from /opt/redis-stack/lib/rejson.so
+13:M 06 Jul 2022 02:52:45.429 * <search> Acquired RedisJSON_V1 API
+13:M 06 Jul 2022 02:52:45.431 * <graph> Acquired RedisJSON_V1 API
+13:M 06 Jul 2022 02:52:45.432 * Module 'bf' loaded from /opt/redis-stack/lib/redisbloom.so
+13:M 06 Jul 2022 02:52:45.434 * Ready to accept connections
+13:M 06 Jul 2022 02:53:01.442 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 22140576B, available memory: 12482018256B
+13:M 06 Jul 2022 02:53:01.444 # <search> creating vector index. Server memory limit: 12564373504B, required memory: 32380576B, available memory: 12482018256B
+13:M 06 Jul 2022 02:53:01.447 * <search> Scanning index idx in background
