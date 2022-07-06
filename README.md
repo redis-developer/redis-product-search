@@ -6,7 +6,6 @@
 <div display="inline-block">
     <a href="https://github.com/Spartee/redis-vector-search"><b>Code</b></a>&nbsp;&nbsp;&nbsp;
     <a href="https://redis.io/docs/stack/search/reference/vectors/"><b>Redis VSS Documentation</b></a>&nbsp;&nbsp;&nbsp;
-    <a href="https://discord.gg/hd5RRGpykv"><b>Discord Invite</b></a>&nbsp;&nbsp;&nbsp;
   </div>
     <br />
     <br />
