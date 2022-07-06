@@ -73,7 +73,40 @@ There are multiple options for running this demo locally.
 The easiest option to run locally is to use the following docker-compose file to launch the
 prebuilt container hosted on GitHub.
 
+```
+version: '3.7'
+services:
+
+  redis-vector-db:
+    image: redis/redis-stack:latest
+    ports:
+      - 6379:6379
+      - 8001:8001
+
+  backend:
+    image: ghcr.io/spartee/redis-vss-fashion:v0.1.3
+    environment:
+      DEPLOYMENT: "dev"
+      REDIS_DATA_URL: 'redis://redis-vector-db:6379'
+      REDIS_OM_URL: 'redis://redis-vector-db:6379'
+      REDIS_HOST: 'redis-vector-db'
+      REDIS_PORT: 6379
+    expose:
+      - "8888"
+    ports:
+      - "8888:8888"
+    depends_on:
+      - "redis-vector-db"
+```
+
+To launch, run the following
+- ``docker compose up`` in same directory as ``docker-compose.yml``
+- Navigate to ``0.0.0.0:8888`` in a browser
+
 ### Building the containers
 
+More to come here
 
 ### Running outside docker
+
+More to come here
