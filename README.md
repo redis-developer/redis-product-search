@@ -18,7 +18,7 @@ Through the RediSearch module, vector types and indexes can be added to Redis. T
 a highly performant vector database which can be used for all types of applications.
 
 The following Redis Stack capabilities are available in this demo:
-   - **Vector Similarity Search** 
+   - **Vector Similarity Search**
      - by image
      - by text
    - **Multiple vector indexing types**
@@ -26,8 +26,8 @@ The following Redis Stack capabilities are available in this demo:
      - Flat (brute-force)
    - **Hybrid Queries**
      - Apply tags as pre-filter for vector search
-   - **Full text search** 
-   - **JSON storage** 
+   - **Full text search**
+   - **JSON storage**
 
 
 ## Application
@@ -63,16 +63,12 @@ The dataset was taken from the the following Kaggle links.
 
 ## Running Locally
 
-MORE TO COME HERE
-
-There are multiple options for running this demo locally.
-
 ### Using pre-built containers
 
 The easiest option to run locally is to use the following docker-compose file to launch the
 prebuilt container hosted on GitHub.
 
-```
+```yaml
 version: '3.7'
 services:
 
@@ -83,7 +79,7 @@ services:
       - 8001:8001
 
   backend:
-    image: ghcr.io/spartee/redis-vss-fashion:v0.1.3
+    image: ghcr.io/spartee/redis-vss-fashion:v0.2.0
     environment:
       DEPLOYMENT: "dev"
       REDIS_DATA_URL: 'redis://redis-vector-db:6379'
@@ -96,6 +92,7 @@ services:
       - "8888:8888"
     depends_on:
       - "redis-vector-db"
+
 ```
 
 To launch, run the following
