@@ -63,7 +63,7 @@ export const Card = (props: Props) => {
       <div className="card mb-2 box-shadow" style={{alignContent : 'center'}}>
        <img
         className="card-img-top"
-        style={{height: '50%', width: '50%', alignSelf: 'center'}}
+        style={{height: '60%', width: '60%', alignSelf: 'center'}}
         src={props.image_path}
         alt={props.name}
        />

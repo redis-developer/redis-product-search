@@ -8,6 +8,10 @@ import { useNavigate } from 'react-router-dom';
 interface Props {
   products: any[];
   setProducts: (state: any) => void;
+  gender: string;
+  setGender: (state: any) => void;
+  category: string;
+  setCategory: (state: any) => void;
 }
 
 
@@ -18,8 +22,8 @@ export const Header = (props: Props) => {
 
    // This function is called when the input changes
    const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const enteredText = event.target.value;
-    setText(enteredText);
+     const enteredText = event.target.value;
+     setText(enteredText);
   };
 
   const queryProductsByText = async () => {
@@ -33,7 +37,7 @@ export const Header = (props: Props) => {
 
   const queryProductsByUserText = async () => {
     try {
-      const productJson = await getSemanticallySimilarProductsbyText(searchText);
+      const productJson = await getSemanticallySimilarProductsbyText(searchText, props.gender, props.category);
       props.setProducts(productJson);
     } catch (err) {
       console.log(String(err));
@@ -99,12 +103,25 @@ export const Header = (props: Props) => {
               onChange={inputHandler}
               type="search"
               placeholder="Search"
+              onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
               className="me-2"
               aria-label="Search"
             />
-            <Button onClick={() => queryProductsByText()} variant="outline-success">Search</Button>
-{/*             <Button onClick={() => queryProductsByUserText()} variant="outline-success">Vector Search</Button>
- */}          </Form>
+            <div style={{display: "flex", gap: "3px"}}>
+              <Button
+              onClick={() => queryProductsByText()}
+              variant="outline-success"
+              disabled={searchText.length < 1}>
+                Search
+              </Button>
+{/*               <Button
+              onClick={() => queryProductsByUserText()}
+              variant="outline-success"
+              disabled={searchText.length < 1}>
+                Vector Search
+              </Button>
+ */}            </div>
+          </Form>
         </Navbar.Collapse>
       </Container>
     </Navbar>

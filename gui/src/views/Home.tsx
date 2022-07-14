@@ -13,6 +13,11 @@ import { Chip } from '@material-ui/core';
 interface Props {
   products: any[];
   setProducts: (state: any) => void;
+  gender: string;
+  setGender: (state: any) => void;
+  category: string;
+  setCategory: (state: any) => void;
+
 }
 
 
@@ -20,15 +25,13 @@ export const Home = (props: Props) => {
   const [error, setError] = useState<string>('');
   const [skip, setSkip] = useState(0);
   const [limit, setLimit] = useState(15);
-  const [gender, setGender] = useState<string>('');
-  const [category, setCategory] = useState<string>('');
   const Navigate = useNavigate();
 
   const queryProducts = async () => {
     try {
       // clear filters
-      setGender("");
-      setCategory("");
+      props.setGender("");
+      props.setCategory("");
 
       const productJson = await getProducts(limit, skip);
       props.setProducts(productJson)
@@ -66,7 +69,11 @@ export const Home = (props: Props) => {
           </a>
           {props.products.length > 0 ? (
           <div>
-              <TagRadios gender={gender} category={category} setGender={setGender} setCategory={setCategory} />
+              <TagRadios
+              gender={props.gender}
+              category={props.category}
+              setGender={props.setGender}
+              setCategory={props.setCategory} />
           </div>
             ): (
               <></>
@@ -90,28 +97,28 @@ export const Home = (props: Props) => {
       <div className="album py-5 bg-light">
         <div className="container">
           <div>
-          { category != "" ? (
+          { props.category != "" ? (
             <Chip
               style={{ margin: "5px 5px 25px 5px" }}
-              label={`Category: ${category}`}
+              label={`Category: ${props.category}`}
               variant='outlined'
               clickable
               color='primary'
-              onDelete={() => {setCategory(""); queryProducts()}}
-              disabled={category == ''}
+              onDelete={() => {props.setCategory(""); queryProducts()}}
+              disabled={props.category == ''}
               />
           ):(
             <></>
           )}
-          { gender != "" ? (
+          { props.gender != "" ? (
             <Chip
               style={{ margin: "5px 5px 25px 5px" }}
-              label={`Gender: ${gender}`}
+              label={`Gender: ${props.gender}`}
               variant='outlined'
               clickable
               color='primary'
-              onDelete={() => {setGender(""); queryProducts()}}
-              disabled={gender == ''}
+              onDelete={() => {props.setGender(""); queryProducts()}}
+              disabled={props.gender == ''}
               />
           ):(
             <></>
@@ -123,12 +130,13 @@ export const Home = (props: Props) => {
               {props.products.map((product) => (
                 <Card
                   key={product.pk}
-                  image_path={`${BASE_URL}/data/images/${product.product_id}.jpg`}
+                 /*   image_path={`${BASE_URL}/data/images/${product.product_id}.jpg`} */
+                  image_path={product.image_url}
                   name={product.product_metadata.name}
                   productId={product.product_id}
                   numProducts={15}
-                  gender={gender}
-                  category={category}
+                  gender={props.gender}
+                  category={props.category}
                   setState={props.setProducts}
                   />
 

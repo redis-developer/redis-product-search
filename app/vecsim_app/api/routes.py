@@ -101,7 +101,9 @@ async def find_products_by_text(similarity_request: SimilarityRequest) -> t.List
 async def find_products_by_user_text(similarity_request: UserTextSimilarityRequest) -> t.List[Product]:
     q = create_query(similarity_request.search_type,
                     similarity_request.number_of_results,
-                    vector_field_name="text_vector")
+                    vector_field_name="text_vector",
+                    gender=similarity_request.gender,
+                    category=similarity_request.category)
 
     redis_client = await Redis(host=config.REDIS_HOST, port=config.REDIS_PORT, db=0)
 

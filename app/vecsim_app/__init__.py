@@ -1,6 +1,6 @@
 
-# TODO uncomment when model is fine tuned on product dataset
-# for user provided text vector search
+# loaded once here at start up
 #from sentence_transformers import SentenceTransformer
+#TEXT_MODEL = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
+
 TEXT_MODEL = None
-#TEXT_MODEL = SentenceTransformer('sentence-transformers/all-distilroberta-v1')

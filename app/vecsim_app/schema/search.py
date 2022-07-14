@@ -18,3 +18,5 @@ class UserTextSimilarityRequest(BaseModel):
     user_text: str
     number_of_results: int = 15
     search_type: str = "KNN"
+    gender: str = ""
+    category: str = ""
