@@ -60,12 +60,12 @@ async def startup():
 app.mount("/data", StaticFiles(directory="data"), name="data")
 
 ## mount the built GUI react files into the static dir to be served.
-current_file = Path(__file__)
-project_root = current_file.parent.resolve()
-gui_build_dir = project_root / "templates" / "build"
-app.mount(
-    path="/", app=SinglePageApplication(directory=gui_build_dir), name="SPA"
-)
+#current_file = Path(__file__)
+#project_root = current_file.parent.resolve()
+#gui_build_dir = project_root / "templates" / "build"
+#app.mount(
+#    path="/", app=SinglePageApplication(directory=gui_build_dir), name="SPA"
+#)
 
 
 if __name__ == "__main__":

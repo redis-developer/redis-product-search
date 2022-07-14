@@ -7,11 +7,13 @@ import { Footer } from './views/Footer';
 
 export const Layout: FC = () => {
     const [products, setProducts] = useState<any[]>([]);
+    const [gender, setGender] = useState<string>('');
+    const [category, setCategory] = useState<string>('');
 
     return (
         <>
-        <Header setProducts={setProducts} products={products} />
-        <Home setProducts={setProducts} products={products}/>
+        <Header setProducts={setProducts} products={products} gender={gender} category={category} setGender={setGender} setCategory={setCategory} />
+        <Home setProducts={setProducts} products={products} gender={gender} category={category} setGender={setGender} setCategory={setCategory}/>
         <Footer/>
         </>
     );

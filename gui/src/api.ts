@@ -89,13 +89,17 @@ export const getSemanticallySimilarProducts = async (id: number,
 
 
 export const getSemanticallySimilarProductsbyText = async (text: string,
+                                                    gender="",
+                                                    category="",
                                                     search='KNN',
                                                     limit=15,
                                                     skip=0) => {
   let body = {
   user_text: text,
   search_type: search,
-  number_of_results: limit
+  number_of_results: limit,
+  gender: gender,
+  category: category
   }
 
   const url = MASTER_URL + "vectorsearch/text/user";
