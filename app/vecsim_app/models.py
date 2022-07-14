@@ -11,11 +11,12 @@ class ProductMetadata(EmbeddedJsonModel):
     season: str = Field(index=True)
     year: int = Field(index=True)
     usage: str = Field(index=True)
+    image_url: str
+    brand: str = Field(index=True)
 
 class Product(JsonModel):
     product_id: int = Field(index=True)
     product_metadata: ProductMetadata
-
 
 # User models
 class User(JsonModel):

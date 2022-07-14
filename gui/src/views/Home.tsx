@@ -130,7 +130,8 @@ export const Home = (props: Props) => {
               {props.products.map((product) => (
                 <Card
                   key={product.pk}
-                  image_path={`${BASE_URL}/data/images/${product.product_id}.jpg`}
+                 /*   image_path={`${BASE_URL}/data/images/${product.product_id}.jpg`} */
+                  image_path={product.image_url}
                   name={product.product_metadata.name}
                   productId={product.product_id}
                   numProducts={15}
