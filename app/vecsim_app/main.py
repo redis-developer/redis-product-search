@@ -33,10 +33,9 @@ app.add_middleware(
 # Routers
 app.include_router(auth_routes.auth_router, prefix="/api", tags=["auth"])
 app.include_router(
-    routes.product_router,
+routes.product_router,
     prefix=config.API_V1_STR + "/product",
-    tags=["products"],
-    dependencies=[Depends(get_current_active_user)],
+    tags=["products"]
 )
 app.include_router(
     user_routes.users_router,
