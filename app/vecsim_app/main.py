@@ -52,7 +52,7 @@ async def startup():
     # variable, or by manually creating the connection using your model's
     # Meta object.
     Product.Meta.database = get_redis_connection(url=config.REDIS_DATA_URL,
-                                                  decode_responses=True)
+                                                 decode_responses=True)
 
     await Migrator().run()
 

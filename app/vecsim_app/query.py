@@ -1,10 +1,10 @@
 import typing as t
-from redis import Redis
+from redis.asyncio import Redis
 from redis.commands.search.field import VectorField, TagField
 from redis.commands.search.query import Query
 
 
-def create_flat_index(redis_conn: Redis,
+async def create_flat_index(redis_conn: Redis,
                       number_of_vectors: int,
                       distance_metric: str='L2'):
         image_field = VectorField("img_vector",
@@ -25,10 +25,10 @@ def create_flat_index(redis_conn: Redis,
                     })
         category_field = TagField("category")
         gender_field = TagField("gender")
-        redis_conn.ft().create_index([image_field,
-                                      text_field,
-                                      category_field,
-                                      gender_field])
+        await redis_conn.ft().create_index([image_field,
+                                            text_field,
+                                            category_field,
+                                            gender_field])
 
 
 def create_hnsw_index(redis_conn: Redis,
@@ -50,13 +50,13 @@ def create_hnsw_index(redis_conn: Redis,
                     })
         category_field = TagField("category")
         gender_field = TagField("gender")
-        redis_conn.ft().create_index([image_field,
-                                      text_field,
-                                      category_field,
-                                      gender_field])
+        await redis_conn.ft().create_index([image_field,
+                                            text_field,
+                                            category_field,
+                                            gender_field])
 
 
-def create_query(search_type: str="KNN",
+async def create_query(search_type: str="KNN",
                  number_of_results: int=20,
                  vector_field_name: str="img_vector",
                  gender: t.Optional[str] = None,
