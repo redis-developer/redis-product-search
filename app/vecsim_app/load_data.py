@@ -3,12 +3,13 @@ import typing as t
 import json
 import asyncio
 import numpy as np
+import redis.asyncio as redis
 
+from vecsim_app import config
 from vecsim_app.query import create_flat_index, create_hnsw_index
-from vecsim_app.models import Product, ProductVectors
+from vecsim_app.models import Product
 from vecsim_app.schema import UserCreate
 from vecsim_app.crud import create_user
-from vecsim_app import config
 
 def read_product_json() -> t.List:
     with open(config.DATA_LOCATION + "/product_metadata.json") as f:
@@ -52,22 +53,35 @@ async def set_superuser_account():
     superuser = UserCreate(**user_dict)
     await create_user(superuser)
 
-async def set_product_vectors(product_vectors, products_with_pk):
+async def set_product_vectors(product_vectors, redis_conn, products_with_pk):
     # iterate through products data and save vectors hash model
     for product in product_vectors:
         product_id = product["product_id"]
         product_pk = products_with_pk[product_id]
-        product_vectors = ProductVectors(
-            product_id=product_id,
-            gender=product_pk.product_metadata.gender,
-            category=product_pk.product_metadata.master_category,
-            img_vector=np.array(product["img_vector"], dtype=np.float32).tobytes(),
-            text_vector=np.array(product["text_vector"], dtype=np.float32).tobytes()
-        )
-        await product_vectors.save()
+        key = "product_vector:" + str(product_id)
+        await redis_conn.hset(
+            key,
+            mapping={
+                "product_pk": product_pk.pk,
+                "product_id": product_id,
+
+                # Add tag fields to vectors for hybrid search
+                "gender": product_pk.product_metadata.gender,
+                "category": product_pk.product_metadata.master_category,
+
+                # add image and text vectors as blobs
+                "img_vector": np.array(product["img_vector"], dtype=np.float32).tobytes(),
+                "text_vector": np.array(product["text_vector"], dtype=np.float32).tobytes()
+        })
 
 async def load_all_data():
-    redis_conn = ProductVectors.db()
+    # TODO use redis-om connection
+    redis_conn = redis.Redis(
+        host=config.REDIS_HOST,
+        port=config.REDIS_PORT,
+        password=config.REDIS_PASSWORD,
+        db=0
+    )
     keys = await redis_conn.keys()
     if len(keys) > 10000:
         print("Products already loaded")
@@ -79,7 +93,7 @@ async def load_all_data():
 
         print("Loading product vectors")
         vectors = read_product_json_vectors()
-        await set_product_vectors(vectors, products_with_pk)
+        await set_product_vectors(vectors, redis_conn, products_with_pk)
         print("Product vectors loaded!")
 
         print("Creating vector search index")

@@ -1,8 +1,6 @@
-import typing as t
 from aredis_om import (
     EmbeddedJsonModel,
     Field,
-    HashModel,
     JsonModel
 )
 
@@ -23,13 +21,6 @@ class ProductMetadata(EmbeddedJsonModel):
 class Product(JsonModel):
     product_id: int = Field(index=True)
     product_metadata: ProductMetadata
-
-class ProductVectors(HashModel):
-    product_id: int
-    gender: str
-    category: str
-    img_vector: bytes
-    text_vector: bytes
 
 # User models
 class User(JsonModel):

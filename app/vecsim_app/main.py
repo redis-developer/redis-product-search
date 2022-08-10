@@ -10,10 +10,7 @@ from vecsim_app import config
 from vecsim_app.models import Product
 from vecsim_app.api import routes, user_routes, auth_routes
 from vecsim_app.spa import SinglePageApplication
-from vecsim_app.auth import (
-    get_current_active_user,
-    get_current_active_superuser
-)
+from vecsim_app.auth import get_current_active_superuser
 
 
 app = FastAPI(
@@ -44,15 +41,12 @@ app.include_router(
     dependencies=[Depends(get_current_active_superuser)]
 )
 
-
 @app.on_event("startup")
 async def startup():
     # You can set the Redis OM URL using the REDIS_OM_URL environment
     # variable, or by manually creating the connection using your model's
     # Meta object.
-    Product.Meta.database = get_redis_connection(url=config.REDIS_DATA_URL,
-                                                 decode_responses=True)
-
+    Product.Meta.database = get_redis_connection(url=config.REDIS_URL, decode_responses=True)
     await Migrator().run()
 
 # static image files
