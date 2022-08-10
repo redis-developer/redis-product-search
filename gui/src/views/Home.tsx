@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getProducts } from '../api';
 import { isAuthenticated } from '../auth';
 import { useNavigate } from 'react-router-dom';
@@ -49,7 +49,10 @@ export const Home = (props: Props) => {
     };
   };
 
-
+  // Execute this one when the component loads up
+  useEffect(() => {
+    queryProductsWithLimit();
+  }, []);
 
   return (
     <>
@@ -62,8 +65,7 @@ export const Home = (props: Props) => {
            to show how unstructured data, such as images and text, can be used to create powerful
            search engines.
        </p>
-      { isAuthenticated() ? (
-        <div>
+       <div>
           <a className="btn btn-primary m-2" onClick={() => queryProductsWithLimit()}>
             Load New Products
           </a>
@@ -79,19 +81,6 @@ export const Home = (props: Props) => {
               <></>
             )}
        </div>
-      ) : (
-        <div>
-          <a className="btn btn-primary m-2" onClick={() => Navigate("/login")}>
-            Login
-          </a>
-          <a className="btn btn-secondary m-2" onClick={() => Navigate("/signup")}>
-            Sign Up
-          </a>
-        </div>
-      )}
-
-      </div>
-      <div>
       </div>
      </section>
       <div className="album py-5 bg-light">

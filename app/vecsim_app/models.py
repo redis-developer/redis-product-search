@@ -1,6 +1,10 @@
-import typing as t
-from aredis_om import JsonModel, EmbeddedJsonModel, Field
+from aredis_om import (
+    EmbeddedJsonModel,
+    Field,
+    JsonModel
+)
 
+# Product Models
 class ProductMetadata(EmbeddedJsonModel):
     name: str = Field(index=True, full_text_search=True)
     gender: str = Field(index=True)

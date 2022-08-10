@@ -1,15 +1,24 @@
-import random
 import typing as t
-from redis.asyncio import Redis
-from fastapi import APIRouter, Depends
+import redis.asyncio as redis
 
-from vecsim_app.schema import SimilarityRequest, SearchRequest, UserTextSimilarityRequest
-from vecsim_app.models import Product
-from vecsim_app.query import create_query
+from fastapi import APIRouter
 from vecsim_app import config
 from vecsim_app import TEXT_MODEL
+from vecsim_app.schema import (
+    SimilarityRequest,
+    SearchRequest,
+    UserTextSimilarityRequest
+)
+from vecsim_app.models import Product
+from vecsim_app.query import create_query
+
 
 product_router = r = APIRouter()
+redis_client = redis.from_url(config.REDIS_URL)
+
+async def products_from_results(results) -> list:
+    # extract products from VSS results
+    return [await Product.get(p.product_pk) for p in results.docs]
 
 @r.get("/", response_model=t.List[Product],
        name="product:get_product_samples",
@@ -29,6 +38,7 @@ async def get_products(limit: int = 20, skip: int = 0):
         return products
     return []
 
+
 @r.post("/search",
        response_model=t.List[Product],
        name="product:text_search",
@@ -47,13 +57,13 @@ async def text_search_products(search: SearchRequest):
        name="product:find_similar_by_image",
        operation_id="compute_image_similarity")
 async def find_products_by_image(similarity_request: SimilarityRequest) -> t.List[Product]:
-    q = create_query(similarity_request.search_type,
-                    similarity_request.number_of_results,
-                    vector_field_name="img_vector",
-                    gender=similarity_request.gender,
-                    category=similarity_request.category)
-
-    redis_client = await Redis(host=config.REDIS_HOST, port=config.REDIS_PORT, db=0)
+    q = await create_query(
+        similarity_request.search_type,
+        similarity_request.number_of_results,
+        vector_field_name="img_vector",
+        gender=similarity_request.gender,
+        category=similarity_request.category
+    )
 
     # find the vector of the Product listed in the request
     product_vector_key = "product_vector:" + str(similarity_request.product_id)
@@ -63,8 +73,7 @@ async def find_products_by_image(similarity_request: SimilarityRequest) -> t.Lis
     results = await redis_client.ft().search(q, query_params={"vec_param": vector})
 
     # Get Product records of those results
-    similar_product_pks = [p.product_pk for p in results.docs]
-    similar_products = [await Product.get(pk) for pk in similar_product_pks]
+    similar_products = await products_from_results(results)
     return similar_products
 
 
@@ -73,13 +82,13 @@ async def find_products_by_image(similarity_request: SimilarityRequest) -> t.Lis
        name="product:find_similar_by_text",
        operation_id="compute_text_similarity")
 async def find_products_by_text(similarity_request: SimilarityRequest) -> t.List[Product]:
-    q = create_query(similarity_request.search_type,
-                    similarity_request.number_of_results,
-                    vector_field_name="text_vector",
-                    gender=similarity_request.gender,
-                    category=similarity_request.category)
-
-    redis_client = await Redis(host=config.REDIS_HOST, port=config.REDIS_PORT, db=0)
+    q = await create_query(
+        similarity_request.search_type,
+        similarity_request.number_of_results,
+        vector_field_name="text_vector",
+        gender=similarity_request.gender,
+        category=similarity_request.category
+    )
 
     # find the vector of the Product listed in the request
     product_vector_key = "product_vector:" + str(similarity_request.product_id)
@@ -89,8 +98,7 @@ async def find_products_by_text(similarity_request: SimilarityRequest) -> t.List
     results = await redis_client.ft().search(q, query_params={"vec_param": vector})
 
     # Get Product records of those results
-    similar_product_pks = [p.product_pk for p in results.docs]
-    similar_products = [await Product.get(pk) for pk in similar_product_pks]
+    similar_products = await products_from_results(results)
     return similar_products
 
 
@@ -105,15 +113,11 @@ async def find_products_by_user_text(similarity_request: UserTextSimilarityReque
                     gender=similarity_request.gender,
                     category=similarity_request.category)
 
-    redis_client = await Redis(host=config.REDIS_HOST, port=config.REDIS_PORT, db=0)
-
     # obtain vector from text model in top level  __init__.py
     vector = TEXT_MODEL.encode(similarity_request.user_text)
     # obtain results of the query
     results = await redis_client.ft().search(q, query_params={"vec_param": vector.tobytes()})
 
     # Get Product records of those results
-    similar_product_pks = [p.product_pk for p in results.docs]
-    similar_products = [await Product.get(pk) for pk in similar_product_pks]
+    similar_products = await products_from_results(results)
     return similar_products
-
