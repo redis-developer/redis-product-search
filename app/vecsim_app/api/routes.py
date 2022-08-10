@@ -2,7 +2,8 @@ import typing as t
 import redis.asyncio as redis
 
 from fastapi import APIRouter
-
+from vecsim_app import config
+from vecsim_app import TEXT_MODEL
 from vecsim_app.schema import (
     SimilarityRequest,
     SearchRequest,
@@ -10,14 +11,10 @@ from vecsim_app.schema import (
 )
 from vecsim_app.models import Product
 from vecsim_app.query import create_query
-from vecsim_app import config
-from vecsim_app import TEXT_MODEL
+
 
 product_router = r = APIRouter()
-redis_client = redis.Redis(host=config.REDIS_HOST,
-                           port=config.REDIS_PORT,
-                           password=config.REDIS_PASSWORD,
-                           db=0)
+redis_client = redis.from_url(config.REDIS_URL)
 
 async def products_from_results(results) -> list:
     # extract products from VSS results

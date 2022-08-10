@@ -16,10 +16,10 @@ services:
       dockerfile: Dockerfile
     environment:
       DEPLOYMENT: "dev"
-      REDIS_DATA_URL: 'redis://:testing123@redis-vector-db:6379/0'
-      REDIS_OM_URL: 'redis://:testing123@redis-vector-db:6379/0'
-      REDIS_HOST: 'redis-vector-db'
+      REDIS_HOST: "redis-vector-db"
       REDIS_PORT: 6379
+      REDIS_PASSSWORD: "testing123"
+      REDIS_DB: 0
     expose:
       - "8888"
     ports:

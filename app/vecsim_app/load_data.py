@@ -76,12 +76,7 @@ async def set_product_vectors(product_vectors, redis_conn, products_with_pk):
 
 async def load_all_data():
     # TODO use redis-om connection
-    redis_conn = redis.Redis(
-        host=config.REDIS_HOST,
-        port=config.REDIS_PORT,
-        password=config.REDIS_PASSWORD,
-        db=0
-    )
+    redis_conn = redis.from_url(config.REDIS_URL)
     keys = await redis_conn.keys()
     if len(keys) > 5000:
         print("Products already loaded")

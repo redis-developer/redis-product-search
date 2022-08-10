@@ -90,6 +90,9 @@ export const Home = (props: Props) => {
           <a className="btn btn-secondary m-2" onClick={() => Navigate("/signup")}>
             Sign Up
           </a>
+          <a className="btn btn-secondary m-2" href="https://forms.gle/ANpHTe2Da5CVGHty7" target="_blank">
+            Talk With Us
+          </a>
         </div>
       )}
 
