@@ -77,8 +77,7 @@ async def set_product_vectors(product_vectors, redis_conn, products_with_pk):
 async def load_all_data():
     # TODO use redis-om connection
     redis_conn = redis.from_url(config.REDIS_URL)
-    keys = await redis_conn.keys()
-    if len(keys) > 5000:
+    if await redis_conn.dbsize() > 5000:
         print("Products already loaded")
     else:
         print("Loading products into Vecsim App")
