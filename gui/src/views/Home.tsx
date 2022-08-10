@@ -65,6 +65,9 @@ export const Home = (props: Props) => {
            to show how unstructured data, such as images and text, can be used to create powerful
            search engines.
        </p>
+       <a className="btn btn-secondary m-2" href="https://forms.gle/ANpHTe2Da5CVGHty7" target="_blank">
+            Talk With Us
+       </a>
       { isAuthenticated() ? (
         <div>
           <a className="btn btn-primary m-2" onClick={() => queryProductsWithLimit()}>
@@ -89,9 +92,6 @@ export const Home = (props: Props) => {
           </a>
           <a className="btn btn-secondary m-2" onClick={() => Navigate("/signup")}>
             Sign Up
-          </a>
-          <a className="btn btn-secondary m-2" href="https://forms.gle/ANpHTe2Da5CVGHty7" target="_blank">
-            Talk With Us
           </a>
         </div>
       )}
