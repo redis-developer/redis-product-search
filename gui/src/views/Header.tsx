@@ -86,7 +86,7 @@ export const Header = (props: Props) => {
           </Nav>
           {/* Add a button to talk with us! */}
           <Nav>
-            <Nav.Link style="color:White;" href="https://forms.gle/ANpHTe2Da5CVGHty7" target="_blank">
+            <Nav.Link className="btn btn-primary m-2" href="https://forms.gle/ANpHTe2Da5CVGHty7" target="_blank">
               Talk With Us
             </Nav.Link>
           </Nav>
