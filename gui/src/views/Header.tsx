@@ -75,29 +75,21 @@ export const Header = (props: Props) => {
             <NavDropdown title="About" id="navbarScrollingDropdown">
               <NavDropdown.Item href="https://github.com/Spartee/redis-vector-search">Code</NavDropdown.Item>
               <NavDropdown.Item href="http://launchpad.redis.com/">Blog</NavDropdown.Item>
+              <NavDropdown.Item href="https://forms.gle/ANpHTe2Da5CVGHty7" target="_blank">Talk With Us</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => Navigate("/login")}>Login</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => Navigate("/signup")}>Signup</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="https://redis.io/docs/stack/search/reference/vectors/">
                 Redis Vector Search
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          {/* Add a button to logout when user is authenticated */}
-          { isAuthenticated() ? (
-            <Nav>
-              <Nav.Link onClick={() => logoutUser() }>
-                Logout
-              </Nav.Link>
-            </Nav>
-          ) : (
-            <Nav>
-            <Nav.Link  onClick={() => Navigate("/login")}>
-              Login
+          {/* Add a button to talk with us! */}
+          <Nav>
+            <Nav.Link style="color:White;" href="https://forms.gle/ANpHTe2Da5CVGHty7" target="_blank">
+              Talk With Us
             </Nav.Link>
-            <Nav.Link  onClick={() => Navigate("/signup")}>
-            Signup
-          </Nav.Link>
           </Nav>
-          )}
           <Form className="d-flex">
             <FormControl
               onChange={inputHandler}
