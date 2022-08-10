@@ -95,7 +95,7 @@ async def find_products_by_text(similarity_request: SimilarityRequest) -> t.List
 
     # find the vector of the Product listed in the request
     product_vector_key = "product_vector:" + str(similarity_request.product_id)
-    vector = await redis_client.hget(product_vector_key, "img_vector")
+    vector = await redis_client.hget(product_vector_key, "text_vector")
 
     # obtain results of the query
     results = await redis_client.ft().search(q, query_params={"vec_param": vector})

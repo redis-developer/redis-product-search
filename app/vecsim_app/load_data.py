@@ -83,7 +83,7 @@ async def load_all_data():
         db=0
     )
     keys = await redis_conn.keys()
-    if len(keys) > 10000:
+    if len(keys) > 5000:
         print("Products already loaded")
     else:
         print("Loading products into Vecsim App")
