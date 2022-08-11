@@ -18,7 +18,7 @@ services:
       DEPLOYMENT: "dev"
       REDIS_HOST: "redis-vector-db"
       REDIS_PORT: 6379
-      REDIS_PASSSWORD: "testing123"
+      REDIS_PASSWORD: "testing123"
       REDIS_DB: 0
     expose:
       - "8888"

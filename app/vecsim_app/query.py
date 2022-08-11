@@ -60,7 +60,7 @@ async def create_hnsw_index(
                                         gender_field])
 
 
-async def create_query(
+def create_query(
     search_type: str="KNN",
     number_of_results: int=20,
     vector_field_name: str="img_vector",

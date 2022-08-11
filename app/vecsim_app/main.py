@@ -73,8 +73,8 @@ if __name__ == "__main__":
     }
     if env == "prod":
         server_attr.update({"reload": False,
-                            "workers": 3,
-                            "ssl_keyfile": "certs/key.pem", # replaced
-                            "ssl_certfile": "certs/cert.pem"})
+                            "workers": 2,
+                            "ssl_keyfile": "key.pem",
+                            "ssl_certfile": "full.pem"})
 
     uvicorn.run("main:app", **server_attr)

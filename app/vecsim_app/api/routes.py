@@ -57,7 +57,7 @@ async def text_search_products(search: SearchRequest):
        name="product:find_similar_by_image",
        operation_id="compute_image_similarity")
 async def find_products_by_image(similarity_request: SimilarityRequest) -> t.List[Product]:
-    q = await create_query(
+    q = create_query(
         similarity_request.search_type,
         similarity_request.number_of_results,
         vector_field_name="img_vector",
@@ -82,7 +82,7 @@ async def find_products_by_image(similarity_request: SimilarityRequest) -> t.Lis
        name="product:find_similar_by_text",
        operation_id="compute_text_similarity")
 async def find_products_by_text(similarity_request: SimilarityRequest) -> t.List[Product]:
-    q = await create_query(
+    q = create_query(
         similarity_request.search_type,
         similarity_request.number_of_results,
         vector_field_name="text_vector",
