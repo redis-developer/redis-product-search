@@ -74,7 +74,7 @@ export const Header = (props: Props) => {
           >
             <NavDropdown title="About" id="navbarScrollingDropdown">
               <NavDropdown.Item href="https://github.com/Spartee/redis-vector-search">Code</NavDropdown.Item>
-              <NavDropdown.Item href="http://launchpad.redis.com/">Blog</NavDropdown.Item>
+              <NavDropdown.Item href="https://mlops.community/vector-similarity-search-from-basics-to-production/">Blog</NavDropdown.Item>
               <NavDropdown.Item href="https://forms.gle/ANpHTe2Da5CVGHty7" target="_blank">Talk With Us</NavDropdown.Item>
               <NavDropdown.Item onClick={() => Navigate("/login")}>Login</NavDropdown.Item>
               <NavDropdown.Item onClick={() => Navigate("/signup")}>Signup</NavDropdown.Item>
