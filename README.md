@@ -62,6 +62,7 @@ The dataset was taken from the the following Kaggle links.
 
 
 ## Running Locally
+Before you can run the application locally, you must use the Jupyter Notebook in the `data/` directory to create product embeddings and product metadata JSON files. Both files will end up stored in the `data/` directory. Then you can proceed with one or both of the options below.
 
 ### Using pre-built containers
 
@@ -96,13 +97,21 @@ services:
 ```
 
 To launch, run the following
-- ``docker compose up`` in same directory as ``docker-compose.yml``
-- Navigate to ``0.0.0.0:8888`` in a browser
+- ``docker compose up --build`` in same directory as ``docker-compose.yml``
+- Wait while things install and get setup
+- Navigate to `http://localhost:8888` in a browser
 
-### Building the containers
+### Using a React development env
+It's typically easier to write front end code in an interactive environment (**outside of Docker**)where one can test out code changes in real time. In order to use this approach:
 
-More to come here
+1. Follow steps from previous section with Docker Compose to deploy the backend API.
+2. Skip the step about launching a browser at host/port.
+3. `cd gui/` directory and use `yarn` to install packages: `yarn install --no-optional` (you may need to use `npm` to install `yarn`).
+4. Use `yarn` to serve the application from your machine: `yarn start`.
+5. Navigate to `http://localhost:3000` in a browser.
 
-### Running outside docker
+### Troubleshooting
 
-More to come here
+#### Issues building the container
+- Sometimes it works if you try again. Or maybe you need to clear out some Docker cache. Run `docker system prune`, restart Docker Desktop, and try again.
+- The generated `node_modules` folder (under `gui/` when running the app outside of Docker) can mess things up when building docker images. Delete that folder (if present) and try rebuilding again.
