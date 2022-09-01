@@ -1,4 +1,4 @@
-FROM node:17.2-alpine AS ReactImage
+FROM node:18.8-alpine AS ReactImage
 
 WORKDIR /app/gui
 

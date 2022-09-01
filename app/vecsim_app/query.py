@@ -61,6 +61,7 @@ async def create_hnsw_index(
 
 
 def create_query(
+    return_fields: list,
     search_type: str="KNN",
     number_of_results: int=20,
     vector_field_name: str="img_vector",
@@ -78,9 +79,27 @@ def create_query(
         tag = "*"
 
     base_query = f'{tag}=>[{search_type} {number_of_results} @{vector_field_name} $vec_param AS vector_score]'
-    q = Query(base_query)
-    q.sort_by("vector_score")
-    q.paging(0, number_of_results)
-    q.return_fields("product_id", "product_pk", "vector_score")
-    q.dialect(2)
-    return q
+    return Query(base_query)\
+        .sort_by("vector_score")\
+        .paging(0, number_of_results)\
+        .return_fields(*return_fields)\
+        .dialect(2)
+
+
+def count(
+    gender: t.Optional[str] = None,
+    category: t.Optional[str] = None
+):
+    tag = "("
+    if gender:
+        tag += f"@gender:{{{gender}}}"
+    if category:
+        tag += f"@category:{{{category}}}"
+    tag += ")"
+    # if no tags are selected
+    if len(tag) < 3:
+        tag = "*"
+
+    return Query(f'{tag}')\
+        .no_content()\
+        .dialect(2)

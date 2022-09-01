@@ -33,8 +33,21 @@ export const fetchFromBackend = async (url: string, method: string, body?: any) 
 
   return data;
 }
-export const getProducts = async (limit=15, skip=0) => {
-  return fetchFromBackend(`${MASTER_URL}?limit=${limit}&skip=${skip}`, 'GET');
+
+export const getProducts = async (limit=15, skip=0, gender="", category="") => {
+  var params: string;
+  if ( gender == "" && category == "" ) {
+    var params = `?limit=${limit}&skip=${skip}`
+  } else {
+    if ( gender != "" && category != "" ) {
+      var params = `?limit=${limit}&skip=${skip}&gender=${gender}&category=${category}`
+    } else if ( gender != "" ) {
+      var params = `?limit=${limit}&skip=${skip}&gender=${gender}`
+    } else {
+      var params = `?limit=${limit}&skip=${skip}&category=${category}`
+    }
+  }
+  return fetchFromBackend(`${MASTER_URL}${params}`, 'GET');
 }
 // get products from Redis through the FastAPI backend
 
@@ -95,11 +108,11 @@ export const getSemanticallySimilarProductsbyText = async (text: string,
                                                     limit=15,
                                                     skip=0) => {
   let body = {
-  user_text: text,
-  search_type: search,
-  number_of_results: limit,
-  gender: gender,
-  category: category
+    user_text: text,
+    search_type: search,
+    number_of_results: limit,
+    gender: gender,
+    category: category
   }
 
   const url = MASTER_URL + "vectorsearch/text/user";
