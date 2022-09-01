@@ -90,8 +90,8 @@ export const Home = (props: Props) => {
       <div className="album py-5 bg-light">
         <div className="container">
             <p style={{fontSize: 15}}>
-              <Tooltip title="Total available product count" arrow>
-                <em>{props.total} products</em>
+              <Tooltip title="Filtered product count" arrow>
+                <em>{props.total} searchable products</em>
               </Tooltip>
             </p>
           <div>
@@ -104,7 +104,7 @@ export const Home = (props: Props) => {
               color='primary'
               onDelete={() => {props.setCategory(""); queryProducts()}}
               disabled={props.category == ''}
-              />
+            />
           ):(
             <></>
           )}
