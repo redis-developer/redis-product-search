@@ -1,9 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
 import { getVisuallySimilarProducts, getSemanticallySimilarProducts } from "../api"
 import  useCheckMobileScreen  from "../mobile"
-
-
+import { Chip } from '@material-ui/core';
+import Tooltip from '@mui/material/Tooltip';
 
 interface Props {
     productId: number;
@@ -12,7 +11,9 @@ interface Props {
     name: string;
     gender: string;
     category: string;
-    setState: (state: any) => void;
+    similarity_score: number;
+    setProducts: (state: any) => void;
+    setTotal: (state: any) => void;
 }
 
 
@@ -22,13 +23,14 @@ export const Card = (props: Props) => {
 
     const queryVisuallySimilarProducts = async () => {
         try {
-          const productJson = await getVisuallySimilarProducts(
+          const res = await getVisuallySimilarProducts(
               props.productId,
               "KNN",
               props.gender,
               props.category,
               props.numProducts);
-          props.setState(productJson)
+          props.setProducts(res.products)
+          props.setTotal(res.total)
         } catch (err) {
           console.log(String(err));
         }
@@ -36,13 +38,14 @@ export const Card = (props: Props) => {
 
     const querySemanticallySimilarProducts = async () => {
         try {
-          const productJson = await getSemanticallySimilarProducts(
+          const res = await getSemanticallySimilarProducts(
               props.productId,
               "KNN",
               props.gender,
               props.category,
               props.numProducts);
-          props.setState(productJson)
+          props.setProducts(res.products)
+          props.setTotal(res.total)
         } catch (err) {
           console.log(String(err));
         }
@@ -76,20 +79,37 @@ export const Card = (props: Props) => {
         </div>
         <div className="d-flex justify-content-between align-items-center">
          <div className="btn-group">
-          <button
-           type="button"
-           className="btn btn-sm btn-outline-secondary"
-           onClick={() => querySemanticallySimilarProducts()}
-          >
-           By Text
-          </button>
-          <button
-           type="button"
-           className="btn btn-sm btn-outline-secondary"
-           onClick={() => queryVisuallySimilarProducts()}
-          >
-           By Image
-          </button>
+         <Tooltip title="Search for similar products by text" arrow>
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-secondary"
+              onClick={() => querySemanticallySimilarProducts()}
+            >
+            By Text
+            </button>
+          </Tooltip>
+          <Tooltip title="Search for similar products by image" arrow>
+            <button
+            type="button"
+            className="btn btn-sm btn-outline-secondary"
+            onClick={() => queryVisuallySimilarProducts()}
+            >
+            By Image
+            </button>
+          </Tooltip>
+         </div>
+         <div className="btn-group">
+          { props.similarity_score ? (
+            <Tooltip title="Similarity Score" arrow>
+              <Chip
+                style={{ margin: "auto 20px" }}
+                label={props.similarity_score.toFixed(2)}
+                color='primary'
+              />
+            </Tooltip>
+          ):(
+            <></>
+          )}
          </div>
         </div>
        </div>
@@ -97,3 +117,4 @@ export const Card = (props: Props) => {
      </div>
     );
    };
+

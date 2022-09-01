@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { getProducts } from '../api';
-import { isAuthenticated } from '../auth';
 import { useNavigate } from 'react-router-dom';
-import { BASE_URL } from '../config';
 import { Card } from "./Card"
 import { TagRadios } from '../radio';
 import { Chip } from '@material-ui/core';
+import Tooltip from '@mui/material/Tooltip';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -17,7 +16,8 @@ interface Props {
   setGender: (state: any) => void;
   category: string;
   setCategory: (state: any) => void;
-
+  total: number;
+  setTotal: (state: any) => void;
 }
 
 
@@ -29,12 +29,9 @@ export const Home = (props: Props) => {
 
   const queryProducts = async () => {
     try {
-      // clear filters
-      props.setGender("");
-      props.setCategory("");
-
-      const productJson = await getProducts(limit, skip);
-      props.setProducts(productJson)
+      const result = await getProducts(limit, skip, props.gender, props.category);
+      props.setProducts(result.products)
+      props.setTotal(result.total)
     } catch (err) {
       setError(String(err));
     }
@@ -51,6 +48,9 @@ export const Home = (props: Props) => {
 
   // Execute this one when the component loads up
   useEffect(() => {
+    // clear filters
+    props.setGender("");
+    props.setCategory("");
     queryProductsWithLimit();
   }, []);
 
@@ -66,25 +66,34 @@ export const Home = (props: Props) => {
            search engines.
        </p>
        <div>
-          <a className="btn btn-primary m-2" onClick={() => queryProductsWithLimit()}>
-            Load New Products
-          </a>
+         <div className="btn-group">
           {props.products.length > 0 ? (
-          <div>
-              <TagRadios
-              gender={props.gender}
-              category={props.category}
-              setGender={props.setGender}
-              setCategory={props.setCategory} />
-          </div>
+              <div>
+                  <TagRadios
+                  gender={props.gender}
+                  category={props.category}
+                  setGender={props.setGender}
+                  setCategory={props.setCategory} />
+              </div>
             ): (
               <></>
             )}
+          <Tooltip title="Fetch more products from Redis" arrow>
+            <a className="btn btn-primary m-2" onClick={() => queryProductsWithLimit()}>
+              Load More Products
+            </a>
+          </Tooltip>
+         </div>
        </div>
       </div>
      </section>
       <div className="album py-5 bg-light">
         <div className="container">
+            <p style={{fontSize: 15}}>
+              <Tooltip title="Filtered product count" arrow>
+                <em>{props.total} searchable products</em>
+              </Tooltip>
+            </p>
           <div>
           { props.category != "" ? (
             <Chip
@@ -95,7 +104,7 @@ export const Home = (props: Props) => {
               color='primary'
               onDelete={() => {props.setCategory(""); queryProducts()}}
               disabled={props.category == ''}
-              />
+            />
           ):(
             <></>
           )}
@@ -118,14 +127,16 @@ export const Home = (props: Props) => {
 
               {props.products.map((product) => (
                  <Card
-                  key={product.pk}
-                  image_path={product.product_metadata.image_url}
-                  name={product.product_metadata.name}
-                  productId={product.product_id}
-                  numProducts={15}
-                  gender={props.gender}
-                  category={props.category}
-                  setState={props.setProducts}
+                    key={product.pk}
+                    image_path={product.product_metadata.image_url}
+                    name={product.product_metadata.name}
+                    productId={product.product_id}
+                    numProducts={15}
+                    similarity_score={product.similarity_score}
+                    gender={props.gender}
+                    category={props.category}
+                    setProducts={props.setProducts}
+                    setTotal={props.setTotal}
                   />
 
                 ))}

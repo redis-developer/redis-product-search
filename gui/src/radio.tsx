@@ -8,6 +8,8 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import useCheckMobileScreen from './mobile';
+import Tooltip from '@mui/material/Tooltip';
+
 interface Props {
     gender: string,
     category: string,
@@ -68,9 +70,11 @@ export const TagRadios = (props: Props) => {
   return (
     <FormControl>
       <div>
-        <button className="btn btn-secondary m-2" onClick={(e) => handleClick(e)}>
-              Set Hybrid Search Attributes
-        </button>
+        <Tooltip title="Select product tags to use as filters" arrow>
+          <button className="btn btn-secondary m-2" onClick={(e) => handleClick(e)}>
+            Apply Filters
+          </button>
+        </Tooltip>
     </div>
     <Popover
       id={id}
@@ -85,8 +89,7 @@ export const TagRadios = (props: Props) => {
     >
       <div style={{paddingTop: "10px"}}>
         <Typography sx={{ p: 2 }}>
-          Hybrid Search combines tag based filtering with vector search.
-          Selected tags will pre-filter results found by the text and image vector search.
+          Hybrid Search combines product filters with vector similarity search.
           </Typography>
       <div style={{ paddingLeft: "10px", display: "flex", paddingTop: "5% ", gap: "30px"}}>
         <div>

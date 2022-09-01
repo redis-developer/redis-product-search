@@ -1706,7 +1706,7 @@
     "@mui/private-theming" "^5.8.4"
     "@mui/styled-engine" "^5.8.0"
     "@mui/types" "^7.1.4"
-    "@mui/utils" "^5.8.4"
+    "/utils" "^5.8.4"
     clsx "^1.1.1"
     csstype "^3.1.0"
     prop-types "^15.8.1"

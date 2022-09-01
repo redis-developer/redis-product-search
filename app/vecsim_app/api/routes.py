@@ -10,33 +10,63 @@ from vecsim_app.schema import (
     UserTextSimilarityRequest
 )
 from vecsim_app.models import Product
-from vecsim_app.query import create_query
+from vecsim_app.query import create_query, count
 
 
 product_router = r = APIRouter()
 redis_client = redis.from_url(config.REDIS_URL)
 
-async def products_from_results(results) -> list:
-    # extract products from VSS results
-    return [await Product.get(p.product_pk) for p in results.docs]
+async def process_product(p, i: int):
+    product = await Product.get(p.product_pk)
+    product = product.dict()
+    score = 1 - float(p.vector_score) if i > 0 else 1.0
+    product['similarity_score'] = score
+    return product
 
-@r.get("/", response_model=t.List[Product],
+async def products_from_results(total, results) -> list:
+    # extract products from VSS results
+    return {
+        'total': total,
+        'products': [
+            await process_product(p, i)
+            for i, p in enumerate(results.docs)
+        ]
+    }
+
+@r.get("/", response_model=t.Dict,
        name="product:get_product_samples",
        operation_id="get_products_samples")
-async def get_products(limit: int = 20, skip: int = 0):
-    pks = await Product.all_pks()
-    if pks:
-        # TODO figure out how to slice async_generator
-        products = []
-        i = 0
-        async for pk in pks:
-            if i >= skip and i < skip + limit:
-                products.append(await Product.get(pk))
-            if len(products) == limit:
-                break
-            i += 1
-        return products
-    return []
+async def get_products(limit: int = 20, skip: int = 0, gender: str = "", category: str = ""):
+    products = []
+    # TODO - if we can generalize this - that would be sick
+    if gender and category:
+        products = await Product.find(
+            (Product.product_metadata.gender == gender) & \
+            (Product.product_metadata.master_category == category)
+        ).copy(offset=skip, limit=limit).execute()
+
+    elif gender and not category:
+        products = await Product.find(
+            Product.product_metadata.gender == gender
+        ).copy(offset=skip, limit=limit).execute()
+
+    elif category and not gender:
+        products = await Product.find(
+            Product.product_metadata.master_category == category
+        ).copy(offset=skip, limit=limit).execute()
+
+    else:
+        products = await Product.find().copy(offset=skip, limit=limit).execute()
+    # Get total count
+    total = (
+        await redis_client.ft().search(
+            count(gender=gender, category=category)
+        )
+    ).total
+    return {
+        'total': total,
+        'products': products
+    }
 
 
 @r.post("/search",
@@ -46,21 +76,25 @@ async def get_products(limit: int = 20, skip: int = 0):
 async def text_search_products(search: SearchRequest):
     num_products = search.number_of_results
     products = await Product.find(
-        Product.product_metadata.name % search.text).all()
-    if len(products) > num_products:
-        return products[:num_products]
+        Product.product_metadata.name % search.text
+    ).copy(offset=0, limit=num_products).execute()
     return products
 
 
 @r.post("/vectorsearch/image",
-       response_model=t.List[Product],
+       response_model=t.Dict,
        name="product:find_similar_by_image",
        operation_id="compute_image_similarity")
-async def find_products_by_image(similarity_request: SimilarityRequest) -> t.List[Product]:
-    q = create_query(
+async def find_products_by_image(similarity_request: SimilarityRequest) -> t.Dict:
+    query = create_query(
+        similarity_request.return_fields,
         similarity_request.search_type,
         similarity_request.number_of_results,
         vector_field_name="img_vector",
+        gender=similarity_request.gender,
+        category=similarity_request.category
+    )
+    count_query = count(
         gender=similarity_request.gender,
         category=similarity_request.category
     )
@@ -70,22 +104,27 @@ async def find_products_by_image(similarity_request: SimilarityRequest) -> t.Lis
     vector = await redis_client.hget(product_vector_key, "img_vector")
 
     # obtain results of the query
-    results = await redis_client.ft().search(q, query_params={"vec_param": vector})
+    total = (await redis_client.ft().search(count_query)).total
+    results = await redis_client.ft().search(query, query_params={"vec_param": vector})
 
     # Get Product records of those results
-    similar_products = await products_from_results(results)
-    return similar_products
+    return await products_from_results(total, results)
 
 
 @r.post("/vectorsearch/text",
-       response_model=t.List[Product],
+       response_model=t.Dict,
        name="product:find_similar_by_text",
        operation_id="compute_text_similarity")
-async def find_products_by_text(similarity_request: SimilarityRequest) -> t.List[Product]:
-    q = create_query(
+async def find_products_by_text(similarity_request: SimilarityRequest) -> t.Dict:
+    query = create_query(
+        similarity_request.return_fields,
         similarity_request.search_type,
         similarity_request.number_of_results,
         vector_field_name="text_vector",
+        gender=similarity_request.gender,
+        category=similarity_request.category
+    )
+    count_query = count(
         gender=similarity_request.gender,
         category=similarity_request.category
     )
@@ -95,29 +134,37 @@ async def find_products_by_text(similarity_request: SimilarityRequest) -> t.List
     vector = await redis_client.hget(product_vector_key, "text_vector")
 
     # obtain results of the query
-    results = await redis_client.ft().search(q, query_params={"vec_param": vector})
+    total = (await redis_client.ft().search(count_query)).total
+    results = await redis_client.ft().search(query, query_params={"vec_param": vector})
 
     # Get Product records of those results
-    similar_products = await products_from_results(results)
-    return similar_products
+    return await products_from_results(total, results)
 
 
 @r.post("/vectorsearch/text/user",
-       response_model=t.List[Product],
+       response_model=t.Dict,
        name="product:find_similar_by_user_text",
        operation_id="compute_user_text_similarity")
-async def find_products_by_user_text(similarity_request: UserTextSimilarityRequest) -> t.List[Product]:
-    q = create_query(similarity_request.search_type,
-                    similarity_request.number_of_results,
-                    vector_field_name="text_vector",
-                    gender=similarity_request.gender,
-                    category=similarity_request.category)
+async def find_products_by_user_text(similarity_request: UserTextSimilarityRequest) -> t.Dict:
+    query = create_query(
+        similarity_request.return_fields,
+        similarity_request.search_type,
+        similarity_request.number_of_results,
+        vector_field_name="text_vector",
+        gender=similarity_request.gender,
+        category=similarity_request.category
+    )
+    count_query = count(
+        gender=similarity_request.gender,
+        category=similarity_request.category
+    )
 
     # obtain vector from text model in top level  __init__.py
     vector = TEXT_MODEL.encode(similarity_request.user_text)
+
     # obtain results of the query
-    results = await redis_client.ft().search(q, query_params={"vec_param": vector.tobytes()})
+    total = (await redis_client.ft().search(count_query)).total
+    results = await redis_client.ft().search(query, query_params={"vec_param": vector})
 
     # Get Product records of those results
-    similar_products = await products_from_results(results)
-    return similar_products
+    return await products_from_results(total, results)
