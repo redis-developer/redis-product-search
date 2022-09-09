@@ -170,10 +170,3 @@ async def find_products_by_user_text(similarity_request: UserTextSimilarityReque
 
     # Get Product records of those results
     return await products_from_results(total.total, results)
-
-async def get_count(count_query):
-    pass
-
-async def get_products(vector_query):
-    pass
-
