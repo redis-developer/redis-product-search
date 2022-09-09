@@ -1,12 +1,38 @@
 import typing as t
+
 from redis.asyncio import Redis
-from redis.commands.search.field import VectorField, TagField
 from redis.commands.search.query import Query
+from redis.commands.search.indexDefinition import (
+    IndexDefinition,
+    IndexType
+)
+from redis.commands.search.field import (
+    VectorField,
+    TagField
+)
+
+
+INDEX_NAME = "products"
+
+async def create_index(
+    redis_conn: Redis,
+    prefix: str,
+    image_field: VectorField,
+    text_field: VectorField
+):
+    category_field = TagField("category")
+    gender_field = TagField("gender")
+    # Create index
+    await redis_conn.ft(INDEX_NAME).create_index(
+        fields = [image_field, text_field, category_field, gender_field],
+        definition = IndexDefinition(prefix=[prefix], index_type=IndexType.HASH)
+    )
 
 
 async def create_flat_index(
     redis_conn: Redis,
     number_of_vectors: int,
+    prefix: str,
     distance_metric: str='L2'
 ):
     image_field = VectorField("img_vector",
@@ -23,19 +49,16 @@ async def create_flat_index(
                     "DIM": 768,
                     "DISTANCE_METRIC": distance_metric,
                     "INITIAL_CAP": number_of_vectors,
-                    "BLOCK_SIZE":number_of_vectors
+                    "BLOCK_SIZE": number_of_vectors
                 })
-    category_field = TagField("category")
-    gender_field = TagField("gender")
-    await redis_conn.ft().create_index([image_field,
-                                        text_field,
-                                        category_field,
-                                        gender_field])
+    await create_index(redis_conn, prefix, image_field, text_field)
+
 
 
 async def create_hnsw_index(
     redis_conn: Redis,
     number_of_vectors: int,
+    prefix: str,
     distance_metric: str='COSINE'
 ):
     image_field = VectorField("img_vector",
@@ -52,12 +75,7 @@ async def create_hnsw_index(
                     "DISTANCE_METRIC": distance_metric,
                     "INITIAL_CAP": number_of_vectors,
                 })
-    category_field = TagField("category")
-    gender_field = TagField("gender")
-    await redis_conn.ft().create_index([image_field,
-                                        text_field,
-                                        category_field,
-                                        gender_field])
+    await create_index(redis_conn, prefix, image_field, text_field)
 
 
 def create_query(
