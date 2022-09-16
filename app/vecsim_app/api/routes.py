@@ -6,7 +6,6 @@ from fastapi import APIRouter
 
 from vecsim_app import config
 from vecsim_app import TEXT_MODEL
-from vecsim_app.config import INDEX_NAME
 from vecsim_app.schema import (
     SimilarityRequest,
     SearchRequest,
@@ -57,7 +56,7 @@ async def get_products(limit: int = 20, skip: int = 0, gender: str = "", categor
         .execute(exhaust_results=False)
     # Get total count
     total = (
-        await redis_client.ft(INDEX_NAME).search(
+        await redis_client.ft(config.INDEX_NAME).search(
             count(gender=gender, category=category)
         )
     ).total
@@ -103,8 +102,8 @@ async def find_products_by_image(similarity_request: SimilarityRequest) -> t.Dic
 
     # obtain results of the query
     total, results = await asyncio.gather(
-        redis_client.ft(INDEX_NAME).search(count_query),
-        redis_client.ft(INDEX_NAME).search(query, query_params={"vec_param": vector})
+        redis_client.ft(config.INDEX_NAME).search(count_query),
+        redis_client.ft(config.INDEX_NAME).search(query, query_params={"vec_param": vector})
     )
 
     # Get Product records of those results
@@ -135,8 +134,8 @@ async def find_products_by_text(similarity_request: SimilarityRequest) -> t.Dict
 
     # obtain results of the query
     total, results = await asyncio.gather(
-        redis_client.ft(INDEX_NAME).search(count_query),
-        redis_client.ft(INDEX_NAME).search(query, query_params={"vec_param": vector})
+        redis_client.ft(config.INDEX_NAME).search(count_query),
+        redis_client.ft(config.INDEX_NAME).search(query, query_params={"vec_param": vector})
     )
 
     # Get Product records of those results
@@ -166,8 +165,8 @@ async def find_products_by_user_text(similarity_request: UserTextSimilarityReque
 
     # obtain results of the query
     total, results = await asyncio.gather(
-        redis_client.ft(INDEX_NAME).search(count_query),
-        redis_client.ft(INDEX_NAME).search(query, query_params={"vec_param": vector})
+        redis_client.ft(config.INDEX_NAME).search(count_query),
+        redis_client.ft(config.INDEX_NAME).search(query, query_params={"vec_param": vector})
     )
 
     # Get Product records of those results
