@@ -21,15 +21,3 @@ class ProductMetadata(EmbeddedJsonModel):
 class Product(JsonModel):
     product_id: int = Field(index=True)
     product_metadata: ProductMetadata
-
-# User models
-class User(JsonModel):
-    id: int = Field(index=True)
-    email: str = Field(index=True)
-    is_active: bool = True
-    is_superuser: bool = False
-    first_name: str = Field(index=True)
-    last_name: str = Field(index=True)
-    company: str = Field(index=True)
-    title: str = Field(index=True)
-    hashed_password: str

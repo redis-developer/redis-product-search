@@ -84,6 +84,7 @@ export const Card = (props: Props) => {
               type="button"
               className="btn btn-sm btn-outline-secondary"
               onClick={() => querySemanticallySimilarProducts()}
+              style={{ fontSize: 12 }}
             >
             By Text
             </button>
@@ -93,16 +94,17 @@ export const Card = (props: Props) => {
             type="button"
             className="btn btn-sm btn-outline-secondary"
             onClick={() => queryVisuallySimilarProducts()}
+            style={{ fontSize: 12 }}
             >
             By Image
             </button>
           </Tooltip>
-         </div>
-         <div className="btn-group">
+          </div>
+          <div className="btn-group">
           { props.similarity_score ? (
             <Tooltip title="Similarity Score" arrow>
               <Chip
-                style={{ margin: "auto 20px" }}
+                style={{ margin: "auto", fontSize: 12 }}
                 label={props.similarity_score.toFixed(2)}
                 color='primary'
               />

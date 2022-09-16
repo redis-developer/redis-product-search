@@ -1,7 +1,9 @@
+import asyncio
 import typing as t
 import redis.asyncio as redis
 
 from fastapi import APIRouter
+
 from vecsim_app import config
 from vecsim_app import TEXT_MODEL
 from vecsim_app.schema import (
@@ -38,28 +40,23 @@ async def products_from_results(total, results) -> list:
        operation_id="get_products_samples")
 async def get_products(limit: int = 20, skip: int = 0, gender: str = "", category: str = ""):
     products = []
-    # TODO - if we can generalize this - that would be sick
+    expressions = []
     if gender and category:
-        products = await Product.find(
+        expressions.append(
             (Product.product_metadata.gender == gender) & \
             (Product.product_metadata.master_category == category)
-        ).copy(offset=skip, limit=limit).execute()
-
+        )
     elif gender and not category:
-        products = await Product.find(
-            Product.product_metadata.gender == gender
-        ).copy(offset=skip, limit=limit).execute()
-
+        expressions.append(Product.product_metadata.gender == gender)
     elif category and not gender:
-        products = await Product.find(
-            Product.product_metadata.master_category == category
-        ).copy(offset=skip, limit=limit).execute()
-
-    else:
-        products = await Product.find().copy(offset=skip, limit=limit).execute()
+        expressions.append(Product.product_metadata.master_category == category)
+    # Run query
+    products = await Product.find(*expressions)\
+        .copy(offset=skip, limit=limit)\
+        .execute(exhaust_results=False)
     # Get total count
     total = (
-        await redis_client.ft().search(
+        await redis_client.ft(config.INDEX_NAME).search(
             count(gender=gender, category=category)
         )
     ).total
@@ -104,11 +101,13 @@ async def find_products_by_image(similarity_request: SimilarityRequest) -> t.Dic
     vector = await redis_client.hget(product_vector_key, "img_vector")
 
     # obtain results of the query
-    total = (await redis_client.ft().search(count_query)).total
-    results = await redis_client.ft().search(query, query_params={"vec_param": vector})
+    total, results = await asyncio.gather(
+        redis_client.ft(config.INDEX_NAME).search(count_query),
+        redis_client.ft(config.INDEX_NAME).search(query, query_params={"vec_param": vector})
+    )
 
     # Get Product records of those results
-    return await products_from_results(total, results)
+    return await products_from_results(total.total, results)
 
 
 @r.post("/vectorsearch/text",
@@ -134,11 +133,13 @@ async def find_products_by_text(similarity_request: SimilarityRequest) -> t.Dict
     vector = await redis_client.hget(product_vector_key, "text_vector")
 
     # obtain results of the query
-    total = (await redis_client.ft().search(count_query)).total
-    results = await redis_client.ft().search(query, query_params={"vec_param": vector})
+    total, results = await asyncio.gather(
+        redis_client.ft(config.INDEX_NAME).search(count_query),
+        redis_client.ft(config.INDEX_NAME).search(query, query_params={"vec_param": vector})
+    )
 
     # Get Product records of those results
-    return await products_from_results(total, results)
+    return await products_from_results(total.total, results)
 
 
 @r.post("/vectorsearch/text/user",
@@ -163,8 +164,10 @@ async def find_products_by_user_text(similarity_request: UserTextSimilarityReque
     vector = TEXT_MODEL.encode(similarity_request.user_text)
 
     # obtain results of the query
-    total = (await redis_client.ft().search(count_query)).total
-    results = await redis_client.ft().search(query, query_params={"vec_param": vector})
+    total, results = await asyncio.gather(
+        redis_client.ft(config.INDEX_NAME).search(count_query),
+        redis_client.ft(config.INDEX_NAME).search(query, query_params={"vec_param": vector})
+    )
 
     # Get Product records of those results
-    return await products_from_results(total, results)
+    return await products_from_results(total.total, results)

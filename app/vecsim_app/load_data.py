@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
-import typing as t
-import json
 import asyncio
+import json
 import numpy as np
 import redis.asyncio as redis
+import typing as t
 
 from vecsim_app import config
-from vecsim_app.query import create_flat_index, create_hnsw_index
 from vecsim_app.models import Product
-from vecsim_app.schema import UserCreate
-from vecsim_app.crud import create_user
+from vecsim_app.query import (
+    create_flat_index,
+    create_hnsw_index
+)
+
 
 def read_product_json() -> t.List:
     with open(config.DATA_LOCATION + "/product_metadata.json") as f:
@@ -35,23 +37,6 @@ async def gather_with_concurrency(n,  *products):
 
     await asyncio.gather(*[load_product(p) for p in products])
     return with_pk
-
-async def set_user_count(redis_conn):
-    await redis_conn.set("user_count", 0)
-
-async def set_superuser_account():
-    user_dict = {
-        "email": config.SUPERUSER_EMAIL,
-        "password": config.SUPERUSER_PASS,
-        "is_active": True,
-        "is_superuser": True,
-        "first_name": config.SUPERUSER_FIRST,
-        "last_name": config.SUPERUSER_LAST,
-        "title": "Principal Engineer",
-        "company": "Redis"
-    }
-    superuser = UserCreate(**user_dict)
-    await create_user(superuser)
 
 async def set_product_vectors(product_vectors, redis_conn, products_with_pk):
     # iterate through products data and save vectors hash model
@@ -93,17 +78,10 @@ async def load_all_data():
         print("Creating vector search index")
         # create a search index
         if config.INDEX_TYPE == "HNSW":
-            await create_hnsw_index(redis_conn, len(products), distance_metric="COSINE")
+            await create_hnsw_index(redis_conn, len(products), prefix="product_vector:", distance_metric="COSINE")
         else:
-            await create_flat_index(redis_conn, len(products), distance_metric="L2")
+            await create_flat_index(redis_conn, len(products), prefix="product_vector:", distance_metric="L2")
         print("Search index created")
-
-    if not await redis_conn.exists("user_count"):
-        await set_user_count(redis_conn)
-
-        print("Creating Superuser")
-        await set_superuser_account()
-        print("Created superuser")
 
 if __name__ == "__main__":
     asyncio.run(load_all_data())

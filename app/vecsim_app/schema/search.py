@@ -1,5 +1,4 @@
-import typing as t
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 DEFAULT_RETURN_FIELDS = ["product_id", "product_pk", "vector_score"]
 
