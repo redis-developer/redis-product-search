@@ -1,5 +1,6 @@
 import typing as t
 
+from config import INDEX_NAME
 from redis.asyncio import Redis
 from redis.commands.search.query import Query
 from redis.commands.search.indexDefinition import (
@@ -12,7 +13,6 @@ from redis.commands.search.field import (
 )
 
 
-INDEX_NAME = "products"
 
 async def create_index(
     redis_conn: Redis,

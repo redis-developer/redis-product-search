@@ -3,15 +3,17 @@ import typing as t
 import redis.asyncio as redis
 
 from fastapi import APIRouter
+
 from vecsim_app import config
 from vecsim_app import TEXT_MODEL
+from vecsim_app.config import INDEX_NAME
 from vecsim_app.schema import (
     SimilarityRequest,
     SearchRequest,
     UserTextSimilarityRequest
 )
 from vecsim_app.models import Product
-from vecsim_app.query import create_query, count, INDEX_NAME
+from vecsim_app.query import create_query, count
 
 
 product_router = r = APIRouter()
