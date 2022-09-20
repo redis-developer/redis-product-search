@@ -4,6 +4,7 @@
     <br />
     <br />
 <div display="inline-block">
+    <a href="https://ecommerce.redisventures.com"><b>Hosted Demo</b></a>&nbsp;&nbsp;&nbsp;
     <a href="https://github.com/Spartee/redis-vector-search"><b>Code</b></a>&nbsp;&nbsp;&nbsp;
     <a href="https://redis.io/docs/stack/search/reference/vectors/"><b>Redis VSS Documentation</b></a>&nbsp;&nbsp;&nbsp;
   </div>
@@ -26,7 +27,6 @@ The following Redis Stack capabilities are available in this demo:
      - Flat (brute-force)
    - **Hybrid Queries**
      - Apply tags as pre-filter for vector search
-   - **Full text search**
    - **JSON storage**
 
 
