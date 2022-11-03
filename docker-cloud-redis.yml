@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  backend:
+    image: ghcr.io/redisventures/redis-product-search:latest
+    environment:
+      DEPLOYMENT: "dev"
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    expose:
+      - "8888"
+    ports:
+      - "8888:8888"
