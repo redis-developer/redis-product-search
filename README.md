@@ -61,12 +61,11 @@ The dataset was taken from the the following Kaggle links.
 ## Running the App
 Before running the app, install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
-### Use pre-built containers
-Both **Redis Stack** and the product search app run with **Docker Compose** using pre-built containers. Choose one of the methods below based on your Redis setup.
+
 
 #### Redis Cloud (recommended)
 
-1. [Get your Redis Cloud Database](https://redis.com/try-free/) (if needed).
+1. [Get your Redis Cloud Database](https://app.redislabs.com/) (if needed).
 
 2. Export Redis Endpoint Environment Variables:
     ```bash
