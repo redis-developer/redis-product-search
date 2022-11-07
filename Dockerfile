@@ -11,7 +11,6 @@ RUN yarn install --no-optional
 ADD ./gui ./
 RUN yarn build
 
-
 FROM python:3.8-slim-buster AS ApiImage
 
 ENV PYTHONUNBUFFERED 1
@@ -30,6 +29,8 @@ RUN pip install -e .
 
 # add static react files to fastapi image
 COPY --from=ReactImage /app/gui/build /app/backend/vecsim_app/templates/build
+
+LABEL org.opencontainers.image.source https://github.com/RedisVentures/redis-product-search
 
 WORKDIR /app/backend/vecsim_app
 

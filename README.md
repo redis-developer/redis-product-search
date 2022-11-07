@@ -27,8 +27,6 @@ The following Redis Stack capabilities are available in this demo:
      - Flat (brute-force)
    - **Hybrid Queries**
      - Apply tags as pre-filter for vector search
-   - **JSON storage**
-
 
 ## Application
 
@@ -52,7 +50,6 @@ This app was built as a Single Page Application (SPA) with the following compone
 Some inspiration was taken from this [Cookiecutter project](https://github.com/Buuntu/fastapi-react)
 and turned into a SPA application instead of a separate front-end server approach.
 
-
 ### Datasets
 
 The dataset was taken from the the following Kaggle links.
@@ -61,57 +58,58 @@ The dataset was taken from the the following Kaggle links.
 - [Smaller Dataset](https://www.kaggle.com/datasets/paramaggarwal/fashion-product-images-small)
 
 
-## Running Locally
-Before you can run the application locally, you must use the Jupyter Notebook in the `data/` directory to create product embeddings and product metadata JSON files. Both files will end up stored in the `data/` directory. Then you can proceed with one or both of the options below.
+## Running the App
+Before running the app, install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
-### Using pre-built containers
 
-The easiest option to run locally is to use the following docker-compose file to launch the
-prebuilt container hosted on GitHub.
 
-```yaml
-version: '3.7'
-services:
+#### Redis Cloud (recommended)
 
-  redis-vector-db:
-    image: redis/redis-stack:latest
-    ports:
-      - 6379:6379
-      - 8001:8001
+1. [Get your Redis Cloud Database](https://app.redislabs.com/) (if needed).
 
-  backend:
-    image: ghcr.io/spartee/redis-vss-fashion:v0.2.0
-    environment:
-      DEPLOYMENT: "dev"
-      REDIS_DATA_URL: 'redis://redis-vector-db:6379'
-      REDIS_OM_URL: 'redis://redis-vector-db:6379'
-      REDIS_HOST: 'redis-vector-db'
-      REDIS_PORT: 6379
-    expose:
-      - "8888"
-    ports:
-      - "8888:8888"
-    depends_on:
-      - "redis-vector-db"
+2. Export Redis Endpoint Environment Variables:
+    ```bash
+    $ export REDIS_HOST=your-redis-host
+    $ export REDIS_PORT=your-redis-port
+    $ export REDIS_PASSOWRD=your-redis-password
+    ```
 
+3. Run the App:
+    ```bash
+    $ docker compose -f docker-cloud-redis.yml up
+    ```
+
+> The benefit of this approach is that the db will persist beyond application runs. So you can make updates and re run the app without having to provision the dataset or create another search index.
+
+#### Redis Docker
+```bash
+$ docker compose -f docker-local-redis.yml up
 ```
 
-To launch, run the following
-- ``docker compose up --build`` in same directory as ``docker-compose.yml``
-- Wait while things install and get setup
-- Navigate to `http://localhost:8888` in a browser
+### Customizing (optional)
+You can use the Jupyter Notebook in the `data/` directory to create product embeddings and product metadata JSON files. Both files will end up stored in the `data/` directory and used when creating your own container.
+
+Create your own containers using the `build.sh` script and then make sure to update the `.yml` file with the right image name.
+
 
 ### Using a React development env
-It's typically easier to write front end code in an interactive environment (**outside of Docker**)where one can test out code changes in real time. In order to use this approach:
+It's typically easier to write front end code in an interactive environment, testing changes in realtime.
 
-1. Follow steps from previous section with Docker Compose to deploy the backend API.
-2. Skip the step about launching a browser at host/port.
-3. `cd gui/` directory and use `yarn` to install packages: `yarn install --no-optional` (you may need to use `npm` to install `yarn`).
-4. Use `yarn` to serve the application from your machine: `yarn start`.
+1. Deploy the app using steps above.
+2. Install NPM packages (you may need to use `npm` to install `yarn`)
+    ```bash
+    $ cd gui/
+    $ yarn install --no-optional
+    ````
+4. Use `yarn` to serve the application from your machine
+    ```bash
+    $ yarn start
+    ```
 5. Navigate to `http://localhost:3000` in a browser.
 
-### Troubleshooting
+All changes to your local code will be reflected in your display in semi realtime.
 
-#### Issues building the container
-- Sometimes it works if you try again. Or maybe you need to clear out some Docker cache. Run `docker system prune`, restart Docker Desktop, and try again.
-- The generated `node_modules` folder (under `gui/` when running the app outside of Docker) can mess things up when building docker images. Delete that folder (if present) and try rebuilding again.
+### Troubleshooting
+Sometimes you need to clear out some Docker cached artifacts. Run `docker system prune`, restart Docker Desktop, and try again.
+
+Open an issue here on GitHub and we will try to be responsive to these. Additionally, please consider [contributing](CONTRIBUTING.md).
