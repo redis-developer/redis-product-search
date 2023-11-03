@@ -1,29 +1,30 @@
-version: '3.7'
+version: '3.9'
 
 services:
-  redis-vector-db:
-    build:
-      context: ./redis-vector-db
-      dockerfile: Dockerfile
-    volumes:
-      - ./redis-data:/data/
-    ports:
-      - 6379:6379
-      - 8001:8001
   backend:
     image: ghcr.io/redisventures/redis-product-search:latest
-    environment:
-      DEPLOYMENT: "dev"
-      REDIS_HOST: "redis-vector-db"
-      REDIS_PORT: 6379
-      REDIS_PASSWORD: "testing123"
-      REDIS_DB: 0
+    env_file:
+      - .env
     expose:
       - "8888"
     ports:
       - "8888:8888"
     depends_on:
-      - "redis-vector-db"
+      - "redis"
+  redis:
+    image: redis/redis-stack:latest
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    volumes:
+        - redis-vector-db:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-h", "localhost", "-p", "6379", "ping"]
+      interval: 2s
+      timeout: 1m30s
+      retries: 5
+      start_period: 5s
+
 
 volumes:
   redis-vector-db:
