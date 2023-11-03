@@ -1,17 +1,13 @@
 import uvicorn
 
-from aredis_om import (
-    get_redis_connection,
-    Migrator
-)
 from pathlib import Path
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
-from vecsim_app import config
-from vecsim_app.models import Product
-from vecsim_app.api import routes
-from vecsim_app.spa import SinglePageApplication
+
+from productsearch import config
+from productsearch.api import routes
+from productsearch.spa import SinglePageApplication
 
 
 app = FastAPI(
@@ -35,15 +31,6 @@ app.include_router(
     tags=["products"]
 )
 
-
-@app.on_event("startup")
-async def startup():
-    # You can set the Redis OM URL using the REDIS_OM_URL environment
-    # variable, or by manually creating the connection using your model's
-    # Meta object.
-    Product.Meta.database = get_redis_connection(url=config.REDIS_URL, decode_responses=True)
-    await Migrator().run()
-
 # static image files
 app.mount("/data", StaticFiles(directory="data"), name="data")
 
@@ -55,18 +42,14 @@ app.mount(
     path="/", app=SinglePageApplication(directory=gui_build_dir), name="SPA"
 )
 
-
 if __name__ == "__main__":
-    import os
-    env = os.environ.get("DEPLOYMENT", "prod")
-
     server_attr = {
         "host": "0.0.0.0",
         "reload": True,
         "port": 8888,
         "workers": 1
     }
-    if env == "prod":
+    if config.DEPLOYMENT_ENV == "prod":
         server_attr.update({"reload": False,
                             "workers": 2,
                             "ssl_keyfile": "key.pem",

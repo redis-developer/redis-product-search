@@ -14,3 +14,5 @@ os.environ["REDIS_DATA_URL"] = REDIS_URL
 os.environ["REDIS_OM_URL"] = REDIS_URL
 API_V1_STR = "/api/v1"
 DATA_LOCATION = os.environ.get("DATA_LOCATION", "../../data")
+DEFAULT_RETURN_FIELDS = ["product_id", "product_pk", "vector_score"]
+DEPLOYMENT_ENV = os.environ.get("DEPLOYMENT", "dev")
