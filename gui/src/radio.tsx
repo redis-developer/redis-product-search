@@ -9,14 +9,18 @@ import Typography from '@mui/material/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import useCheckMobileScreen from './mobile';
 import Tooltip from '@mui/material/Tooltip';
+import { queryProducts } from './query';
 
 interface Props {
-    gender: string,
-    category: string,
-    setGender: (state: any) => void;
-    setCategory: (state: any) => void;
+  products: any[];
+  setProducts: (state: any) => void;
+  gender: string;
+  setGender: (state: any) => void;
+  category: string;
+  setCategory: (state: any) => void;
+  total: number;
+  setTotal: (state: any) => void;
 }
-
 
 const useStyles = makeStyles((theme) => ({
   popover: {
@@ -58,6 +62,7 @@ export const TagRadios = (props: Props) => {
       props.setGender("");
     } else {
       props.setGender(event.target.value);
+      queryProducts(props, event.target.value, props.category)
     }
   }
   const setProductCategory = (event: any) =>{
@@ -65,6 +70,7 @@ export const TagRadios = (props: Props) => {
       props.setCategory("");
     } else {
       props.setCategory(event.target.value);
+      queryProducts(props, props.gender, event.target.value)
     }
   }
   return (

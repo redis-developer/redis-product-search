@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
-import { getProducts } from '../api';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { Card } from "./Card"
 import { TagRadios } from '../radio';
 import { Chip } from '@material-ui/core';
 import Tooltip from '@mui/material/Tooltip';
+import { queryProducts, queryProductsWithLimit } from '../query';
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -20,38 +19,13 @@ interface Props {
   setTotal: (state: any) => void;
 }
 
-
 export const Home = (props: Props) => {
-  const [error, setError] = useState<string>('');
-  const [skip, setSkip] = useState(0);
-  const [limit, setLimit] = useState(15);
-  const Navigate = useNavigate();
-
-  const queryProducts = async () => {
-    try {
-      const result = await getProducts(limit, skip, props.gender, props.category);
-      props.setProducts(result.products)
-      props.setTotal(result.total)
-    } catch (err) {
-      setError(String(err));
-    }
-  };
-
-  const queryProductsWithLimit = async () => {
-    try {
-      setSkip(skip + limit);
-      queryProducts();
-    } catch (err) {
-      console.log(err);
-    };
-  };
-
   // Execute this one when the component loads up
   useEffect(() => {
     // clear filters
     props.setGender("");
     props.setCategory("");
-    queryProductsWithLimit();
+    queryProductsWithLimit(props);
   }, []);
 
   return (
@@ -72,14 +46,19 @@ export const Home = (props: Props) => {
                   <TagRadios
                   gender={props.gender}
                   category={props.category}
+                  products={props.products}
+                  total={props.total}
                   setGender={props.setGender}
-                  setCategory={props.setCategory} />
+                  setCategory={props.setCategory} 
+                  setProducts={props.setProducts} 
+                  setTotal={props.setTotal} 
+                  />
               </div>
             ): (
               <></>
             )}
           <Tooltip title="Fetch more products from Redis" arrow>
-            <a className="btn btn-primary m-2" onClick={() => queryProductsWithLimit()}>
+            <a className="btn btn-primary m-2" onClick={() => queryProductsWithLimit(props)}>
               Load More Products
             </a>
           </Tooltip>
@@ -102,7 +81,7 @@ export const Home = (props: Props) => {
               variant='outlined'
               clickable
               color='primary'
-              onDelete={() => {props.setCategory(""); queryProducts()}}
+              onDelete={() => {props.setCategory(""); queryProducts(props, props.gender, "")}}
               disabled={props.category == ''}
             />
           ):(
@@ -115,7 +94,7 @@ export const Home = (props: Props) => {
               variant='outlined'
               clickable
               color='primary'
-              onDelete={() => {props.setGender(""); queryProducts()}}
+              onDelete={() => {props.setGender(""); queryProducts(props, "", props.category)}}
               disabled={props.gender == ''}
               />
           ):(
