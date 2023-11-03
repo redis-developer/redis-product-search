@@ -1,7 +1,8 @@
 fastapi
 httpx
-requests
 uvicorn
 aiofiles
-redis-om
 pandas
+numpy
+redis>=5.0.0
+redisvl>=0.0.4
