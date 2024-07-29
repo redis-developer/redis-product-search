@@ -1,0 +1,58 @@
+[tool.poetry]
+name = "vecsim"
+version = "0.1.0"
+description = "Reference architecture for vector search application with Redis"
+authors = ["Robert Shelton  <robert.shelton@redis.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.111.0"
+uvicorn = "^0.30.1"
+ipython = "^8.26.0"
+numpy = "1.26.4"
+redisvl = "^0.2.3"
+cohere = "^5.5.8"
+openai = "^1.35.9"
+sentence-transformers = "^3.0.1"
+sentencepiece = "^0.2.0"
+redis = "^5.0.7"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "1.9.0"
+black = ">=20.8b1"
+pylint = "3.1.0"
+isort = ">=5.6.4"
+pytest-cov = "5.0.0"
+pytest-asyncio = "^0.23.7"
+pytest = "^8.2.2"
+types-redis = "*"
+types-pyyaml = "*"
+types-tabulate = "*"
+anyio = {extras = ["trio"], version = "^4.4.0"}
+
+[tool.poetry.scripts]
+start = "vecsim.main:main"
+start-app = "scripts:start_app"
+load = "scripts:load"
+format = "scripts:format"
+check-format = "scripts:check_format"
+sort-imports = "scripts:sort_imports"
+check-sort-imports = "scripts:check_sort_imports"
+check-lint = "scripts:check_lint"
+mypy = "scripts:mypy"
+test = "scripts:test"
+test-cov = "scripts:test_cov"
+cov = "scripts:cov"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.mypy]
+warn_unused_configs = true
+ignore_missing_imports = true
