@@ -19,8 +19,6 @@ interface Props {
 
 export const Card = (props: Props) => {
 
-  // console.log(props);
-
   const isMobile = useCheckMobileScreen();
 
   const queryVisuallySimilarProducts = async () => {

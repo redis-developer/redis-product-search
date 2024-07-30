@@ -9,6 +9,8 @@ fields:
     type: tag
   - name: img_url
     type: text
+  - name: name
+    type: text
   - name: img_vector
     type: vector
     attrs:

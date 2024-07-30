@@ -13,9 +13,20 @@ logger = logging.getLogger(__name__)
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__)) + "/schema"
-schema = IndexSchema.from_yaml(os.path.join(dir_path, "products.yml"))
+file_path = os.path.join(dir_path, "products.yml")
+schema = IndexSchema.from_yaml(file_path)
 client = Redis.from_url(config.REDIS_URL)
 global_index = None
+
+
+def get_test_index():
+    index = SearchIndex.from_yaml(file_path)
+    index.connect(redis_url=config.REDIS_URL)
+
+    if not index.exists():
+        index.create(overwrite=True)
+
+    return index
 
 
 async def get_async_index():

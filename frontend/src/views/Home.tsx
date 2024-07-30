@@ -20,7 +20,6 @@ interface Props {
 }
 
 export const Home = (props: Props) => {
-  console.log(props);
   // Execute this one when the component loads up
   useEffect(() => {
     // clear filters
