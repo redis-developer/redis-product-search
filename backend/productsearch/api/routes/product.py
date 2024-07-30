@@ -1,27 +1,23 @@
 import asyncio
+from typing import Any, Dict, List, Union
+
 import numpy as np
-
-from redis.commands.search.query import Query
-from redis.commands.search.document import Document
-from redis.commands.search.result import Result
-
-from redisvl.index import AsyncSearchIndex
-from redisvl.query import VectorQuery, FilterQuery
-from redisvl.query.filter import Tag, FilterExpression
 from fastapi import APIRouter, Depends
+from redis.commands.search.document import Document
+from redis.commands.search.query import Query
+from redis.commands.search.result import Result
+from redisvl.index import AsyncSearchIndex
+from redisvl.query import FilterQuery, VectorQuery
+from redisvl.query.filter import FilterExpression, Tag
 
-from productsearch import config
-from productsearch import TEXT_MODEL
-from productsearch.db import redis_helpers
+from productsearch import TEXT_MODEL, config
 from productsearch.api.schema.product import (
-    SimilarityRequest,
-    UserTextSimilarityRequest,
     ProductSearchResponse,
     ProductVectorSearchResponse,
+    SimilarityRequest,
+    UserTextSimilarityRequest,
 )
-
-from typing import List, Dict, Any, Union
-
+from productsearch.db import redis_helpers
 
 router = APIRouter()
 

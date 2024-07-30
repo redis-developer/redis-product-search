@@ -1,10 +1,8 @@
 import pytest
 from httpx import AsyncClient
 
+from productsearch.api.schema.product import SimilarityRequest
 from productsearch.main import app
-from productsearch.api.schema.product import (
-    SimilarityRequest,
-)
 
 
 @pytest.fixture

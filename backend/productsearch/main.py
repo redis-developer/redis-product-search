@@ -1,6 +1,6 @@
-import uvicorn
-
 from pathlib import Path
+
+import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
@@ -8,7 +8,6 @@ from starlette.middleware.cors import CORSMiddleware
 from productsearch import config
 from productsearch.api.main import api_router
 from productsearch.spa import SinglePageApplication
-
 
 app = FastAPI(
     title=config.PROJECT_NAME, docs_url=config.API_DOCS, openapi_url=config.OPENAPI_DOCS

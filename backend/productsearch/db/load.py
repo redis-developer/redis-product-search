@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 import asyncio
-import numpy as np
-import os
 import json
+import os
 from typing import List
 
-from productsearch import config
-
+import numpy as np
 from redisvl.index import AsyncSearchIndex
+
+from productsearch import config
 
 
 def read_product_json_vectors() -> List:
