@@ -8,3 +8,5 @@ images
 product_metadata.json
 product_vectors.json
 data/
+!backend/data
+.env

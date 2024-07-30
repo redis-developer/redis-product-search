@@ -1,64 +1,22 @@
 import asyncio
-from typing import Any, Dict, List, Union
 
 import numpy as np
 from fastapi import APIRouter, Depends
 from redis.commands.search.document import Document
 from redis.commands.search.query import Query
-from redis.commands.search.result import Result
 from redisvl.index import AsyncSearchIndex
 from redisvl.query import FilterQuery, VectorQuery
 from redisvl.query.filter import FilterExpression, Tag
 
-from productsearch import TEXT_MODEL, config
+from productsearch import config
 from productsearch.api.schema.product import (
     ProductSearchResponse,
     ProductVectorSearchResponse,
     SimilarityRequest,
-    UserTextSimilarityRequest,
 )
 from productsearch.db import redis_helpers
 
 router = APIRouter()
-
-
-# def process_product(product: Union[Document, Dict[str, Any]]) -> Dict[str, Any]:
-#     """
-#     Process product data and calculate similarity score.
-
-#     Args:
-#         product: Input product data.
-
-#     Returns:
-#         dict: Processed product data with similarity score.
-#     """
-#     if not isinstance(product, dict):
-#         product = product.__dict__
-#     if "vector_distance" in product:
-#         product["similarity_score"] = 1 - float(product["vector_distance"])
-#     return product
-
-
-# def prepare_response(
-#     total: int, results: Union[List[Dict[str, Any]], Result]
-# ) -> Dict[str, Any]:
-#     """
-#     Extract and process products from search results.
-
-#     This function extracts products from the provided search results, processes each paper,
-#     and returns a dictionary containing the total count and a list of processed papers.
-
-#     Args:
-#         total (int): The hypothetical count of papers present in the db that match the filters.
-#         results (list): The iterable containing raw paper data.
-
-#     Returns:
-#         dict: A dictionary with 'total' count and a list of 'papers', where each paper is a processed dict.
-#     """
-#     # extract papers from VSS results
-#     if not isinstance(results, list):
-#         results = results.docs
-#     return {"total": total, "papers": [process_product(product) for product in results]}
 
 
 def create_count_query(filter_expression: FilterExpression) -> Query:

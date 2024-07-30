@@ -1,6 +1,6 @@
 import os
 
-# TODO: structure better
+S3_DATA_URL = "https://redis-product-search.s3.us-east-2.amazonaws.com/products.json"
 
 RETURN_FIELDS = [
     "product_id",

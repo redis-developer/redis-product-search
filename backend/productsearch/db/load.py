@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import asyncio
 import json
+import requests
 import os
 from typing import List
 
@@ -10,9 +11,19 @@ from redisvl.index import AsyncSearchIndex
 from productsearch import config
 
 
+def read_from_s3():
+    res = requests.get(config.S3_DATA_URL)
+    return res.json()
+
+
 def read_product_json_vectors() -> List:
-    with open(config.DATA_LOCATION + "/products.json") as f:
-        product_vectors = json.load(f)
+    try:
+        with open(config.DATA_LOCATION + "/products.json") as f:
+            product_vectors = json.load(f)
+    except FileNotFoundError:
+        print("File not found, reading from S3")
+        product_vectors = read_from_s3()
+
     return product_vectors
 
 
