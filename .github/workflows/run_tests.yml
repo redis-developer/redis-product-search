@@ -3,12 +3,11 @@ name: Test Suite
 on:
   pull_request:
     branches:
-      - main
+      - master
 
   push:
     branches:
-      - main
-      - feat/RAAE-9/repo-upgrades
+      - master
 
 jobs:
   test:
