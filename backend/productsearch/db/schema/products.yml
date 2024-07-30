@@ -1,0 +1,25 @@
+index:
+  name: products
+  prefix: product
+
+fields:
+  - name: gender
+    type: tag
+  - name: category
+    type: tag
+  - name: img_url
+    type: text
+  - name: img_vector
+    type: vector
+    attrs:
+      dims: 512
+      type: float32
+      algorithm: hnsw
+      distance_metric: cosine
+  - name: text_vector
+    type: vector
+    attrs:
+      dims: 768
+      type: float32
+      algorithm: hnsw
+      distance_metric: cosine

@@ -7,3 +7,4 @@ images
 .ipynb_checkpoints
 product_metadata.json
 product_vectors.json
+data/

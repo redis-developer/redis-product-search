@@ -16,19 +16,19 @@ const limit = 15;
 
 export const queryProducts = async (props: Props, gender: string, category: string) => {
   try {
-      const result = await getProducts(limit, skip, gender, category);
-      props.setProducts(result.products)
-      props.setTotal(result.total)
+    const result = await getProducts(limit, skip, gender, category);
+    props.setProducts(result.products)
+    props.setTotal(result.total)
   } catch (err) {
-      console.log(err);
+    console.log(err);
   }
 };
 
 export const queryProductsWithLimit = async (props: Props) => {
   try {
-      skip = skip + limit;
-      queryProducts(props, props.gender, props.category);
+    skip = skip + limit;
+    queryProducts(props, props.gender, props.category);
   } catch (err) {
-      console.log(err);
+    console.log(err);
   };
 };

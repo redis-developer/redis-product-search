@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "vecsim"
+name = "productsearch"
 version = "0.1.0"
 description = "Reference architecture for vector search application with Redis"
 authors = ["Robert Shelton  <robert.shelton@redis.com>"]
@@ -33,9 +33,9 @@ types-tabulate = "*"
 anyio = {extras = ["trio"], version = "^4.4.0"}
 
 [tool.poetry.scripts]
-start = "vecsim.main:main"
+start = "productsearch.main:main"
 start-app = "scripts:start_app"
-load = "scripts:load"
+load = "scripts:load_data"
 format = "scripts:format"
 check-format = "scripts:check_format"
 sort-imports = "scripts:sort_imports"

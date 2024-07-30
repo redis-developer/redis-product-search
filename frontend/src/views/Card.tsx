@@ -7,17 +7,19 @@ import Tooltip from '@mui/material/Tooltip';
 interface Props {
   productId: number;
   numProducts: number;
-  image_path: string;
+  imageUrl: string;
   name: string;
   gender: string;
   category: string;
-  similarity_score: number;
+  similarityScore: number;
   setProducts: (state: any) => void;
   setTotal: (state: any) => void;
 }
 
 
 export const Card = (props: Props) => {
+
+  // console.log(props);
 
   const isMobile = useCheckMobileScreen();
 
@@ -67,7 +69,7 @@ export const Card = (props: Props) => {
         <img
           className="card-img-top"
           style={{ height: '60%', width: '60%', alignSelf: 'center' }}
-          src={props.image_path}
+          src={props.imageUrl}
           alt={props.name}
         />
         <div className="card-body">
@@ -101,11 +103,11 @@ export const Card = (props: Props) => {
               </Tooltip>
             </div>
             <div className="btn-group">
-              {props.similarity_score ? (
+              {props.similarityScore ? (
                 <Tooltip title="Similarity Score" arrow>
                   <Chip
                     style={{ margin: "auto", fontSize: 12 }}
-                    label={props.similarity_score.toFixed(2)}
+                    label={props.similarityScore.toFixed(2)}
                     color='primary'
                   />
                 </Tooltip>

@@ -43,8 +43,6 @@ This app was built as a Single Page Application (SPA) with the following compone
 - **[Docker Compose](https://docs.docker.com/compose/)** for development
 - **[MaterialUI](https://material-ui.com/)** for some UI elements
 - **[React-Bootstrap](https://react-bootstrap.github.io/)** for some UI elements
-- **[react-admin](https://github.com/marmelab/react-admin)** for the admin dashboard
-  - Using the same token based authentication as FastAPI backend (JWT)
 - **[Pytorch/Img2Vec](https://github.com/christiansafka/img2vec)** and **[Huggingface Sentence Transformers](https://huggingface.co/sentence-transformers)** for vector embedding creation
 
 Some inspiration was taken from this [Cookiecutter project](https://github.com/Buuntu/fastapi-react)

@@ -1,17 +1,17 @@
-FROM node:18.8-alpine AS ReactImage
+FROM node:22.0-alpine AS ReactImage
 
-WORKDIR /app/gui
+WORKDIR /app/frontend
 
-ENV NODE_PATH=/app/gui/node_modules
-ENV PATH=$PATH:/app/gui/node_modules/.bin
+ENV NODE_PATH=/app/frontend/node_modules
+ENV PATH=$PATH:/app/frontend/node_modules/.bin
 
-COPY ./gui/package.json ./
-RUN yarn install --no-optional
+COPY ./frontend/package.json ./
+RUN npm install
 
-ADD ./gui ./
-RUN yarn build
+ADD ./frontend ./
+RUN npm run build
 
-FROM python:3.9-slim-buster AS ApiImage
+FROM python:3.11 AS ApiImage
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -28,7 +28,7 @@ COPY ./backend/ .
 RUN pip install -e . --no-cache-dir
 
 # add static react files to fastapi image
-COPY --from=ReactImage /app/gui/build /app/backend/productsearch/templates/build
+COPY --from=ReactImage /app/frontend/build /app/backend/productsearch/templates/build
 
 LABEL org.opencontainers.image.source https://github.com/RedisVentures/redis-product-search
 

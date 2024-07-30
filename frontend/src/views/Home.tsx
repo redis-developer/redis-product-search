@@ -20,6 +20,7 @@ interface Props {
 }
 
 export const Home = (props: Props) => {
+  console.log(props);
   // Execute this one when the component loads up
   useEffect(() => {
     // clear filters
@@ -41,7 +42,7 @@ export const Home = (props: Props) => {
             </p>
             <div>
               <div className="btn-group">
-                {props.products.length > 0 ? (
+                {props.products && props.products.length > 0 ? (
                   <div>
                     <TagRadios
                       gender={props.gender}
@@ -74,7 +75,7 @@ export const Home = (props: Props) => {
               </Tooltip>
             </p>
             <div>
-              {props.category != "" ? (
+              {props.category !== "" ? (
                 <Chip
                   style={{ margin: "5px 5px 25px 5px" }}
                   label={`Category: ${props.category}`}
@@ -82,12 +83,12 @@ export const Home = (props: Props) => {
                   clickable
                   color='primary'
                   onDelete={() => { props.setCategory(""); queryProducts(props, props.gender, "") }}
-                  disabled={props.category == ''}
+                  disabled={props.category === ''}
                 />
               ) : (
                 <></>
               )}
-              {props.gender != "" ? (
+              {props.gender !== "" ? (
                 <Chip
                   style={{ margin: "5px 5px 25px 5px" }}
                   label={`Gender: ${props.gender}`}
@@ -95,7 +96,7 @@ export const Home = (props: Props) => {
                   clickable
                   color='primary'
                   onDelete={() => { props.setGender(""); queryProducts(props, "", props.category) }}
-                  disabled={props.gender == ''}
+                  disabled={props.gender === ''}
                 />
               ) : (
                 <></>
@@ -106,12 +107,12 @@ export const Home = (props: Props) => {
 
                 {props.products.map((product) => (
                   <Card
-                    key={product.pk}
-                    image_path={product.product_metadata.image_url}
-                    name={product.product_metadata.name}
+                    key={product.product_id}
+                    imageUrl={product.img_url}
+                    name={product.name}
                     productId={product.product_id}
                     numProducts={15}
-                    similarity_score={product.similarity_score}
+                    similarityScore={product.similarity_score}
                     gender={props.gender}
                     category={props.category}
                     setProducts={props.setProducts}

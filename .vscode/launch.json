@@ -9,12 +9,13 @@
             "type": "debugpy",
             "cwd": "${workspaceFolder}/backend/",
             "env": {
-                "PYTHONPATH": "${cwd}"
+                "PYTHONPATH": "${cwd}",
+                "REDIS_HOST": "localhost",
             },
             "request": "launch",
             "module": "uvicorn",
             "args": [
-                "vecsim.main:app",
+                "productsearch.main:app",
                 "--port=8888",
                 "--reload"
             ],

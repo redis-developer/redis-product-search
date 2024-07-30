@@ -1,5 +1,4 @@
-import { MASTER_URL, BASE_URL } from './config';
-import { logout } from './auth';
+import { MASTER_URL } from './config';
 
 export const fetchFromBackend = async (url: string, method: string, body?: any) => {
   const request = new Request(url, {
@@ -17,7 +16,6 @@ export const fetchFromBackend = async (url: string, method: string, body?: any) 
     throw new Error('Internal server error');
   }
   if (response.status === 401 || response.status === 403) {
-    logout();
     // redirect to home page
     window.location.href = "/";
   }
@@ -34,14 +32,14 @@ export const fetchFromBackend = async (url: string, method: string, body?: any) 
   return data;
 }
 
-export const getProducts = async (limit=15, skip=0, gender="", category="") => {
+export const getProducts = async (limit = 15, skip = 0, gender = "", category = "") => {
   var params: string;
-  if ( gender == "" && category == "" ) {
+  if (gender == "" && category == "") {
     var params = `?limit=${limit}&skip=${skip}`
   } else {
-    if ( gender != "" && category != "" ) {
+    if (gender != "" && category != "") {
       var params = `?limit=${limit}&skip=${skip}&gender=${gender}&category=${category}`
-    } else if ( gender != "" ) {
+    } else if (gender != "") {
       var params = `?limit=${limit}&skip=${skip}&gender=${gender}`
     } else {
       var params = `?limit=${limit}&skip=${skip}&category=${category}`
@@ -51,7 +49,7 @@ export const getProducts = async (limit=15, skip=0, gender="", category="") => {
 }
 // get products from Redis through the FastAPI backend
 
-export const getProductsByText = async (search_text: string, limit=15, skip=0) => {
+export const getProductsByText = async (search_text: string, limit = 15, skip = 0) => {
   // TODO use limit and skip to paginate through search results
   let body = {
     text: search_text,
@@ -64,11 +62,11 @@ export const getProductsByText = async (search_text: string, limit=15, skip=0) =
 
 
 export const getVisuallySimilarProducts = async (id: number,
-                                                search='KNN',
-                                                gender="",
-                                                category="",
-                                                limit=15,
-                                                skip=0) => {
+  search = 'KNN',
+  gender = "",
+  category = "",
+  limit = 15,
+  skip = 0) => {
   let body = {
     product_id: id,
     search_type: search,
@@ -83,11 +81,11 @@ export const getVisuallySimilarProducts = async (id: number,
 
 
 export const getSemanticallySimilarProducts = async (id: number,
-                                                    search='KNN',
-                                                    gender="",
-                                                    category="",
-                                                    limit=15,
-                                                    skip=0) => {
+  search = 'KNN',
+  gender = "",
+  category = "",
+  limit = 15,
+  skip = 0) => {
   let body = {
     product_id: id,
     search_type: search,
@@ -102,11 +100,11 @@ export const getSemanticallySimilarProducts = async (id: number,
 
 
 export const getSemanticallySimilarProductsbyText = async (text: string,
-                                                    gender="",
-                                                    category="",
-                                                    search='KNN',
-                                                    limit=15,
-                                                    skip=0) => {
+  gender = "",
+  category = "",
+  search = 'KNN',
+  limit = 15,
+  skip = 0) => {
   let body = {
     user_text: text,
     search_type: search,

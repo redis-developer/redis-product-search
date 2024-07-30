@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 
 import { Header } from './views/Header';
 import { Home } from './views/Home';
@@ -14,7 +14,16 @@ export const Layout: FC = () => {
     return (
         <>
             <Header />
-            <Home setProducts={setProducts} products={products} gender={gender} category={category} total={total} setTotal={setTotal} setGender={setGender} setCategory={setCategory} />
+            <Home
+                products={products}
+                setProducts={setProducts}
+                gender={gender}
+                category={category}
+                setCategory={setCategory}
+                total={total}
+                setTotal={setTotal}
+                setGender={setGender}
+            />
             <Footer />
         </>
     );
