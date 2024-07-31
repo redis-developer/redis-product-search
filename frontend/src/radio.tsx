@@ -6,8 +6,6 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
-// import { makeStyles } from '@material-ui/core/styles';
-import useCheckMobileScreen from './mobile';
 import Tooltip from '@mui/material/Tooltip';
 import { queryProducts } from './query';
 
@@ -22,20 +20,9 @@ interface Props {
   setTotal: (state: any) => void;
 }
 
-// const useStyles = makeStyles((theme) => ({
-//   popover: {
-//     padding: theme.spacing(1),
-//     width: "50%"
-//   },
-//   popoverMobile: {
-//     padding: theme.spacing(1),
-//     width: "85%"
-//   }
-// }));
 
 export const TagRadios = (props: Props) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-  // const classes = useStyles();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -48,15 +35,6 @@ export const TagRadios = (props: Props) => {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
-  const isMobile = useCheckMobileScreen();
-  // const getPopoverClass = () => {
-  //   if (isMobile) {
-  //     return classes.popoverMobile;
-  //   }
-  //   else {
-  //     return classes.popover;
-  //   }
-  // }
   const setProductGender = (event: any) => {
     if (event.target.value === props.gender) {
       props.setGender("");

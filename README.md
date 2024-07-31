@@ -47,6 +47,8 @@ and turned into a SPA application instead of a separate front-end server approac
 
 ### General Project Structure
 
+Much inspiration taken from [tiangelo/full-stack-fastapi-template](https://github.com/tiangolo/full-stack-fastapi-template)
+
 ```
 /backend
     /productsearch
@@ -139,6 +141,10 @@ Pre-step: install [poetry](https://python-poetry.org/).
 1. `cd backend`
 2. `poetry install` to get necessary python deps
 3. `poetry run start` to launch uvicorn server with FastAPI app
+
+### vscode debugger
+
+Included in the project is a `./vscode/launch.json` for local debugging purposes.
 
 ### Troubleshooting
 Sometimes you need to clear out some Docker cached artifacts. Run `docker system prune`, restart Docker Desktop, and try again.

@@ -16,6 +16,7 @@ from productsearch.api.schema.product import (
 )
 from productsearch.db import redis_helpers
 
+
 router = APIRouter()
 
 
