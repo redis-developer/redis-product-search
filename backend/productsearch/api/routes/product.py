@@ -63,7 +63,6 @@ async def get_products(
     filter_query = FilterQuery(return_fields=[], filter_expression=filter_expression)
     # Execute search
     result_papers = await index.search(filter_query.query.paging(skip, limit))
-    # return prepare_response(result_papers.total, result_papers)
     return ProductSearchResponse(
         total=result_papers.total, products=[d.__dict__ for d in result_papers.docs]
     )
@@ -172,7 +171,7 @@ async def find_products_by_text(
         vector=product_text_vector,
         vector_field_name="text_vector",
         num_results=similarity_request.number_of_results,
-        return_fields=config.RETURN_FIELDS,  # TODO: I don't think it makes sense to have return fields specified by FE => modify request schema => move to config
+        return_fields=config.RETURN_FIELDS,
         filter_expression=filter_expression,
     )
     count_query = create_count_query(filter_expression)
