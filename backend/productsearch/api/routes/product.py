@@ -46,8 +46,8 @@ async def get_products(
     gender: str = "",
     category: str = "",
     index: AsyncSearchIndex = Depends(redis_helpers.get_async_index),
-):
-    """_summary_
+) -> ProductSearchResponse:
+    """Fetch and return products based on gender and category fields
 
     Args:
         limit (int, optional): _description_. Defaults to 20.
@@ -56,7 +56,7 @@ async def get_products(
         category (str, optional): _description_. Defaults to "".
 
     Returns:
-        ProductSearchResponse model
+        ProductSearchResponse: Pydantic model containing products and total count
     """
     # Build query
     filter_expression = (Tag("gender") == gender) & (Tag("category") == category)
@@ -79,12 +79,30 @@ async def find_products_by_image(
     similarity_request: SimilarityRequest,
     index: AsyncSearchIndex = Depends(redis_helpers.get_async_index),
 ) -> ProductVectorSearchResponse:
+    """Fetch and return products based on image similarity
 
+    Args:
+        SimilarityRequest:
+            number_of_results (int): Number of results to return
+            search_type (str): Search type
+            gender (str): filter criteria
+            category (str): filter criteria
+
+    Returns:
+        ProductSearchResponse:
+            total (int): Total number of results
+            products (list[VectorSearchProduct]): List of products
+                product_id (str): Product ID
+                name (str): Product name
+                gender (str): fashion tag
+                category (str): fashion tag
+                img_url (str): Image URL for displaying in FE
+                text_vector (str): Text vector for similarity computation
+                img_vector (str): Image vector for similarity computation
+    """
     # Fetch paper key and the vector from the HASH, cast to numpy array
-    product_key = f"{index.schema.index.prefix}:{similarity_request.product_id}"
-    product_img_vector = np.frombuffer(
-        await index.client.hget(product_key, "img_vector"), dtype=np.float32
-    )
+    product = await index.fetch(similarity_request.product_id)
+    product_img_vector = np.frombuffer(product["img_vector"], dtype=np.float32)
 
     # Build filter expression
     filter_expression = (Tag("gender") == similarity_request.gender) & (
@@ -119,11 +137,30 @@ async def find_products_by_text(
     similarity_request: SimilarityRequest,
     index: AsyncSearchIndex = Depends(redis_helpers.get_async_index),
 ) -> ProductVectorSearchResponse:
+    """Fetch and return products based on image similarity
+
+    Args:
+        SimilarityRequest:
+            number_of_results (int): Number of results to return
+            search_type (str): Search type
+            gender (str): filter criteria
+            category (str): filter criteria
+
+    Returns:
+        ProductSearchResponse:
+            total (int): Total number of results
+            products (list[VectorSearchProduct]): List of products
+                product_id (str): Product ID
+                name (str): Product name
+                gender (str): fashion tag
+                category (str): fashion tag
+                img_url (str): Image URL for displaying in FE
+                text_vector (str): Text vector for similarity computation
+                img_vector (str): Image vector for similarity computation
+    """
     # Fetch paper key and the vector from the HASH, cast to numpy array
-    product_key = f"{index.schema.index.prefix}:{similarity_request.product_id}"
-    product_text_vector = np.frombuffer(
-        await index.client.hget(product_key, "text_vector"), dtype=np.float32
-    )
+    product = await index.fetch(similarity_request.product_id)
+    product_text_vector = np.frombuffer(product["text_vector"], dtype=np.float32)
 
     # Build filter expression
     filter_expression = (Tag("gender") == similarity_request.gender) & (
