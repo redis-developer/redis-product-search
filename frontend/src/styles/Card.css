@@ -1,0 +1,28 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 26rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+}
+
+.card-top {
+    padding-top: 1rem;
+}
+
+.card-btns-space {
+    width: 0.5rem;
+    display: inline-block;
+}
+
+.card-btn {
+    background: #f0f0f0;
+    padding: 0.5rem;
+    border: none;
+    font: inherit;
+    border-radius: 0.25rem;
+    text-decoration: none;
+}

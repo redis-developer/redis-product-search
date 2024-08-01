@@ -1,0 +1,31 @@
+.home-padding {
+    padding: 0 25px;
+}
+
+.home-heading {
+    text-align: center;
+}
+
+.home-options {
+    padding: 2rem 5%;
+}
+
+.home-filters {
+    padding: 1rem 0 3rem 0;
+}
+
+.home-search-results {
+    padding: 0 0 0 5%;
+}
+
+.home-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 5%;
+}
+
+.home-loader {
+    display: flex;
+    padding: 2rem 5%;
+}

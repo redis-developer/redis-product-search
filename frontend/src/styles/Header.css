@@ -1,0 +1,30 @@
+.header {
+    background: #091a23;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2.25rem;
+}
+
+.header-logo {
+    height: 2rem;
+}
+
+.header-icon-link {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-right: 1rem;
+}
+
+.header-cta {
+    background: #dcff1e;
+    padding: 10px;
+    border-radius: 2px;
+    color: black;
+    text-decoration: none;
+}
+
+.cta-nav {
+    display: flex;
+    align-items: center;
+}

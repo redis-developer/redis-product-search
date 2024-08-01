@@ -1,11 +1,11 @@
 
 <div align="center">
-    <a href="https://github.com/spartee/redis-vector-search"><img src="https://github.com/Spartee/redis-vector-search/blob/master/app/vecsim_app/data/redis-logo.png?raw=true" width="30%"><img></a>
+    <a href="https://github.com/spartee/redis-vector-search"><img src="https://redis.io/wp-content/uploads/2024/04/Logotype.svg?raw=true" width="30%"><img></a>
     <br />
     <br />
 <div display="inline-block">
     <a href="https://ecommerce.redisventures.com"><b>Hosted Demo</b></a>&nbsp;&nbsp;&nbsp;
-    <a href="https://github.com/Spartee/redis-vector-search"><b>Code</b></a>&nbsp;&nbsp;&nbsp;
+    <a href="https://github.com/redis-developer/redis-product-search"><b>Code</b></a>&nbsp;&nbsp;&nbsp;
     <a href="https://redis.io/docs/stack/search/reference/vectors/"><b>Redis VSS Documentation</b></a>&nbsp;&nbsp;&nbsp;
   </div>
     <br />
@@ -33,22 +33,56 @@ The following Redis Stack capabilities are available in this demo:
 This app was built as a Single Page Application (SPA) with the following components:
 
 - **[Redis Stack](https://redis.io/docs/stack/)**: Vector database + JSON storage
-- **[FastAPI](https://fastapi.tiangolo.com/)** (Python 3.8)
-  - JWT authentication using [OAuth2 "password
-    flow"](https://fastapi.tiangolo.com/tutorial/security/simple-oauth2/) and
-    PyJWT
+- **[RedisVL](https://redisvl.com)** for Python vector db client
+- **[FastAPI](https://fastapi.tiangolo.com/)** for backend API
 - **[Pydantic](https://pydantic-docs.helpmanual.io/)** for schema and validation
 - **[React](https://reactjs.org/)** (with Typescript)
-- **[Redis OM](https://redis.io/docs/stack/get-started/tutorials/stack-python/)** for ORM
 - **[Docker Compose](https://docs.docker.com/compose/)** for development
 - **[MaterialUI](https://material-ui.com/)** for some UI elements
 - **[React-Bootstrap](https://react-bootstrap.github.io/)** for some UI elements
-- **[react-admin](https://github.com/marmelab/react-admin)** for the admin dashboard
-  - Using the same token based authentication as FastAPI backend (JWT)
 - **[Pytorch/Img2Vec](https://github.com/christiansafka/img2vec)** and **[Huggingface Sentence Transformers](https://huggingface.co/sentence-transformers)** for vector embedding creation
 
 Some inspiration was taken from this [Cookiecutter project](https://github.com/Buuntu/fastapi-react)
 and turned into a SPA application instead of a separate front-end server approach.
+
+### General Project Structure
+
+Much inspiration taken from [tiangelo/full-stack-fastapi-template](https://github.com/tiangolo/full-stack-fastapi-template)
+
+```
+/backend
+    /productsearch
+        /api
+            /routes
+                product.py # primary API logic lives here
+        /db
+            load.py # seeds Redis DB
+            redis_helpers.py # redis util
+        /schema
+            # pydantic models for serialization/validation from API
+        /tests
+        /utils
+        config.py
+        spa.py # logic for serving compiled react project
+        main.py # entrypoint
+/frontend
+    /public
+        # index, manifest, logos, etc.
+    /src
+        /config
+        /styles
+        /views
+            # primary components live here
+
+        api.ts # logic for connecting with BE
+        App.tsx # project entry
+        Routes.tsk # route definitions
+        ...
+/data
+    # folder mounted as volume in Docker
+    # load script auto populates initial data from S3
+
+```
 
 ### Datasets
 
@@ -58,12 +92,10 @@ The dataset was taken from the the following Kaggle links.
 - [Smaller Dataset](https://www.kaggle.com/datasets/paramaggarwal/fashion-product-images-small)
 
 
-## Running the App
+## Running the App with docker-compose
 Before running the app, install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
-
-
-#### Redis Cloud (recommended)
+#### Using Redis Cloud (recommended)
 
 1. [Get your Redis Cloud Database](https://app.redislabs.com/) (if needed).
 
@@ -81,33 +113,38 @@ Before running the app, install [Docker Desktop](https://www.docker.com/products
 
 > The benefit of this approach is that the db will persist beyond application runs. So you can make updates and re run the app without having to provision the dataset or create another search index.
 
-#### Redis Docker
+#### Using Redis Docker
 ```bash
 $ docker compose -f docker-local-redis.yml up
 ```
 
-### Customizing (optional)
-You can use the Jupyter Notebook in the `data/` directory to create product embeddings and product metadata JSON files. Both files will end up stored in the `data/` directory and used when creating your own container.
+## Running without docker-compose
 
-Create your own containers using the `build.sh` script and then make sure to update the `.yml` file with the right image name.
+### Run frontend
 
-
-### Using a React development env
-It's typically easier to write front end code in an interactive environment, testing changes in realtime.
-
-1. Deploy the app using steps above.
-2. Install NPM packages (you may need to use `npm` to install `yarn`)
+1. Install NPM packages
     ```bash
-    $ cd gui/
-    $ yarn install --no-optional
+    $ cd frontend/
+    $ npm install
     ````
-4. Use `yarn` to serve the application from your machine
+2. Use `npm` to serve the application from your machine
     ```bash
-    $ yarn start
+    $ npm run start
     ```
-5. Navigate to `http://localhost:3000` in a browser.
+3. Navigate to `http://localhost:3000` in a browser.
 
 All changes to your local code will be reflected in your display in semi realtime.
+
+### Run backend
+Pre-step: install [poetry](https://python-poetry.org/).
+
+1. `cd backend`
+2. `poetry install` to get necessary python deps
+3. `poetry run start` to launch uvicorn server with FastAPI app
+
+### vscode debugger
+
+Included in the project is a `./vscode/launch.json` for local debugging purposes.
 
 ### Troubleshooting
 Sometimes you need to clear out some Docker cached artifacts. Run `docker system prune`, restart Docker Desktop, and try again.
