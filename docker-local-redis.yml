@@ -2,7 +2,6 @@ version: '3.11'
 
 services:
   backend:
-    # image: ghcr.io/redisventures/redis-product-search:latest
     build:
       context: .
       dockerfile: Dockerfile
