@@ -101,7 +101,7 @@ Before running the app, install [Docker Desktop](https://www.docker.com/products
 
 1. [Get your Redis Cloud Database](https://app.redislabs.com/) (if needed).
 
-2. `touch .env` and update with cloud values
+2. `cp template.env .env` and update with cloud values
 
 ```bash
 REDIS_HOST=your-redis-host
@@ -118,12 +118,7 @@ REDIS_PASSOWRD=your-redis-password
 
 #### Running the app locally using docker
 
-1. `touch .env` and update with local values
-
-```bash
-REDIS_HOST=redis
-REDIS_PORT=6379
-```
+1. `cp template.env .env`
 
 2. Run compose command
 ```bash
