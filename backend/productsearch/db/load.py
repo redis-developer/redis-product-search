@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 import asyncio
 import json
-import requests
 import os
 from typing import List
 
 import numpy as np
-from redisvl.index import AsyncSearchIndex
-
+import requests
 from productsearch import config
+from redisvl.index import AsyncSearchIndex
 
 
 def read_from_s3():

@@ -91,20 +91,23 @@ The dataset was taken from the the following Kaggle links.
 - [Large Dataset](https://www.kaggle.com/datasets/paramaggarwal/fashion-product-images-dataset)
 - [Smaller Dataset](https://www.kaggle.com/datasets/paramaggarwal/fashion-product-images-small)
 
+A formatted version is available for use with this demo at:
+
 
 ## Running the App with docker-compose
 Before running the app, install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
-#### Using Redis Cloud (recommended)
+#### Using Redis Cloud
 
 1. [Get your Redis Cloud Database](https://app.redislabs.com/) (if needed).
 
-2. Export Redis Endpoint Environment Variables:
-    ```bash
-    $ export REDIS_HOST=your-redis-host
-    $ export REDIS_PORT=your-redis-port
-    $ export REDIS_PASSOWRD=your-redis-password
-    ```
+2. `cp template.env .env` and update with cloud values
+
+```bash
+REDIS_HOST=your-redis-host
+REDIS_PORT=your-redis-port
+REDIS_PASSOWRD=your-redis-password
+```
 
 3. Run the App:
     ```bash
@@ -113,10 +116,16 @@ Before running the app, install [Docker Desktop](https://www.docker.com/products
 
 > The benefit of this approach is that the db will persist beyond application runs. So you can make updates and re run the app without having to provision the dataset or create another search index.
 
-#### Using Redis Docker
+#### Running the app locally using docker
+
+1. `cp template.env .env`
+
+2. Run compose command
 ```bash
 $ docker compose -f docker-local-redis.yml up
 ```
+
+Note: you can add `--build` and `--force-recreate` if caching old images.
 
 ## Running without docker-compose
 

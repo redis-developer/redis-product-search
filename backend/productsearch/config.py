@@ -16,6 +16,7 @@ PROJECT_NAME = "productsearch"
 API_DOCS = "/api/docs"
 OPENAPI_DOCS = "/api/openapi.json"
 INDEX_NAME = "products"
+
 REDIS_HOST = os.environ.get("REDIS_HOST", "redis-vector-db")
 REDIS_PORT = os.environ.get("REDIS_PORT", 6379)
 REDIS_DB = os.environ.get("REDIS_DB", 0)
