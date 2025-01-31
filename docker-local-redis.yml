@@ -13,7 +13,7 @@ services:
       - "8888:8888"
     depends_on:
       - "redis"
-  redis:
+  redis-vector-db:
     image: redis/redis-stack:latest
     ports:
       - "6379:6379"
