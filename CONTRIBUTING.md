@@ -16,7 +16,7 @@ helpful contributions that mean less work for you.
 
 ## Your First Contribution
 
-Unsure where to begin contributing? You can start by looking through some of our issues [listed here](https://github.com/RedisVentures/redis-vector-search/issues).
+Unsure where to begin contributing? You can start by looking through some of our issues [listed here](https://github.com/redis-developer/redis-product-search).
 
 ## Getting Started
 

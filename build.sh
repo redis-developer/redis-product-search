@@ -1,1 +1,0 @@
-docker build -t redisventures/redis-product-search:latest .

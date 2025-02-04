@@ -4,7 +4,7 @@
     <br />
     <br />
 <div display="inline-block">
-    <a href="https://ecommerce.redisventures.com"><b>Hosted Demo</b></a>&nbsp;&nbsp;&nbsp;
+    <a href="https://ecommerce.redisvl.com/"><b>Hosted Demo</b></a>&nbsp;&nbsp;&nbsp;
     <a href="https://github.com/redis-developer/redis-product-search"><b>Code</b></a>&nbsp;&nbsp;&nbsp;
     <a href="https://redis.io/docs/stack/search/reference/vectors/"><b>Redis VSS Documentation</b></a>&nbsp;&nbsp;&nbsp;
   </div>
@@ -97,37 +97,21 @@ A formatted version is available for use with this demo at:
 ## Running the App with docker-compose
 Before running the app, install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
-#### Using Redis Cloud
-
-1. [Get your Redis Cloud Database](https://app.redislabs.com/) (if needed).
-
-2. `cp template.env .env` and update with cloud values
+1. Copy .env file
 
 ```bash
-REDIS_HOST=your-redis-host
-REDIS_PORT=your-redis-port
-REDIS_PASSOWRD=your-redis-password
+cp template.env .env
 ```
 
-3. Run the App:
-    ```bash
-    $ docker compose -f docker-cloud-redis.yml up
-    ```
-
-> The benefit of this approach is that the db will persist beyond application runs. So you can make updates and re run the app without having to provision the dataset or create another search index.
-
-#### Running the app locally using docker
-
-1. `cp template.env .env`
-
 2. Run compose command
+
 ```bash
-$ docker compose -f docker-local-redis.yml up
+docker compose -f docker-local-redis.yml up
 ```
 
 Note: you can add `--build` and `--force-recreate` if caching old images.
 
-## Running without docker-compose
+## Running local without docker-compose
 
 ### Run frontend
 
