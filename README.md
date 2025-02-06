@@ -103,10 +103,10 @@ Before running the app, install [Docker Desktop](https://www.docker.com/products
 cp template.env .env
 ```
 
-2. Run compose command
+2. Run docker containers with `make`
 
 ```bash
-docker compose -f docker-local-redis.yml up
+make build
 ```
 
 Note: you can add `--build` and `--force-recreate` if caching old images.
