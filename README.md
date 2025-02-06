@@ -100,7 +100,7 @@ Before running the app, install [Docker Desktop](https://www.docker.com/products
 1. Copy .env file
 
 ```bash
-cp template.env .env
+cp .env.template .env
 ```
 
 2. Run docker containers with `make`
