@@ -1,23 +1,23 @@
 [tool.poetry]
 name = "productsearch"
-version = "0.1.0"
+version = "0.2.0"
 description = "Reference architecture for vector search application with Redis"
 authors = ["Robert Shelton  <robert.shelton@redis.com>"]
 readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.11,<3.14"
 fastapi = "^0.111.0"
 uvicorn = "^0.30.1"
 ipython = "^8.26.0"
 numpy = "1.26.4"
-redisvl = "^0.2.3"
+redisvl = "^0.4.1"
 cohere = "^5.5.8"
 openai = "^1.35.9"
 sentence-transformers = "^3.0.1"
 sentencepiece = "^0.2.0"
-redis = "^5.0.7"
+
 
 [tool.poetry.group.dev.dependencies]
 mypy = "1.9.0"

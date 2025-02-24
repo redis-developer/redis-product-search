@@ -2,10 +2,9 @@ import asyncio
 
 import numpy as np
 from fastapi import APIRouter, Depends
-from redis.commands.search.document import Document
 from redis.commands.search.query import Query
 from redisvl.index import AsyncSearchIndex
-from redisvl.query import FilterQuery, VectorQuery
+from redisvl.query import CountQuery, FilterQuery, VectorQuery
 from redisvl.query.filter import FilterExpression, Tag
 
 from productsearch import config
@@ -16,22 +15,7 @@ from productsearch.api.schema.product import (
 )
 from productsearch.db import redis_helpers
 
-
 router = APIRouter()
-
-
-def create_count_query(filter_expression: FilterExpression) -> Query:
-    """
-    Create a "count" query where simply want to know how many records
-    match a particular filter expression
-
-    Args:
-        filter_expression (FilterExpression): The filter expression for the query.
-
-    Returns:
-        Query: The Redis query object.
-    """
-    return Query(str(filter_expression)).no_content().dialect(2)
 
 
 @router.get(
@@ -116,14 +100,14 @@ async def find_products_by_image(
         return_fields=config.RETURN_FIELDS,
         filter_expression=filter_expression,
     )
-    count_query = create_count_query(filter_expression)
+    count_query = CountQuery(filter_expression)
 
     # Execute search
     count, result_papers = await asyncio.gather(
-        index.search(count_query), index.query(paper_similarity_query)
+        index.query(count_query), index.query(paper_similarity_query)
     )
     # Get Paper records of those results
-    return ProductVectorSearchResponse(total=count.total, products=result_papers)
+    return ProductVectorSearchResponse(total=count, products=result_papers)
 
 
 @router.post(
@@ -174,11 +158,11 @@ async def find_products_by_text(
         return_fields=config.RETURN_FIELDS,
         filter_expression=filter_expression,
     )
-    count_query = create_count_query(filter_expression)
+    count_query = CountQuery(filter_expression)
 
     # Execute search
     count, result_papers = await asyncio.gather(
-        index.search(count_query), index.query(paper_similarity_query)
+        index.query(count_query), index.query(paper_similarity_query)
     )
     # Get Paper records of those results
-    return ProductVectorSearchResponse(total=count.total, products=result_papers)
+    return ProductVectorSearchResponse(total=count, products=result_papers)

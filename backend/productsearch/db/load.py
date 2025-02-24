@@ -6,8 +6,9 @@ from typing import List
 
 import numpy as np
 import requests
-from productsearch import config
 from redisvl.index import AsyncSearchIndex
+
+from productsearch import config
 
 
 def read_from_s3():
