@@ -1,11 +1,15 @@
 import logging
 import os
 
-from fastapi import Request
 from redisvl.index import AsyncSearchIndex
 from redisvl.schema import IndexSchema
 
+from productsearch import config
+
 logger = logging.getLogger(__name__)
+
+# global search index
+_global_index = None
 
 
 def get_schema() -> IndexSchema:
@@ -14,5 +18,8 @@ def get_schema() -> IndexSchema:
     return IndexSchema.from_yaml(file_path)
 
 
-def get_async_index(request: Request) -> AsyncSearchIndex:
-    return request.app.state.redis_index
+async def get_async_index():
+    global _global_index
+    if not _global_index:
+        _global_index = AsyncSearchIndex(get_schema(), redis_url=config.REDIS_URL)
+    return _global_index

@@ -1,11 +1,10 @@
 import asyncio
 
 import numpy as np
-from fastapi import APIRouter, Depends, Request
-from redis.commands.search.query import Query
+from fastapi import APIRouter, Depends
 from redisvl.index import AsyncSearchIndex
 from redisvl.query import CountQuery, FilterQuery, VectorQuery
-from redisvl.query.filter import FilterExpression, Tag
+from redisvl.query.filter import Tag
 
 from productsearch import config
 from productsearch.api.schema.product import (
@@ -25,11 +24,11 @@ router = APIRouter()
     operation_id="get_products_samples",
 )
 async def get_products(
-    request: Request,
     limit: int = 20,
     skip: int = 0,
     gender: str = "",
     category: str = "",
+    index: AsyncSearchIndex = Depends(utils.get_async_index),
 ) -> ProductSearchResponse:
     """Fetch and return products based on gender and category fields
 
@@ -42,8 +41,6 @@ async def get_products(
     Returns:
         ProductSearchResponse: Pydantic model containing products and total count
     """
-    index = utils.get_async_index(request)
-
     # Build query
     filter_expression = (Tag("gender") == gender) & (Tag("category") == category)
     filter_query = FilterQuery(return_fields=[], filter_expression=filter_expression)
@@ -61,8 +58,8 @@ async def get_products(
     operation_id="compute_image_similarity",
 )
 async def find_products_by_image(
-    request: Request,
     similarity_request: SimilarityRequest,
+    index: AsyncSearchIndex = Depends(utils.get_async_index),
 ) -> ProductVectorSearchResponse:
     """Fetch and return products based on image similarity
 
@@ -85,8 +82,6 @@ async def find_products_by_image(
                 text_vector (str): Text vector for similarity computation
                 img_vector (str): Image vector for similarity computation
     """
-    index = utils.get_async_index(request)
-
     # Fetch paper key and the vector from the HASH, cast to numpy array
     product = await index.fetch(similarity_request.product_id)
     product_img_vector = np.frombuffer(product["img_vector"], dtype=np.float32)
@@ -121,8 +116,8 @@ async def find_products_by_image(
     operation_id="compute_text_similarity",
 )
 async def find_products_by_text(
-    request: Request,
     similarity_request: SimilarityRequest,
+    index: AsyncSearchIndex = Depends(utils.get_async_index),
 ) -> ProductVectorSearchResponse:
     """Fetch and return products based on image similarity
 
@@ -145,8 +140,6 @@ async def find_products_by_text(
                 text_vector (str): Text vector for similarity computation
                 img_vector (str): Image vector for similarity computation
     """
-    index = utils.get_async_index(request)
-
     # Fetch paper key and the vector from the HASH, cast to numpy array
     product = await index.fetch(similarity_request.product_id)
     product_text_vector = np.frombuffer(product["text_vector"], dtype=np.float32)

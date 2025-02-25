@@ -5,7 +5,6 @@ import httpx
 import numpy as np
 import pytest
 import pytest_asyncio
-from asgi_lifespan import LifespanManager
 from httpx import AsyncClient
 from redisvl.index import SearchIndex
 
@@ -46,14 +45,13 @@ def test_data(index):
         parsed["product_id"] = product["product_id"]
         parsed_products.append(parsed)
 
-    keys = index.load(data=parsed_products, id_field="product_id")
+    _ = index.load(data=parsed_products, id_field="product_id")
     return parsed_products
 
 
 @pytest_asyncio.fixture(scope="session")
 async def async_client():
-    async with LifespanManager(app):
-        async with AsyncClient(
-            transport=httpx.ASGITransport(app=app), base_url="http://test/api/v1/"
-        ) as client:
-            yield client
+    async with AsyncClient(
+        transport=httpx.ASGITransport(app=app), base_url="http://test/api/v1/"  # type: ignore
+    ) as client:
+        yield client
