@@ -2,30 +2,29 @@ import pytest
 from httpx import AsyncClient
 
 from productsearch.api.schema.product import SimilarityRequest
-from productsearch.main import app
 
 
-@pytest.fixture
-def gender(products):
-    return products[0]["gender"]
+@pytest.fixture(scope="module")
+def gender(test_data):
+    return test_data[0]["gender"]
 
 
-@pytest.fixture
-def category(products):
-    return products[0]["category"]
+@pytest.fixture(scope="module")
+def category(test_data):
+    return test_data[0]["category"]
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def bad_req_json():
     return {"not": "valid"}
 
 
-@pytest.fixture
-def product_req(gender, category, products):
+@pytest.fixture(scope="module")
+def product_req(gender, category, test_data):
     return SimilarityRequest(
         gender=gender,
         category=category,
-        product_id=products[0]["product_id"],
+        product_id=test_data[0]["product_id"],
     )
 
 

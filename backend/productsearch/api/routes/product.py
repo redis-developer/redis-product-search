@@ -2,11 +2,9 @@ import asyncio
 
 import numpy as np
 from fastapi import APIRouter, Depends
-from redis.commands.search.document import Document
-from redis.commands.search.query import Query
 from redisvl.index import AsyncSearchIndex
-from redisvl.query import FilterQuery, VectorQuery
-from redisvl.query.filter import FilterExpression, Tag
+from redisvl.query import CountQuery, FilterQuery, VectorQuery
+from redisvl.query.filter import Tag
 
 from productsearch import config
 from productsearch.api.schema.product import (
@@ -14,24 +12,9 @@ from productsearch.api.schema.product import (
     ProductVectorSearchResponse,
     SimilarityRequest,
 )
-from productsearch.db import redis_helpers
-
+from productsearch.db import utils
 
 router = APIRouter()
-
-
-def create_count_query(filter_expression: FilterExpression) -> Query:
-    """
-    Create a "count" query where simply want to know how many records
-    match a particular filter expression
-
-    Args:
-        filter_expression (FilterExpression): The filter expression for the query.
-
-    Returns:
-        Query: The Redis query object.
-    """
-    return Query(str(filter_expression)).no_content().dialect(2)
 
 
 @router.get(
@@ -45,7 +28,7 @@ async def get_products(
     skip: int = 0,
     gender: str = "",
     category: str = "",
-    index: AsyncSearchIndex = Depends(redis_helpers.get_async_index),
+    index: AsyncSearchIndex = Depends(utils.get_async_index),
 ) -> ProductSearchResponse:
     """Fetch and return products based on gender and category fields
 
@@ -76,7 +59,7 @@ async def get_products(
 )
 async def find_products_by_image(
     similarity_request: SimilarityRequest,
-    index: AsyncSearchIndex = Depends(redis_helpers.get_async_index),
+    index: AsyncSearchIndex = Depends(utils.get_async_index),
 ) -> ProductVectorSearchResponse:
     """Fetch and return products based on image similarity
 
@@ -116,14 +99,14 @@ async def find_products_by_image(
         return_fields=config.RETURN_FIELDS,
         filter_expression=filter_expression,
     )
-    count_query = create_count_query(filter_expression)
+    count_query = CountQuery(filter_expression)
 
     # Execute search
     count, result_papers = await asyncio.gather(
-        index.search(count_query), index.query(paper_similarity_query)
+        index.query(count_query), index.query(paper_similarity_query)
     )
     # Get Paper records of those results
-    return ProductVectorSearchResponse(total=count.total, products=result_papers)
+    return ProductVectorSearchResponse(total=count, products=result_papers)
 
 
 @router.post(
@@ -134,7 +117,7 @@ async def find_products_by_image(
 )
 async def find_products_by_text(
     similarity_request: SimilarityRequest,
-    index: AsyncSearchIndex = Depends(redis_helpers.get_async_index),
+    index: AsyncSearchIndex = Depends(utils.get_async_index),
 ) -> ProductVectorSearchResponse:
     """Fetch and return products based on image similarity
 
@@ -174,11 +157,11 @@ async def find_products_by_text(
         return_fields=config.RETURN_FIELDS,
         filter_expression=filter_expression,
     )
-    count_query = create_count_query(filter_expression)
+    count_query = CountQuery(filter_expression)
 
     # Execute search
     count, result_papers = await asyncio.gather(
-        index.search(count_query), index.query(paper_similarity_query)
+        index.query(count_query), index.query(paper_similarity_query)
     )
     # Get Paper records of those results
-    return ProductVectorSearchResponse(total=count.total, products=result_papers)
+    return ProductVectorSearchResponse(total=count, products=result_papers)

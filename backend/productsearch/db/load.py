@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 import asyncio
 import json
-import os
 from typing import List
 
 import numpy as np
 import requests
-from productsearch import config
 from redisvl.index import AsyncSearchIndex
+
+from productsearch import config
+from productsearch.db.utils import get_schema
 
 
 def read_from_s3():
@@ -58,10 +59,8 @@ async def write_products(index: AsyncSearchIndex, products: List[dict]):
 
 
 async def load_data():
-    index = AsyncSearchIndex.from_yaml(
-        os.path.join("./productsearch/db/schema", "products.yml")
-    )
-    index.connect(config.REDIS_URL)
+    schema = get_schema()
+    index = AsyncSearchIndex(schema, redis_url=config.REDIS_URL)
 
     # Check if index exists
     if await index.exists() and len((await index.search("*")).docs) > 0:

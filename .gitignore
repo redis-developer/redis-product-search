@@ -9,3 +9,4 @@ product_vectors.json
 data/
 !backend/data
 .env
+.python-version

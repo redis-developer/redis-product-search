@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 import uvicorn
@@ -7,10 +8,22 @@ from starlette.middleware.cors import CORSMiddleware
 
 from productsearch import config
 from productsearch.api.main import api_router
+from productsearch.db.utils import get_async_index
 from productsearch.spa import SinglePageApplication
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    index = await get_async_index()
+    async with index:
+        yield
+
+
 app = FastAPI(
-    title=config.PROJECT_NAME, docs_url=config.API_DOCS, openapi_url=config.OPENAPI_DOCS
+    title=config.PROJECT_NAME,
+    docs_url=config.API_DOCS,
+    openapi_url=config.OPENAPI_DOCS,
+    lifespan=lifespan,
 )
 
 app.add_middleware(

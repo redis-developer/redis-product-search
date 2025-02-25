@@ -14,7 +14,7 @@ services:
     depends_on:
       - "redis-vector-db"
   redis-vector-db:
-    image: redis/redis-stack:latest
+    image: redis:8.0-M03
     ports:
       - "6379:6379"
       - "8001:8001"
