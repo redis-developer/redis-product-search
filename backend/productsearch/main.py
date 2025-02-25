@@ -1,16 +1,41 @@
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from redis.asyncio import Redis
+from redisvl.index import AsyncSearchIndex
 from starlette.middleware.cors import CORSMiddleware
 
 from productsearch import config
 from productsearch.api.main import api_router
+from productsearch.db.utils import get_schema
 from productsearch.spa import SinglePageApplication
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Create your async resource(s) in startup logic
+    client = await Redis.from_url(config.REDIS_URL)
+    index = AsyncSearchIndex(schema=get_schema(), redis_client=client)
+    # Store them on app.state
+    app.state.redis_client = client
+    app.state.redis_index = index
+    try:
+        # Let the application run
+        yield
+    finally:
+        # Dispose of them in shutdown logic
+        await index.disconnect()
+        await client.close()
+
+
 app = FastAPI(
-    title=config.PROJECT_NAME, docs_url=config.API_DOCS, openapi_url=config.OPENAPI_DOCS
+    title=config.PROJECT_NAME,
+    docs_url=config.API_DOCS,
+    openapi_url=config.OPENAPI_DOCS,
+    lifespan=lifespan,
 )
 
 app.add_middleware(

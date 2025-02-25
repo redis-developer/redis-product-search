@@ -9,6 +9,7 @@ import requests
 from redisvl.index import AsyncSearchIndex
 
 from productsearch import config
+from productsearch.db.utils import get_schema
 
 
 def read_from_s3():
@@ -59,10 +60,8 @@ async def write_products(index: AsyncSearchIndex, products: List[dict]):
 
 
 async def load_data():
-    index = AsyncSearchIndex.from_yaml(
-        os.path.join("./productsearch/db/schema", "products.yml"),
-        redis_url=config.REDIS_URL,
-    )
+    schema = get_schema()
+    index = AsyncSearchIndex(schema, redis_url=config.REDIS_URL)
 
     # Check if index exists
     if await index.exists() and len((await index.search("*")).docs) > 0:

@@ -57,7 +57,7 @@ Much inspiration taken from [tiangelo/full-stack-fastapi-template](https://githu
                 product.py # primary API logic lives here
         /db
             load.py # seeds Redis DB
-            redis_helpers.py # redis util
+            utils.py # redis util
         /schema
             # pydantic models for serialization/validation from API
         /tests
