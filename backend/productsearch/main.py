@@ -28,7 +28,7 @@ async def lifespan(app: FastAPI):
     finally:
         # Dispose of them in shutdown logic
         await index.disconnect()
-        await client.close()
+        await client.aclose()  # type: ignore
 
 
 app = FastAPI(

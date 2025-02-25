@@ -7,7 +7,6 @@ import pytest
 import pytest_asyncio
 from asgi_lifespan import LifespanManager
 from httpx import AsyncClient
-from redis.asyncio import Redis
 from redisvl.index import SearchIndex
 
 from productsearch import config
