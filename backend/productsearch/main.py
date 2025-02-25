@@ -4,7 +4,6 @@ from pathlib import Path
 import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from redisvl.index import AsyncSearchIndex
 from starlette.middleware.cors import CORSMiddleware
 
 from productsearch import config
