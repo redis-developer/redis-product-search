@@ -1,7 +1,6 @@
 import logging
 import os
 
-from redis.asyncio import Redis
 from redisvl.index import AsyncSearchIndex, SearchIndex
 from redisvl.schema import IndexSchema
 
@@ -13,7 +12,7 @@ logger = logging.getLogger(__name__)
 dir_path = os.path.dirname(os.path.realpath(__file__)) + "/schema"
 file_path = os.path.join(dir_path, "products.yml")
 schema = IndexSchema.from_yaml(file_path)
-global_index = None
+_global_index = None
 
 
 def get_test_index():
@@ -26,7 +25,7 @@ def get_test_index():
 
 
 async def get_async_index():
-    global global_index
-    if not global_index:
-        global_index = AsyncSearchIndex(schema, redis_url=config.REDIS_URL)
-    yield global_index
+    global _global_index
+    if not _global_index:
+        _global_index = AsyncSearchIndex(schema, redis_url=config.REDIS_URL)
+    return _global_index

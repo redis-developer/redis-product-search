@@ -1,9 +1,6 @@
-from asyncio import get_event_loop
-from typing import Generator
-
 import pytest
 import pytest_asyncio
-from httpx import AsyncClient
+from httpx import AsyncClient, ASGITransport
 from redis.asyncio import Redis
 
 from productsearch import config
@@ -30,7 +27,7 @@ async def client():
 
 @pytest_asyncio.fixture(scope="session")
 async def async_client():
-
-    async with AsyncClient(app=app, base_url="http://test/api/v1/") as client:
-
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test/api/v1/"  # type: ignore
+    ) as client:
         yield client
